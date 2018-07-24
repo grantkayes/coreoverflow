@@ -13,7 +13,6 @@ import {
 
 const Home = props => (
   <div>
-    <QuestionModal/>
   </div>
 )
 

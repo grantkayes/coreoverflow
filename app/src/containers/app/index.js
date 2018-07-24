@@ -7,6 +7,7 @@ import SideBarContainer from '../sidebar/sidebarContainer'
 import MyQuestions from '../myQuestions'
 import '@procore/core-css'
 import '@procore/core-icons'
+import QuestionModal from '../questionmodal/questionmodal';
 
 const App = () => (
   <div id='header-and-body-wrapper'>
@@ -26,6 +27,11 @@ const App = () => (
       <div id="right" className="column">
         <SideBarContainer />
       </div>
+
+      <div id="center" className="column">
+        <QuestionModal />
+      </div>
+      
     </div>
   </div>
 );

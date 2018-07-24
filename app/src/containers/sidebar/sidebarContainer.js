@@ -4,14 +4,17 @@ import { bindActionCreators } from '../../../node_modules/redux';
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { toggleModal } from '../../modules/sidebar'
+import QuestionModal from '../questionmodal/questionmodal.js';
 
 const SideBarContainer = props => (
   <div>
     <SideBar toggleModal={props.toggleModal} changePage={() => props.changePage()}/>
+    <QuestionModal open={props.isModalOpen}/>
   </div>
 )
 
 const mapStateToProps = ({ sidebar }) => {
+  console.log(sidebar);
   return {
     isModalOpen: sidebar.isModalOpen
   }
