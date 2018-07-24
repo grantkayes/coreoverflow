@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Home from '../home'
 import About from '../about'
 import NavBar from '../navbar'
@@ -11,8 +11,7 @@ import '@procore/core-icons'
 const App = () => (
   <div id='header-and-body-wrapper'>
     <header>
-      <Link to="/">Home</Link>
-      <Link to="/about-us">About</Link>
+      <NavBar />
     </header>
     <div id='main-and-sidebar-wrapper'>
       <div id="left" className="column">
@@ -29,6 +28,6 @@ const App = () => (
       </div>
     </div>
   </div>
-)
+);
 
-export default App
+export default App;
