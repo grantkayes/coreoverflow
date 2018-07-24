@@ -9,6 +9,12 @@ Changing the world, and your core
 ## Setting and Starting DynamoDB (local)
 
 To Start:
-cd into "dynamodb_local_latest" and run
 
-java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
+1. Download a zip folder of a local dynamodb
+Here
+- https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html
+
+2. Unzip the folder
+3. cd into "dynamodb_local_latest" and run
+
+`java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb`
