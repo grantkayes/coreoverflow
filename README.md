@@ -18,3 +18,15 @@ Here
 3. cd into "dynamodb_local_latest" and run
 
 `java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb`
+
+
+4. cd in the "coreoverflowexpress" folder
+
+5. Run "yarn create-db"
+
+
+## To start backend
+
+1. Run "yarn"
+
+2. Run "yarn start"
