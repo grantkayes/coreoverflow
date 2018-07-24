@@ -1,0 +1,52 @@
+.logo {
+  width: 140px;
+  letter-spacing: 1px;
+  margin-left: 5px;
+  color: white;
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
+.navbar-container {
+  z-index: 1;
+  padding: 10px 20px;
+  width: 100%;
+  background-color: #262626;
+  box-shadow: 0 4px 2px -2px gray;
+  position: fixed;
+}
+
+.icons-container {
+  width: 120px;
+  margin-left: 15px;
+  color: white;
+}
+
+.icon:hover {
+  cursor: pointer;
+}
+
+.notifications-container {
+  position: fixed;
+
+  top: 76px;
+  right: 0px;
+  background-color: #262626;
+  box-shadow: 0 2px 1px -1px gray;
+}
+
+.notification {
+  width: 250px;
+  border-width: 0px 0px 1px 0px;
+  border-color: gray;
+  border-style: solid;
+  padding: 10px 15px;
+  font-size: 14px;
+}
+
+.notification:hover {
+  background-color: gray !important;
+  cursor: pointer;
+}
