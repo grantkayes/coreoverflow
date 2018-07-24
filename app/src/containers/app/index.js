@@ -1,22 +1,20 @@
-import React from 'react'
-import { Route, Link } from 'react-router-dom'
-import Home from '../home'
-import About from '../about'
-import NavBar from '../navbar'
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
+import '@procore/core-icons';
+
+import Home from '../home';
+import About from '../about';
+import NavBar from '../navbar';
 
 const App = () => (
   <div>
-    <header>
-      <Link to="/">Home</Link>
-      <Link to="/about-us">About</Link>
-    </header>
+    <NavBar />
 
     <main>
       <Route exact path="/" component={Home} />
       <Route exact path="/about-us" component={About} />
-      <Route exact path="/navbar" component={NavBar} />
     </main>
   </div>
-)
+);
 
-export default App
+export default App;
