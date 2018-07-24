@@ -1,13 +1,8 @@
 import React from 'react';
 import { Flex, Icon } from '@procore/core-react';
-import styles from './index.css';
 import onClickOutside from 'react-onclickoutside';
 
 class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleClickOutside = evt => {
     this.props.handleClickOutside();
   };

@@ -4,10 +4,6 @@ import styles from './index.css';
 import onClickOutside from 'react-onclickoutside';
 
 class Notifications extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleClickOutside = evt => {
     this.props.handleClickOutside();
   };

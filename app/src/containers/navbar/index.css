@@ -1,6 +1,3 @@
-.search {
-}
-
 .logo {
   width: 140px;
   letter-spacing: 1px;
@@ -12,6 +9,7 @@
 }
 
 .navbar-container {
+  z-index: 1;
   padding: 10px 20px;
   width: 100%;
   background-color: #e9e9e9;
