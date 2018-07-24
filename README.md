@@ -11,7 +11,6 @@ Changing the world, and your core
 To Start:
 
 1. Download a zip folder of a local dynamodb
-Here
 - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html
 
 2. Unzip the folder
@@ -19,6 +18,7 @@ Here
 
 `java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb`
 
+Note: Use the command above to start server
 
 4. cd in the "coreoverflowexpress" folder
 
