@@ -8,7 +8,6 @@ import {
   decrement,
   decrementAsync
 } from '../../modules/counter'
-import Sidebar from '../sidebar/index.js'
 
 const Home = props => (
   <div>
@@ -34,8 +33,6 @@ const Home = props => (
         Go to about page via redux
       </button>
     </p>
-
-    <Sidebar />
   </div>
 )
 
