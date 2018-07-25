@@ -5,7 +5,7 @@
 }
 
 .side-card-container {
-  width: 100px;
+  min-width: 100px;
   margin-right: 10px;
 }
 
@@ -17,7 +17,7 @@
 .answer-container {
   margin: 4px 0;
   padding: 0 4px;
-  border: 2px solid #32CD32;
+  border: 2px solid #707070;
 }
 .card-title {
   margin: 0;
@@ -56,11 +56,16 @@
   margin: 0;
   font-size: 24px;
   font-weight: 600;
-  color: #32CD32;
+  color: #707070;
 }
 
 .answer-vote-text {
   margin: 0 0 3px 0;
   font-size: 12px;
-  color: #32CD32;
+  color: #707070;
+}
+
+.has-answer {
+  color: #f47e42;
+  border-color: #f47e42;
 }

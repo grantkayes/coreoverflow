@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Card, Flex } from '@procore/core-react'
+import classNames from 'classnames'
+import { Box, Card, Flex, Link } from '@procore/core-react'
 import './style.css'
 
 
@@ -23,20 +24,22 @@ const QuestionCard = (props) => {
                 <p className='card-vote-text'>votes</p>
               </Flex>
             </Box>
-            <Box className='answer-container'>
+            <Box className={classNames('answer-container', {'has-answer': answerCount > 0})}>
               <Flex alignItems='center' direction='column'>
-                <p className='answer-vote-num'>{4}</p>
-                <p className='answer-vote-text'>answers</p>
+                <p className={classNames('answer-vote-num', {'has-answer': answerCount > 0})}>{answerCount}</p>
+                <p className={classNames('answer-vote-text', {'has-answer': answerCount > 0})}>answers</p>
               </Flex>
             </Box>
           </Flex>
           <Flex direction='column'>
             <Box>
-              <p className='card-title'>{title}</p>
+              <Link>
+                <p className='card-title'>{title}</p>
+              </Link>
             </Box>
             <Box>
               <Flex>
-                <p class='card-body'>{bodyText}</p>
+                <p className='card-body'>{bodyText}</p>
               </Flex>
             </Box>
             <Flex className='question-user-info' direction='column'>
