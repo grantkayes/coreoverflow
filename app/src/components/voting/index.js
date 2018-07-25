@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Header, Card } from '@procore/core-react';
+import { Flex } from '@procore/core-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './index.css';
