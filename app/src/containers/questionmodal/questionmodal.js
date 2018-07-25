@@ -1,8 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-// import { push } from 'connected-react-router'
-// import { bindActionCreators } from 'redux'
-// import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { Modal, Button, Notation } from '@procore/core-react'
 import { TextEditor, TextArea } from '@procore/core-react'
 import axios from 'axios'
@@ -11,14 +10,18 @@ class QuestionModal extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      title: '',
+      body: ''
+    }
   }
 
   submitQuestion = event => {
     event.preventDefault();
 
     const Question = {
-      title: 'Title',
-      body: this.bodyInput
+      title: this.state.title,
+      body: this.state.body
     };
 
     axios.post('http://localhost:5000/questions', { Question })
@@ -34,10 +37,10 @@ class QuestionModal extends React.Component {
         <Modal open={this.props.open} onClickOverlay={this.props.close}>
           <Modal.Header onClose={this.props.close}>
             Title
-            <TextArea resize="horizontal" ref={(titleInput) => {this.titleInput = titleInput}}/>
+            <TextArea resize="horizontal" onChange={(event) => this.state.title = event.target.value}/>
           </Modal.Header>
           <Modal.Body>
-            <TextEditor onChange={(content) => console.log(content)}/>
+            <TextEditor onChange={(content) => this.state.body = content.replace(/<\/?[^>]+(>|$)/g, "")}/>
           </Modal.Body>
           <Modal.Footer>
             <Modal.FooterNotation>

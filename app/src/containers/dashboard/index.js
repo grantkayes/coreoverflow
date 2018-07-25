@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-import React from 'react'
-import './dashboard.css'
-import QuestionCard from '../../components/QuestionCard'
-import moment from 'moment'
-import axios from 'axios'
-import { EmptyState } from '@procore/core-react'
-=======
 import React from 'react';
 import './dashboard.css';
 import QuestionCard from '../../components/questionCard';
 import moment from 'moment';
 import { EmptyState } from '@procore/core-react';
->>>>>>> 550d90cf141199e8b32b8078197ee1bf3c106f87
+import axios from 'axios'
 
 const EXAMPLE_QUESTION = {
   title: 'How can I prevent SQL injection in PHP?',
@@ -88,14 +80,7 @@ const Dashboard = props => {
       <h1 id="dashboard-header">{props.title}</h1>
       <div className="questions-wrapper">{allQuestions}</div>
     </div>
-<<<<<<< HEAD
-  )
-}
-
-export default Dashboard
-=======
   );
 };
 
 export default Dashboard;
->>>>>>> 550d90cf141199e8b32b8078197ee1bf3c106f87

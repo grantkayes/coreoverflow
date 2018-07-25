@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import { Route } from 'react-router-dom'
-import MostRecent from '../mostRecent'
-import About from '../about'
-import NavBar from '../navbar'
-import SideBarContainer from '../sidebar/sidebarContainer'
-import MyQuestions from '../myQuestions'
-import '@procore/core-css'
-import '@procore/core-icons'
-import QuestionModal from '../questionmodal/questionmodal';
-=======
 import React from 'react';
 import { Route } from 'react-router-dom';
 import Home from '../home';
@@ -21,7 +9,6 @@ import Question from '../question';
 import MostRecent from '../mostRecent';
 import '@procore/core-css';
 import '@procore/core-icons';
->>>>>>> 550d90cf141199e8b32b8078197ee1bf3c106f87
 
 const App = () => (
   <div id="header-and-body-wrapper">
