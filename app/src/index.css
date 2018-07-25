@@ -29,7 +29,6 @@ button:disabled {
 }
 
 #main-and-sidebar-wrapper {
-  height: 500px;
   overflow: hidden;
   margin: 0px;
   display: flex;
@@ -44,7 +43,7 @@ button:disabled {
 }
 
 #left {
-  flex: 1 300px;
+  flex: 1;
   flex-shrink: 0;
 }
 

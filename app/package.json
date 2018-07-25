@@ -15,6 +15,9 @@
     "react-scripts": "1.1.4"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "^0.1.0-11",
     "@procore/core-css": "^5.3.0",
     "@procore/core-icons": "^5.3.0",
     "@procore/core-react": "^5.3.0",

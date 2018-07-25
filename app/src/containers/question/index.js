@@ -9,14 +9,13 @@ class DetailedQuestion extends React.Component {
     super(props);
 
     const questionId = this.props.match.params.id;
-
-    console.log(questionId);
   }
 
   render() {
     return (
       <Flex id="main-container" justifyContent="center" direction="column">
         <Question />
+        <AnswerList />
       </Flex>
     );
   }
