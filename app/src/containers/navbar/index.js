@@ -2,6 +2,8 @@ import React from 'react';
 import Notifications from './notifications';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
+import { withRouter } from 'react-router';
+
 import './index.css';
 
 class NavBar extends React.Component {
@@ -13,6 +15,11 @@ class NavBar extends React.Component {
       isProfileOpen: false
     };
   }
+
+  navigateDashboard = () => {
+    console.log(this.props);
+    this.props.history.push('/');
+  };
 
   closeDropdowns = () => {
     this.setState({
@@ -60,7 +67,9 @@ class NavBar extends React.Component {
           <Avatar size="lg">
             <Avatar.Portrait imageUrl={avatarImageUrl} />
           </Avatar>
-          <ToolHeader.Header className="logo">ore Overflow</ToolHeader.Header>
+          <ToolHeader.Header className="logo" onClick={this.navigateDashboard}>
+            ore Overflow
+          </ToolHeader.Header>
           <Search
             className="search"
             onSubmit={this.handleSearch}
@@ -86,4 +95,4 @@ class NavBar extends React.Component {
   }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

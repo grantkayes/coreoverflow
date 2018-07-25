@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Icon } from '@procore/core-react';
+import { Flex, Icon, Header } from '@procore/core-react';
 import Answer from './answer';
 import './index.css';
 
@@ -15,10 +15,9 @@ class AnswerList extends React.Component {
         justifyContent="center"
         direction="column"
       >
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
+        <Header className="answer-list-title" type="h1">
+          7 Answers
+        </Header>
       </Flex>
     );
   }

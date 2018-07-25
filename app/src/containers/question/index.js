@@ -1,7 +1,6 @@
 import React from 'react';
 import { Flex, Icon } from '@procore/core-react';
 import Question from './question';
-import AnswerList from './answerList';
 import './index.css';
 
 class DetailedQuestion extends React.Component {
@@ -15,7 +14,6 @@ class DetailedQuestion extends React.Component {
     return (
       <Flex id="main-container" justifyContent="center" direction="column">
         <Question />
-        <AnswerList />
       </Flex>
     );
   }
