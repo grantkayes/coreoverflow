@@ -8,7 +8,7 @@ const Markdown = props => {
 
   md.renderer = new RemarkableReactRenderer();
 
-  return <div>{md.render(props.text)}</div>;
+  return <div className={props.className}>{md.render(props.text)}</div>;
 };
 
 export default Markdown;
