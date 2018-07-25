@@ -9,7 +9,7 @@ import QuestionModal from '../questionmodal/questionmodal.js';
 const SideBarContainer = props => (
   <div>
     <SideBar toggleModal={props.toggleModal} changePage={() => props.changePage()}/>
-    <QuestionModal open={props.isModalOpen}/>
+    <QuestionModal open={props.isModalOpen} close={props.toggleModal}/>
   </div>
 )
 
@@ -17,6 +17,7 @@ const mapStateToProps = ({ sidebar }) => {
   console.log(sidebar);
   return {
     isModalOpen: sidebar.isModalOpen
+
   }
 }
 

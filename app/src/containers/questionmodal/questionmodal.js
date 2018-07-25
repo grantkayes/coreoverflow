@@ -4,17 +4,15 @@ import React from 'react'
 // import { connect } from 'react-redux'
 import { Modal, Button, Notation } from '@procore/core-react'
 import { TextEditor, TextArea } from '@procore/core-react'
+import { toggleModal } from '../../modules/sidebar';
 
 class QuestionModal extends React.Component {
-  // super(props)
-
-  
   
   render() {
     console.log(this.props);
       return (
-        <Modal open={this.props.isModalOpen} onClickOverlay={visibility.hide}>
-          <Modal.Header onClose={visibility.hide}>
+        <Modal open={this.props.open} onClickOverlay={this.props.close}>
+          <Modal.Header onClose={this.props.close}>
             Question Title
             <TextArea/>
           </Modal.Header>
@@ -26,16 +24,16 @@ class QuestionModal extends React.Component {
               <Notation variant="required">* required field</Notation>
             </Modal.FooterNotation>
             <Modal.FooterButtons>
-              <Button variant="tertiary" onClick={visibility.hide}>
+              <Button variant="tertiary" onClick={this.props.close}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={visibility.hide}>
+              <Button variant="primary" onClick={this.props.toggleModal}>
                 Submit
               </Button>
             </Modal.FooterButtons>
           </Modal.Footer>
         </Modal>
-      )
+      );
   }
 }
 

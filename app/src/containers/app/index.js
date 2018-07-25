@@ -27,10 +27,6 @@ const App = () => (
       <div id="right" className="column">
         <SideBarContainer />
       </div>
-
-      {/* <div id="center" className="column">
-        <QuestionModal />
-      </div> */}
       
     </div>
   </div>
