@@ -45,6 +45,7 @@ button:disabled {
 #left {
   flex: 1;
   flex-shrink: 0;
+  margin-right: 280px;
 }
 
 #right {

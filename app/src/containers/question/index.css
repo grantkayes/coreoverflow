@@ -1,7 +1,7 @@
 #main-container {
   margin: 20px 0px;
-  margin-right: 330px;
   padding: 0px 30px;
+  width: 100%;
 }
 
 #question-container {
@@ -29,7 +29,7 @@
 
 .question-markdown {
   background-color: #f1f1f1;
-  border-radius: 10px;
+  border-radius: 3px;
   padding: 15px 25px;
   margin-top: 10px;
   margin-bottom: 10px;
