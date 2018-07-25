@@ -2,6 +2,7 @@ import React from 'react'
 import './dashboard.css'
 import QuestionCard from '../../components/QuestionCard'
 import moment from 'moment'
+import axios from 'axios'
 import { EmptyState } from '@procore/core-react'
 
 const EXAMPLE_QUESTION = {
@@ -17,6 +18,14 @@ const EXAMPLE_ANS_COUNT = 2080;
 
 const Dashboard = props => {
   let tempVarForIfEmptyQuestions = true;
+  console.log('before axios call')
+  axios.get('http://localhost:5000/questions')
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
 
   const allQuestions = tempVarForIfEmptyQuestions ? (
       <div>
@@ -46,6 +55,5 @@ const Dashboard = props => {
     </div>
   )
 }
-
 
 export default Dashboard
