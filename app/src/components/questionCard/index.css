@@ -8,6 +8,10 @@
   margin-right: 10px;
 }
 
+.right-side-container {
+  width: 100%;
+}
+
 .votes-container {
   margin: 4px 0;
   padding: 0 4px;
