@@ -25,6 +25,11 @@ router.get('/', function(req, res, next){
   res.status(200).send()
 })
 
+router.post('/', function(req, res, next){
+  console.log(req.body);
+  res.send();
+})
+
 
 
 
