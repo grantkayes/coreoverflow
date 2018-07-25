@@ -18,13 +18,6 @@ class AnswerList extends React.Component {
         <Header className="answer-list-title" type="h1">
           7 Answers
         </Header>
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
       </Flex>
     );
   }
