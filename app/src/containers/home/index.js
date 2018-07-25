@@ -11,8 +11,12 @@ import {
 
 const Home = props => (
   <div>
+<<<<<<< HEAD
+=======
+    HOME
+>>>>>>> 63a4bdec497f3b642f2db951efed72c163f8ff3e
   </div>
-);
+)
 
 const mapStateToProps = ({ counter }) => ({
   count: counter.count,

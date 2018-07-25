@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import Home from '../home'
+import MostRecent from '../mostRecent'
 import About from '../about'
 import NavBar from '../navbar'
 import SideBarContainer from '../sidebar/sidebarContainer'
@@ -17,13 +17,12 @@ const App = () => (
     <div id='main-and-sidebar-wrapper'>
       <div id="left" className="column">
         <main>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={MostRecent} />
           <Route exact path="/about-us" component={About} />
           <Route exact path="/navbar" component={NavBar} />
           <Route exact path="/my-questions" component={MyQuestions} />
         </main>
       </div>
-
       <div id="right" className="column">
         <SideBarContainer />
       </div>
