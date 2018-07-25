@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Icon } from '@procore/core-react';
-import styles from './index.css';
+import './index.css';
 import onClickOutside from 'react-onclickoutside';
 
 class Notifications extends React.Component {

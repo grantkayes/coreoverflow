@@ -2,7 +2,7 @@ import React from 'react';
 import Notifications from './notifications';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
-import styles from './index.css';
+import './index.css';
 
 class NavBar extends React.Component {
   constructor(props) {
