@@ -1,14 +1,14 @@
 import React from 'react';
-import { Flex, Icon } from '@procore/core-react';
+import { Flex } from '@procore/core-react';
 import Question from './question';
 import './index.css';
 
 class DetailedQuestion extends React.Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    const questionId = this.props.match.params.id;
-  }
+  //   // const questionId = this.props.match.params.id;
+  // }
 
   render() {
     return (

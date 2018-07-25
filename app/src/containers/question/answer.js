@@ -14,10 +14,6 @@ import Voting from '../../components/voting';
 import './index.css';
 
 class Answer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const input = `
 ## Hello
