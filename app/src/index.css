@@ -29,7 +29,6 @@ button:disabled {
 }
 
 #main-and-sidebar-wrapper {
-  height: 500px;
   overflow: hidden;
   margin: 0px;
   display: flex;

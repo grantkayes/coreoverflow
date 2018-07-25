@@ -3,7 +3,6 @@ import classNames from 'classnames'
 import { Box, Card, Flex, Link } from '@procore/core-react'
 import './style.css'
 
-
 const QuestionCard = (props) => {
   const {title, body, up, down, timestamp, user} = props.question
   const answerCount = props.answerCount
