@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { Box, Card, Flex, Link } from '@procore/core-react'
-import './style.css'
+import './index.css'
 
 const QuestionCard = (props) => {
   const {title, body, up, down, timestamp, user, answerCount, userId} = props.question
