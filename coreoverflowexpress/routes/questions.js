@@ -12,20 +12,39 @@ AWS.config.update({
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
+//Get all questions
 router.get('/', function(req, res, next){
-  const EXAMPLE_QUESTION = {
-    title: 'How can I prevent SQL injection in PHP?',
-    body: "There's so much confusion and debate over what is welcoming and what is expected of users with the Code of Conduct changing. There's a fine line we step between being frank in our discourse and what others consider rude. As a site we don't want to tie our community in knots over what they can and cannot say.",
-    up: 25,
-    down: 2,
-    timestamp: moment('2018-04-20'),
-    user: 'Johnny Walker'
+  var params = {
+    TableName: "Question",
+    ProjectionExpression: "#id, #questionTitle, #up, #body, #down, #user, #userId, #timestamp, #answerCount",
+    ExpressionAttributeNames: {
+      "#id": "id",
+      "#questionTitle": "questionTitle",
+      "#up": "up",
+      "#body": "body",
+      "#down": "down",
+      "#user": "user",
+      "#userId": "userId",
+      "#timestamp": "timestamp",
+      "#answerCount": "answerCount"
+    }
   }
 
-  res.status(200).send()
+  docClient.scan(params, onScan);
+
+  function onScan(err, data) {
+    if (err) {
+      console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+      console.log("Scan succeeded.");
+      // data.Items.forEach(function(question) {
+      //   console.log(question.id, question.title, question.body)
+      // });
+
+      //TODO: Sort data by time stamp before returning
+      res.status(200).send(data)
+    }
+  }
 })
-
-
-
 
 module.exports = router;

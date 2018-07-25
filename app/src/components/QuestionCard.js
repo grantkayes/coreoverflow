@@ -4,8 +4,7 @@ import { Box, Card, Flex, Link } from '@procore/core-react'
 import './style.css'
 
 const QuestionCard = (props) => {
-  const {title, body, up, down, timestamp, user} = props.question
-  const answerCount = props.answerCount
+  const {title, body, up, down, timestamp, user, answerCount, userId} = props.question
 
   let bodyText = body
   if (body.length > 250) {
@@ -30,7 +29,7 @@ const QuestionCard = (props) => {
               </Flex>
             </Box>
           </Flex>
-          <Flex direction='column'>
+          <Flex direction='column' className='right-side-container'>
             <Box>
               <Link>
                 <p className='card-title'>{title}</p>
@@ -42,7 +41,11 @@ const QuestionCard = (props) => {
               </Flex>
             </Box>
             <Flex className='question-user-info' direction='column'>
-              <p className='subtext'>Asked by {user}</p>
+              <p className='subtext'>Asked by 
+                <Link href={`http://localhost:3000/profile/userid=${userId}`}>
+                  {` ${user}`}
+                </Link>
+              </p>
               <p className='subtext'>on {timestamp.format('ll')}</p>
             </Flex>
           </Flex>
