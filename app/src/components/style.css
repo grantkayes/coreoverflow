@@ -1,7 +1,6 @@
 .card {
-  width: 70%;
   border-radius: 0.2em;
-  margin: 10px;
+  margin: 12px 5px;
 }
 
 .side-card-container {
