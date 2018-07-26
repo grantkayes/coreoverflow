@@ -32,9 +32,11 @@ router.post('/', function(req, res, next) {
   docClient.put(params, function(err, data) {
     if (err) {
       console.error("Unable to add User:", JSON.stringify(err, null, 2));
+      res.status(500).send();
+      return;
     }
     else {
-      console.log("PUTITEM succeed:", data)
+      console.log("PUT ANSWER SUCCEEDED:", data)
     }
   });
 
