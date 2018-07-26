@@ -30,6 +30,10 @@ class QuestionModal extends React.Component {
         console.log(res.data);
       })
   };
+
+  setTitle = (event) => {
+    this.setState(this.state.title, event.target.value)
+  }
   
   render() {
     console.log(this.props);
@@ -37,10 +41,10 @@ class QuestionModal extends React.Component {
         <Modal open={this.props.open} onClickOverlay={this.props.close}>
           <Modal.Header onClose={this.props.close}>
             Title
-            <TextArea resize="horizontal" onChange={(event) => this.state.title = event.target.value}/>
+            <TextArea resize="horizontal" onChange={this.setTitle(event)}/>
           </Modal.Header>
           <Modal.Body>
-            <TextEditor onChange={(content) => this.state.body = content.replace(/<\/?[^>]+(>|$)/g, "")}/>
+            <TextEditor onChange={(content) => this.setState({body: content.replace(/<\/?[^>]+(>|$)/g, "")})}/>
           </Modal.Body>
           <Modal.Footer>
             <Modal.FooterNotation>
