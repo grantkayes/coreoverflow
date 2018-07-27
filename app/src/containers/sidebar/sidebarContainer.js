@@ -4,12 +4,12 @@ import { bindActionCreators } from '../../../node_modules/redux';
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { toggleModal } from '../../modules/sidebar'
-import QuestionModal from '../questionmodal/questionmodal.js';
+import CoreModal from '../coremodal/coremodal';
 
 const SideBarContainer = props => (
   <div>
     <SideBar toggleModal={props.toggleModal} changePage={() => props.changePage()}/>
-    <QuestionModal open={props.isModalOpen} close={props.toggleModal}/>
+    <CoreModal open={props.isModalOpen} close={props.toggleModal}/>
   </div>
 )
 
