@@ -6,7 +6,8 @@ import {
   GET_QUESTIONS_FAILED,
   GET_MY_QUESTIONS_REQUESTED,
   GET_MY_QUESTIONS_SUCCEEDED,
-  GET_MY_QUESTIONS_FAILED
+  GET_MY_QUESTIONS_FAILED,
+  GET_SEARCH_RESULTS
 } from '../reducers/questions';
 
 //TODO: Remove hard coded userId
@@ -57,7 +58,16 @@ const getMyQuestions = () => {
   }
 }
 
-export { getQuestions, getMyQuestions };
+const getSearchResults = (searchTerm) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: GET_SEARCH_RESULTS,
+      payload: searchTerm
+    });
+  };
+}
+
+export { getQuestions, getMyQuestions, getSearchResults };
 
 
 

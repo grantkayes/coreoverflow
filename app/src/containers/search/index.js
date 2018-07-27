@@ -2,34 +2,33 @@ import React from 'react'
 import Dashboard from '../dashboard'
 import { bindActionCreators } from '../../../node_modules/redux'
 import { connect } from 'react-redux'
-import { getQuestions } from '../../modules/actions/questions'
+import { getMyQuestions } from '../../modules/actions/questions'
 
-class MostRecent extends React.Component {
+class SearchResults extends React.Component {
   componentWillMount() {
-    this.props.getQuestions()
+    // this.props.getMyQuestions()
   }
 
   render() {
     return (
       <div>
-        <Dashboard title={"Most Recent Questions"} questionData={this.props.data}/>
+        <Dashboard title={"Search Results:"} questionData={this.props.data}/>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({question}) => {
+const mapStateToProps = ({ question }) => {
   return {
     data: question.data,
-    busy: question.busy,
-    error: question.error
+    searchData: question.searchData
   }
 }
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getQuestions
+      getMyQuestions
     },
     dispatch
   )
@@ -37,5 +36,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps, 
   mapDispatchToProps
-)(MostRecent)
-
+)(SearchResults)

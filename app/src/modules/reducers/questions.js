@@ -4,9 +4,11 @@ export const GET_QUESTIONS_FAILED = 'GET_QUESTIONS_FAILED';
 export const GET_MY_QUESTIONS_REQUESTED = 'GET_MY_QUESTIONS_REQUESTED';
 export const GET_MY_QUESTIONS_SUCCEEDED = 'GET_MY_QUESTIONS_SUCEEDED';
 export const GET_MY_QUESTIONS_FAILED = 'GET_MY_QUESTIONS_FAILED';
+export const GET_SEARCH_RESULTS = 'GET_SEARCH_RESULTS';
 
 const initialState = {
   data: [],
+  searchData: [],
   busy: false,
   error: null
 };
@@ -38,7 +40,7 @@ export default (state = initialState, action) => {
         error: action.error
       };
       
-      case GET_MY_QUESTIONS_REQUESTED:
+    case GET_MY_QUESTIONS_REQUESTED:
       console.log('getting MY questions requested...');
       return {
         ...state,
@@ -62,6 +64,18 @@ export default (state = initialState, action) => {
         busy: false,
         error: action.error
       };
+
+    case GET_SEARCH_RESULTS:
+      console.log('getting search results');
+
+      // Traverse data matching searchterm
+      console.log(this.state)
+
+      return {
+        ...state,
+        busy: false,
+        error: action.error
+      }
 
     default:
       return state;

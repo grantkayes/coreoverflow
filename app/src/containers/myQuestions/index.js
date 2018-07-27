@@ -1,6 +1,6 @@
 import React from 'react'
 import Dashboard from '../dashboard'
-import { bindActionCreators } from '../../../node_modules/redux';
+import { bindActionCreators } from '../../../node_modules/redux'
 import { connect } from 'react-redux'
 import { getMyQuestions } from '../../modules/actions/questions'
 

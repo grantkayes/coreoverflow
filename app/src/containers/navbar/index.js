@@ -3,7 +3,9 @@ import Notifications from './notifications';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
 import { withRouter } from 'react-router';
-import axios from 'axios'
+import { bindActionCreators } from '../../../node_modules/redux'
+import { connect } from 'react-redux'
+import { getSearchResults } from '../../modules/actions/questions'
 
 import './index.css';
 
@@ -29,25 +31,12 @@ class NavBar extends React.Component {
   };
 
   onChange = event => {
-    this.setState({
-      input: event.target.value
-    });
+    this.setState({ input: event.target.value });
   };
 
-  handleSearch = () => {
+  handleSearch = (props) => {
     console.log("Inside handle search ", this.state.input);
-
-    axios.get('http://localhost:5000/questions/search', {
-      params: {
-        searchTerm: this.state.input
-      }
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    this.props.getSearchResults(this.state.input)
   };
 
   toggleNotifications = () => {
@@ -107,4 +96,15 @@ class NavBar extends React.Component {
   }
 }
 
-export default withRouter(NavBar);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getSearchResults
+    },
+    dispatch
+  )
+
+export default connect(
+  mapDispatchToProps
+)(withRouter(NavBar))
+

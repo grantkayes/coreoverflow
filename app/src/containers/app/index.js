@@ -5,6 +5,7 @@ import SideBarContainer from '../sidebar/sidebarContainer';
 import MyQuestions from '../myQuestions';
 import Question from '../question';
 import MostRecent from '../mostRecent';
+import SearchResults from '../search'
 import '@procore/core-css';
 import '@procore/core-icons';
 
@@ -19,6 +20,7 @@ const App = () => (
           <Route exact path="/" component={MostRecent} />
           <Route exact path="/my-questions" component={MyQuestions} />
           <Route exact path="/question/:id" component={Question} />
+          <Route exact path="/search-results" component={SearchResults} />
         </main>
       </div>
       <div id="right" className="column">
