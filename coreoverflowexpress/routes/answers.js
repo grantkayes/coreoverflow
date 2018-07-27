@@ -64,9 +64,9 @@ router.post('/', function(req, res, next) {
     return;
   }
   if (
-    req.body.userId === undefined ||
-    req.body.userId === null ||
-    req.body.userId.trim() === ''
+    req.body.userEmail === undefined ||
+    req.body.userEmail === null ||
+    req.body.userEmail.trim() === ''
   ) {
     res.status(400).send();
     return;
@@ -79,7 +79,7 @@ router.post('/', function(req, res, next) {
 
   const fields = {
     questionId: req.body.questionId.trim(),
-    userEmail: req.body.userId.trim(),
+    userEmail: req.body.userEmail.trim(),
     up: 0,
     down: 0,
     body: req.body.body,
