@@ -20,10 +20,10 @@ export default (state = initialState, action) => {
 
     case GET_ANSWERS_SUCCEEDED:
       console.log('get answers succeeded');
-
+      console.log(action.payload);
       return {
         ...state,
-        data: action.payload.response.data,
+        data: action.payload.data,
         busy: false,
         error: null
       };
@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         busy: false,
-        error: action.payload.error
+        error: action.error
       };
 
     default:

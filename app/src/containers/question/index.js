@@ -14,9 +14,9 @@ class DetailedQuestion extends React.Component {
   constructor(props) {
     super(props);
 
-    // const questionId = this.props.match.params.id;
+    const questionId = this.props.match.params.id;
 
-    // this.props.getAnswers(questionId);
+    this.props.getAnswers(questionId);
   }
 
   render() {

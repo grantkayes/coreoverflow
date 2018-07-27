@@ -15,34 +15,21 @@ import './index.css';
 
 class Answer extends React.Component {
   render() {
-    const input = `
-## Hello
-
-I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown!
-
-\`Hello\`
-
-
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-    <Markdown source="# Your markdown here" />,
-    document.getElementById('content')
-);
-\`\`\`
-`;
+    const { body, id, questionId, timestamp, up, down } = this.props;
 
     return (
-      <Flex id="answer-container" justifyContent="center" alignItems="center">
+      <Flex
+        id="answer-container"
+        justifyContent="flex-start"
+        alignItems="center"
+      >
         <Flex className="answer-card-left">
-          <Voting votes={13} />
+          <Voting votes={up - down} />
         </Flex>
         <Flex className="answer-card-right" direction="column">
           <Flex className="info-container">
             <Header className="record-info record-info-answer" type="h3">
-              Answered by Sonia Xu on July 22, 2018
+              Answered by Sonia Xu on {timestamp}
             </Header>
 
             <Flex className="actions-container" justifyContent="flex-end">
@@ -62,7 +49,7 @@ React.render(
             </Flex>
           </Flex>
 
-          <Markdown className="question-markdown" text={input} />
+          <Markdown className="question-markdown" text={body} />
         </Flex>
       </Flex>
     );

@@ -136,6 +136,7 @@ router.get('/', function(req, res, next) {
       return;
     }
     console.log(data);
+    console.log('success');
     res.status(200).json({
       data: data.Items
     });

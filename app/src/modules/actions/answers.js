@@ -6,7 +6,7 @@ import {
 } from '../reducers/answers';
 
 const retrieveAnswers = questionId => {
-  return axios.get(`localhost:5000/answers/?questionId=${questionId}`);
+  return axios.get(`http://localhost:5000/answers/?questionId=${questionId}`);
 };
 
 const getAnswers = questionId => {
@@ -19,7 +19,7 @@ const getAnswers = questionId => {
       .then(response =>
         dispatch({
           type: GET_ANSWERS_SUCCEEDED,
-          payload: response
+          payload: response.data
         })
       )
       .catch(err =>
