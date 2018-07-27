@@ -38,7 +38,6 @@ function createGetQuestionsParams(query) {
 
 //Get all questions
 router.get('/', function(req, res, next){
-  console.log('1')
   var params = {
     TableName: "Question",
     ProjectionExpression: "#id, #questionTitle, #up, #body, #down, #user, #userId, #timestamp, #answerCount",
@@ -68,14 +67,12 @@ router.get('/', function(req, res, next){
 
 // Get all questions matching searchTerm
 router.get('/search', function(req, res, next){
-  console.log('3')
   console.log(req.query.searchTerm)
 
 })
 
 // Get all questions for a specific userId
 router.get('/:userId', function(req, res, next){
-  console.log('2')
   let params = createGetQuestionsParams({ userId: req.params.userId})
   
   docClient.scan(params, function(err, data) {
@@ -87,8 +84,5 @@ router.get('/:userId', function(req, res, next){
     }
   })
 })
-
-
-
 
 module.exports = router;

@@ -1,35 +1,40 @@
 import React from 'react'
 import Dashboard from '../dashboard'
-import axios from 'axios'
-
-//TODO: Remove hard coded userId
-const USER_ID = 2
+import { bindActionCreators } from '../../../node_modules/redux';
+import { connect } from 'react-redux'
+import { getMyQuestions } from '../../modules/actions/questions'
 
 class MyQuestions extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      questionData: [],
-      title: ''
-    }
-  }
-
-  componentDidMount() {
-    // Get all my questions associated with my userId
-    axios.get(`http://localhost:5000/questions/${USER_ID}`)
-    .then( response => {
-      this.setState({ questionData: response.data });
-    })
-    .catch( error => {
-      console.log(error);
-    })
+  componentWillMount() {
+    this.props.getMyQuestions()
   }
 
   render() {
     return (
-      <Dashboard title={this.state.title} questionData={this.state.questionData}/>
+      <div>
+        <Dashboard title={"My Questions"} questionData={this.props.data}/>
+      </div>
     )
   }
 }
 
-export default MyQuestions
+const mapStateToProps = ({ question }) => {
+  return {
+    data: question.data,
+    busy: question.busy,
+    error: question.error
+  }
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getMyQuestions
+    },
+    dispatch
+  )
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(MyQuestions)
