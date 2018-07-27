@@ -3,6 +3,7 @@ import Notifications from './notifications';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
 import { withRouter } from 'react-router';
+import axios from 'axios'
 
 import './index.css';
 
@@ -17,7 +18,6 @@ class NavBar extends React.Component {
   }
 
   navigateDashboard = () => {
-    console.log(this.props);
     this.props.history.push('/');
   };
 
@@ -35,7 +35,19 @@ class NavBar extends React.Component {
   };
 
   handleSearch = () => {
-    console.log(this.state.input);
+    console.log("Inside handle search ", this.state.input);
+
+    axios.get('http://localhost:5000/questions/search', {
+      params: {
+        searchTerm: this.state.input
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
 
   toggleNotifications = () => {
