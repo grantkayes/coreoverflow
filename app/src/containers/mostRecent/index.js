@@ -1,10 +1,10 @@
-import React from 'react'
-import Dashboard from '../dashboard'
+import React from 'react';
+import Dashboard from '../dashboard';
 
 const MostRecent = props => (
   <div>
-    <Dashboard title={'Most Recent Questions'}/>
+    <Dashboard title={'Most Recent Questions'} />
   </div>
-)
+);
 
-export default MostRecent
+export default MostRecent;
