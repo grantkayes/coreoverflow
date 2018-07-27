@@ -1,6 +1,6 @@
 import React from 'react';
 import './dashboard.css';
-import QuestionCard from '../../components/questionCard/index';
+import QuestionCard from '../../components/questionCard';
 import moment from 'moment';
 import axios from 'axios';
 

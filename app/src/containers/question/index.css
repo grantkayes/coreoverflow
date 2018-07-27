@@ -4,11 +4,13 @@
   width: 100%;
 }
 
-#question-container {
+#card-container {
   /* border: 1px solid black; */
   width: 100%;
   padding: 25px 0px;
-  padding-right: 40px;
+  margin: 20px 0px;
+  padding: 0px 30px;
+  width: 100%;
 }
 
 #answer-list-container {
