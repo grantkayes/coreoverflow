@@ -34,4 +34,4 @@ class MostRecent extends React.Component {
   }
 }
 
-export default MostRecent
+export default MostRecent;

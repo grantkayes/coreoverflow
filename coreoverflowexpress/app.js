@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var AWS = require('aws-sdk');
-var cors = require('cors')
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,18 +12,18 @@ var answersRouter = require('./routes/answers');
 var questionRouter = require('./routes/questions');
 
 var app = express();
-app.use(cors())
+app.use(cors());
 
 AWS.config.update({
-  region: "eu-west-2",
-  endpoint: "http://localhost:8000",
+  region: 'eu-west-2',
+  endpoint: 'http://localhost:8000',
   accessKeyId: 'myfakeaccessid',
   secretAccessKey: 'secret'
 });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
