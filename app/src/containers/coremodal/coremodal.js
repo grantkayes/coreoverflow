@@ -1,13 +1,14 @@
 import React from 'react'
-import { push } from 'connected-react-router'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import { Modal, Button, Header } from '@procore/core-react'
 import { TextArea } from '@procore/core-react'
-import Markdown from '../../components/markdown'
 import { Tabs } from '@procore/core-react'
+import Markdown from '../../components/markdown'
+import Dropzone from 'react-dropzone'
 import axios from 'axios'
 import './coremodal.css';
+// import { push } from 'connected-react-router'
+// import { bindActionCreators } from 'redux'
+// import { connect } from 'react-redux'
 
 class CoreModal extends React.Component {
 
@@ -35,6 +36,16 @@ class CoreModal extends React.Component {
         console.log(res.data);
       })
   };
+
+  onDrop = (acceptedFiles, rejectedFiles) => {
+    console.log('WHOO we did it reddit!');
+
+    axios.post('http://localhost:5000/upload', { acceptedFiles })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  }
 
   setTitle = (event) => {
     this.setState({ title: event.target.value })
@@ -74,9 +85,7 @@ class CoreModal extends React.Component {
           
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="tertiary">
-              Add Image(s)
-            </Button>
+            <Dropzone onDrop={this.onDrop}>Put stuff here </Dropzone>
             <Modal.FooterButtons>
               <Button variant="tertiary" onClick={this.props.close}>
                 Cancel
