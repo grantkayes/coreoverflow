@@ -3,6 +3,8 @@ import Notifications from './notifications';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
 import { withRouter } from 'react-router';
+import onClickOutside from 'react-onclickoutside';
+import AuthLock from '../../components/auth/authLock';
 
 import './index.css';
 
@@ -17,7 +19,6 @@ class NavBar extends React.Component {
   }
 
   navigateDashboard = () => {
-    console.log(this.props);
     this.props.history.push('/');
   };
 
@@ -26,6 +27,10 @@ class NavBar extends React.Component {
       isNotificationsOpen: false,
       isProfileOpen: false
     });
+  };
+
+  handleClickOutside = evt => {
+    this.closeDropdowns()
   };
 
   onChange = event => {
@@ -39,23 +44,18 @@ class NavBar extends React.Component {
   };
 
   toggleNotifications = () => {
-    console.log('notifications toggle');
-    if (!this.state.isNotificationsOpen) {
-      this.setState({
-        isNotificationsOpen: !this.state.isNotificationsOpen,
-        isProfileOpen: false
-      });
-    }
+    this.setState({
+      isNotificationsOpen: !this.state.isNotificationsOpen,
+      isProfileOpen: false
+    });
   };
 
   toggleProfile = () => {
     console.log('profile toggle');
-    if (!this.state.isProfileOpen) {
       this.setState({
         isProfileOpen: !this.state.isProfileOpen,
         isNotificationsOpen: false
       });
-    }
   };
 
   render() {
@@ -86,6 +86,7 @@ class NavBar extends React.Component {
             <Profile
               handleClickOutside={this.closeDropdowns}
               toggleProfile={this.toggleProfile}
+              navigateDashboard={this.navigateDashboard}
               open={this.state.isProfileOpen}
             />
           </Flex>
@@ -95,4 +96,4 @@ class NavBar extends React.Component {
   }
 }
 
-export default withRouter(NavBar);
+export default withRouter(onClickOutside(NavBar));
