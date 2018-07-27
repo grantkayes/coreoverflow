@@ -1,11 +1,20 @@
 import React from 'react';
 import { Flex, Icon } from '@procore/core-react';
-import onClickOutside from 'react-onclickoutside';
+import { push } from 'connected-react-router'
+
+const clearSession = () => {
+  localStorage.removeItem('access_token')
+  localStorage.removeItem('id_token')
+  localStorage.removeItem('expires_at')
+}
+
 
 class Profile extends React.Component {
-  handleClickOutside = evt => {
-    this.props.handleClickOutside();
-  };
+
+  handleLogout = () => {
+    clearSession()
+    window.location.pathname = '/'
+  }
 
   render() {
     return (
@@ -27,8 +36,8 @@ class Profile extends React.Component {
             <Flex className="notification" alignItems="center">
               My Questions
             </Flex>
-            <Flex className="notification" alignItems="center">
-              Post a Question
+            <Flex className="notification" alignItems="center" onClick={this.handleLogout}>
+              Log out
             </Flex>
           </Flex>
         )}
@@ -37,4 +46,4 @@ class Profile extends React.Component {
   }
 }
 
-export default onClickOutside(Profile);
+export default Profile;

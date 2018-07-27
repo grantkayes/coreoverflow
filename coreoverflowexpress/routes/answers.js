@@ -79,7 +79,7 @@ router.post('/', function(req, res, next) {
 
   const fields = {
     questionId: req.body.questionId.trim(),
-    userId: req.body.userId.trim(),
+    userEmail: req.body.userId.trim(),
     up: 0,
     down: 0,
     body: req.body.body,
