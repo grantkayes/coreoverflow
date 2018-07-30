@@ -12,6 +12,30 @@ AWS.config.update({
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
+function createGetQuestionsParams(query) {
+  if (Object.keys(query).length === 0) {
+    return {};
+  }
+
+  const ExpressionAttributeNames = {};
+  const ExpressionAttributeValues = {};
+  const FilterExpression = [];
+  const TableName = 'Question';
+  
+  for (key in query) {
+    ExpressionAttributeNames['#' + key] = key;
+    ExpressionAttributeValues[':' + key] = query[key];
+    FilterExpression.push('#' + key + " = " + ':' + key);
+  }
+
+  return {
+    TableName,
+    ExpressionAttributeNames,
+    ExpressionAttributeValues,
+    FilterExpression: FilterExpression.join(' AND '),
+  }
+}
+
 //Get all questions
 router.get('/', function(req, res, next){
   var params = {
@@ -30,21 +54,35 @@ router.get('/', function(req, res, next){
     }
   }
 
-  docClient.scan(params, onScan);
-
-  function onScan(err, data) {
+  docClient.scan(params, function(err, data) {
     if (err) {
       console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
     } else {
       console.log("Scan succeeded.");
-      // data.Items.forEach(function(question) {
-      //   console.log(question.id, question.title, question.body)
-      // });
-
       //TODO: Sort data by time stamp before returning
       res.status(200).send(data)
     }
-  }
+  })
+})
+
+// Get all questions matching searchTerm
+router.get('/search', function(req, res, next){
+  console.log(req.query.searchTerm)
+
+})
+
+// Get all questions for a specific userId
+router.get('/:userId', function(req, res, next){
+  let params = createGetQuestionsParams({ userId: req.params.userId})
+  
+  docClient.scan(params, function(err, data) {
+    if (err) {
+      console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+    } else {
+      console.log("Query succeeded.");
+      res.status(200).send(data.Items)
+    }
+  })
 })
 
 module.exports = router;

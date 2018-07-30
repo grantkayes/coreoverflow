@@ -1,6 +1,5 @@
 import React from 'react';
-import { Flex, Icon } from '@procore/core-react';
-import { push } from 'connected-react-router'
+import { Flex, Icon } from '@procore/core-react'
 
 const clearSession = () => {
   localStorage.removeItem('access_token')
