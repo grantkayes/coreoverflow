@@ -11,8 +11,10 @@
   padding: 0;
 }
 
-.pagination {
-  display: flex; 
-  justify-content: flex-end;
-  margin-right: 5px;
+.placeholder {
+  height: 100px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

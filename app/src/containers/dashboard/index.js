@@ -1,11 +1,11 @@
 import React from 'react'
 import './dashboard.css'
 import QuestionCard from '../../components/questionCard/index'
+import Placeholder from './placeholder';
 import moment from 'moment'
-import { Pagination } from '@procore/core-react'
+import LazyLoad from 'react-lazyload';
 
 const Dashboard = props => {
-
   const allQuestions = props.questionData.map((question) => {
     const exampleQuestion = {
       title: question.questionTitle,
@@ -17,7 +17,12 @@ const Dashboard = props => {
       userId: question.userId,
       answerCount: question.answerCount
     }
-    return <QuestionCard key={question.id} question={exampleQuestion} />
+
+    return (
+      <LazyLoad key={question.id} height={150} throttle={350} offset={[0, -200]} placeholder={<Placeholder />} >
+        <QuestionCard key={question.id} question={exampleQuestion} />
+      </LazyLoad > 
+    )
   })
 
   return (
@@ -25,15 +30,6 @@ const Dashboard = props => {
       <h1 id='dashboard-header'>{props.title}</h1>
       <div className='questions-wrapper'>
         { allQuestions }
-        <div className='pagination'>
-          <Pagination>
-            <Pagination.Prev />
-            <Pagination.Page >1</Pagination.Page>
-            <Pagination.Page>2</Pagination.Page>
-            <Pagination.Page variant="selected">3</Pagination.Page>
-            <Pagination.Next variant="disabled" />
-          </Pagination>
-        </div>
       </div>
     </div>
   );
