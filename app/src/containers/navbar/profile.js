@@ -1,6 +1,5 @@
 import React from 'react';
-import { Flex, Icon } from '@procore/core-react';
-import { push } from 'connected-react-router'
+import { Flex, Icon } from '@procore/core-react'
 
 const clearSession = () => {
   localStorage.removeItem('access_token')
@@ -12,8 +11,9 @@ const clearSession = () => {
 class Profile extends React.Component {
 
   handleLogout = () => {
-    clearSession()
-    window.location.pathname = '/'
+    clearSession();
+    this.props.handleLogout();
+    window.location.pathname = '/';
   }
 
   render() {

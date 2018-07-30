@@ -1,6 +1,5 @@
 import React from 'react';
 import { Flex, Header } from '@procore/core-react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faReply,
@@ -15,7 +14,7 @@ import './index.css';
 
 class Answer extends React.Component {
   render() {
-    const { body, id, questionId, timestamp, up, down } = this.props;
+    const { body, timestamp, up, down } = this.props;
 
     return (
       <Flex
