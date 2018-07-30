@@ -16,7 +16,7 @@ const QuestionCard = props => {
   } = props.question;
 
   let bodyText = body;
-  if (body.length > 250) {
+  if (body && body.length > 250) {
     bodyText = body.substring(0, 250) + '...';
   }
 

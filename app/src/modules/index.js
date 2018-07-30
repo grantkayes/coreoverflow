@@ -9,6 +9,6 @@ export default combineReducers({
   counter,
   sidebar,
   answers,
-  user
+  user,
   question,
 });

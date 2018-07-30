@@ -11,8 +11,9 @@ const clearSession = () => {
 class Profile extends React.Component {
 
   handleLogout = () => {
-    clearSession()
-    window.location.pathname = '/'
+    clearSession();
+    this.props.handleLogout();
+    window.location.pathname = '/';
   }
 
   render() {
