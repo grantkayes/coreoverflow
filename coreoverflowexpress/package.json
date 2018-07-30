@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "create-db": "cd db_scripts && node createTables.js && cd ..",
-    "delete-db": "cd db_scripts && node deleteTables.js && cd .."
+    "delete-db": "cd db_scripts && node deleteTables.js && cd ..",
+    "seed-data": "cd db_scripts && node seedDb.js && cd .."
   },
   "dependencies": {
     "aws-sdk": "^2.279.1",
@@ -22,6 +23,8 @@
     "multer": "^1.3.1",
     "multer-s3": "^2.7.0",
     "nodemon": "^1.18.3",
+    "random-paragraph": "^1.0.4",
+    "random-sentence": "^1.0.4",
     "uuid": "^3.3.2"
   }
 }
