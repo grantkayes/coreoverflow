@@ -67,14 +67,21 @@ export default (state = initialState, action) => {
 
     case GET_SEARCH_RESULTS:
       console.log('getting search results');
+      let searchterm = action.payload.toLowerCase();
 
       // Traverse data matching searchterm
-      console.log(this.state)
+      const filtered = state.data.filter(question => {
+        let questionTitle = question.questionTitle.toLowerCase();
+        let questionBody = question.body.toLowerCase();
+
+        return (questionTitle.includes(searchterm) || questionBody.includes(searchterm)) 
+      })
 
       return {
         ...state,
         busy: false,
-        error: action.error
+        error: action.error,
+        searchData: filtered
       }
 
     default:

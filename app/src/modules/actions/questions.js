@@ -67,8 +67,8 @@ const getSearchResults = (searchTerm) => {
   };
 }
 
-export { getQuestions, getMyQuestions, getSearchResults };
-
-
-
-
+export { 
+  getQuestions, 
+  getMyQuestions, 
+  getSearchResults 
+};

@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { bindActionCreators } from '../../../node_modules/redux'
 import { connect } from 'react-redux'
 import { getSearchResults } from '../../modules/actions/questions'
+import { push } from 'connected-react-router'
 
 import './index.css';
 
@@ -35,8 +36,8 @@ class NavBar extends React.Component {
   };
 
   handleSearch = (props) => {
-    console.log("Inside handle search ", this.state.input);
     this.props.getSearchResults(this.state.input)
+    this.props.changePage()
   };
 
   toggleNotifications = () => {
@@ -99,12 +100,14 @@ class NavBar extends React.Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getSearchResults
+      getSearchResults,
+      changePage: () => push('/search-results')
     },
     dispatch
   )
 
 export default connect(
+  null, 
   mapDispatchToProps
 )(withRouter(NavBar))
 
