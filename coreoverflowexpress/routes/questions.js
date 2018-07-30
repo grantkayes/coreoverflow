@@ -79,6 +79,7 @@ router.get('/', function(req, res, next){
     } else {
       console.log("Scan succeeded.");
       //TODO: Sort data by time stamp before returning
+      console.log('HELLO', data)
       res.status(200).send(data)
     }
   })
@@ -117,9 +118,7 @@ router.post('/', function(req, res, next){
     answerCount: 0,
     user: req.body.user
   };
-  console.log('FUCK u', fields)
   const params = createUpdateAnswersParams(uuidv4(), fields);
-  console.log('FuCK dynamo', params)
   docClient.update(params, function(err, data) {
     if (err) {
         console.log("no");

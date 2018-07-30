@@ -17,11 +17,13 @@ const getQuestions = () => {
     });
 
     axios.get('http://localhost:5000/questions/')
-    .then(response =>
-      dispatch({
+    .then(response => {
+      console.log('res', response)
+      return dispatch({
         type: GET_QUESTIONS_SUCCEEDED,
         payload: response
       })
+    }
     )
     .catch(err =>
       dispatch({
