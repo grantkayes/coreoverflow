@@ -105,8 +105,8 @@ router.get('/:userEmail', function(req, res, next){
 })
 
 router.post('/', function(req, res, next){
-  console.log('hehexd', req.body);
   console.log(req.body.userEmail);
+  console.log(req.body.title);
   const fields = {
     userEmail: req.body.userEmail,
     title: req.body.title,
