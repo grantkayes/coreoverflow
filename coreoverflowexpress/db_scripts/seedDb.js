@@ -4,7 +4,9 @@ var seedData = require('../seed_data');
 
 AWS.config.update({
     region: "eu-west-2",
-    endpoint: "http://localhost:8000"
+    endpoint: "http://localhost:8000",
+    accessKeyId: 'myfakeaccessid',
+    secretAccessKey: 'secret'
 });
 var docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -17,10 +19,10 @@ seedData.forEach(function(table) {
       TableName: table.name,
       Item: dataPoint
     };
-  docClient.put(params, function(err, data) {
-         if (err) {
-             console.error("Unable to add data to", table.name, "table. Error JSON:", JSON.stringify(err, null, 2));
-         } else {
+    docClient.put(params, function(err, data) {
+      if (err) {
+        console.error("Unable to add data to", table.name, "table. Error JSON:", JSON.stringify(err, null, 2));
+      } else {
              console.log("PutItem succeeded:", dataPoint);
          }
       });
