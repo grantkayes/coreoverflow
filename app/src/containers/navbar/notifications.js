@@ -1,12 +1,9 @@
 import React from 'react';
 import { Flex, Icon } from '@procore/core-react';
+
 import './index.css';
-import onClickOutside from 'react-onclickoutside';
 
 class Notifications extends React.Component {
-  handleClickOutside = evt => {
-    this.props.handleClickOutside();
-  };
 
   render() {
     return (
@@ -38,4 +35,4 @@ class Notifications extends React.Component {
   }
 }
 
-export default onClickOutside(Notifications);
+export default Notifications;

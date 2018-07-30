@@ -7,6 +7,7 @@ import { bindActionCreators } from '../../../node_modules/redux'
 import { connect } from 'react-redux'
 import { getSearchResults } from '../../modules/actions/questions'
 import { push } from 'connected-react-router'
+import onClickOutside from 'react-onclickoutside';
 
 import './index.css';
 
@@ -31,6 +32,10 @@ class NavBar extends React.Component {
     });
   };
 
+  handleClickOutside = evt => {
+    this.closeDropdowns()
+  };
+
   onChange = event => {
     this.setState({ input: event.target.value });
   };
@@ -41,23 +46,18 @@ class NavBar extends React.Component {
   };
 
   toggleNotifications = () => {
-    console.log('notifications toggle');
-    if (!this.state.isNotificationsOpen) {
-      this.setState({
-        isNotificationsOpen: !this.state.isNotificationsOpen,
-        isProfileOpen: false
-      });
-    }
+    this.setState({
+      isNotificationsOpen: !this.state.isNotificationsOpen,
+      isProfileOpen: false
+    });
   };
 
   toggleProfile = () => {
     console.log('profile toggle');
-    if (!this.state.isProfileOpen) {
       this.setState({
         isProfileOpen: !this.state.isProfileOpen,
         isNotificationsOpen: false
       });
-    }
   };
 
   render() {
@@ -88,6 +88,7 @@ class NavBar extends React.Component {
             <Profile
               handleClickOutside={this.closeDropdowns}
               toggleProfile={this.toggleProfile}
+              navigateDashboard={this.navigateDashboard}
               open={this.state.isProfileOpen}
             />
           </Flex>
@@ -109,5 +110,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   null, 
   mapDispatchToProps
-)(withRouter(NavBar))
-
+)(withRouter(onClickOutside(NavBar)))

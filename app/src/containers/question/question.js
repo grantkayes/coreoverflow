@@ -1,7 +1,6 @@
 import React from 'react';
-import { Flex, Header, Card } from '@procore/core-react';
+import { Flex, Header } from '@procore/core-react';
 
-import AnswerList from './answerList';
 import Markdown from '../../components/markdown';
 import Voting from '../../components/voting';
 
@@ -92,58 +91,57 @@ React.render(
 `;
 
     return (
-      <Card id="question-container" className="card" level="30">
-        <Flex direction="row" alignItems="center" justifyContent="center">
-          <Flex
-            className="question-votes"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Voting
-              votes={this.state.votes}
-              onUpvote={this.onUpvote}
-              onDownvote={this.onDownvote}
-              upvoted={this.state.upvoted}
-              downvoted={this.state.downvoted}
-            />
-          </Flex>
-          <Flex
-            justifyContent="center"
-            className="question-info"
-            direction="column"
-          >
-            <Header className="question-title" type="h3">
-              What are Procore's Values?
-            </Header>
-            <Markdown className="question-markdown" text={input} />
-            <Flex className="info-container" justifyContent="space-between">
-              <Flex
-                className="actions-container"
-                justify-content="space-around"
-              >
-                <Header className="actions" type="h3">
-                  <FontAwesomeIcon className="answer" icon={faComments} />
-                  Answer
-                </Header>
+      <Flex
+        id="question-container"
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Flex
+          className="question-votes"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Voting
+            votes={this.state.votes}
+            onUpvote={this.onUpvote}
+            onDownvote={this.onDownvote}
+            upvoted={this.state.upvoted}
+            downvoted={this.state.downvoted}
+          />
+        </Flex>
+        <Flex
+          justifyContent="center"
+          className="question-info"
+          direction="column"
+        >
+          <Header className="question-title" type="h3">
+            What are Procore's Values?
+          </Header>
+          <Markdown className="question-markdown" text={input} />
+          <Flex className="info-container" justifyContent="space-between">
+            <Flex className="actions-container" justify-content="space-around">
+              <Header className="actions" type="h3">
+                <FontAwesomeIcon className="answer" icon={faComments} />
+                Answer
+              </Header>
 
-                <Header className="actions" type="h3">
-                  <FontAwesomeIcon className="edit" icon={faStickyNote} />
-                  Edit
-                </Header>
-                <Header className="actions" type="h3">
-                  <FontAwesomeIcon className="edit" icon={faTrash} />
-                  Delete
-                </Header>
-              </Flex>
-
-              <Header className="record-info" type="h3">
-                Asked by Elton Xue on July 22, 2018
+              <Header className="actions" type="h3">
+                <FontAwesomeIcon className="edit" icon={faStickyNote} />
+                Edit
+              </Header>
+              <Header className="actions" type="h3">
+                <FontAwesomeIcon className="edit" icon={faTrash} />
+                Delete
               </Header>
             </Flex>
+
+            <Header className="record-info" type="h3">
+              Asked by Elton Xue on July 22, 2018
+            </Header>
           </Flex>
         </Flex>
-        <AnswerList />
-      </Card>
+      </Flex>
     );
   }
 }

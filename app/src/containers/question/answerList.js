@@ -5,6 +5,23 @@ import './index.css';
 
 class AnswerList extends React.Component {
   render() {
+    const Answers = this.props.answers.map(answer => {
+      const { body, id, questionId, timestamp, up, down } = answer;
+
+      return (
+        <Answer
+          body={body}
+          id={id}
+          questionId={questionId}
+          timestamp={timestamp}
+          up={up}
+          down={down}
+        />
+      );
+    });
+
+    console.log(Answers);
+
     return (
       <Flex
         id="answer-list-container"
@@ -14,13 +31,7 @@ class AnswerList extends React.Component {
         <Header className="answer-list-title" type="h1">
           7 Answers
         </Header>
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
+        {Answers}
       </Flex>
     );
   }
