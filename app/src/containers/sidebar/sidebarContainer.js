@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { toggleModal } from '../../modules/sidebar.js';
+import CoreModal from '../coremodal/coremodal'
 
 const SideBarContainer = props => (
   <div>

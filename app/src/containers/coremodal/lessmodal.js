@@ -10,7 +10,7 @@ import './coremodal.css';
 // import { bindActionCreators } from 'redux'
 // import { connect } from 'react-redux'
 
-class CoreModal extends React.Component {
+class LessModal extends React.Component {
 
   constructor(props) {
     super(props);
@@ -22,20 +22,20 @@ class CoreModal extends React.Component {
     }
   }
 
-  submitQuestion = event => {
-    event.preventDefault();
+//   submitQuestion = event => {
+//     event.preventDefault();
 
-    const Question = {
-      title: this.state.title,
-      body: this.state.body
-    };
+//     const Question = {
+//       title: this.state.title,
+//       body: this.state.body
+//     };
 
-    axios.post('http://localhost:5000/questions', { Question })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
-  };
+//     axios.post('http://localhost:5000/questions', { Question })
+//       .then(res => {
+//         console.log(res);
+//         console.log(res.data);
+//       })
+//   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
     console.log('WHOO we did it reddit!');
@@ -54,9 +54,9 @@ class CoreModal extends React.Component {
       })
   }
 
-  setTitle = (event) => {
-    this.setState({ title: event.target.value })
-  }
+//   setTitle = (event) => {
+//     this.setState({ title: event.target.value })
+//   }
 
   setBody = (event) => {
     this.setState({ body: event.target.value })
@@ -76,10 +76,6 @@ class CoreModal extends React.Component {
     return (
       <Modal class='modalBody' open={this.props.open} onClickOverlay={this.props.close}>
         <Modal.Header class='modalHeader' onClose={this.props.close}>
-          <div class='flex-container'>
-            <Header type='h1' class='flex-item1'>Question</Header>
-            <TextArea class='flex-item2' resize='none' onChange={this.setTitle} />
-          </div>
         </Modal.Header>
         <Modal.Body class='modalText'>
           <Tabs>
@@ -97,7 +93,8 @@ class CoreModal extends React.Component {
               <Button variant="tertiary" onClick={this.props.close}>
                 Cancel
                 </Button>
-              <Button variant="primary" onClick={this.submitQuestion}>
+                {/* need to replace the onCLick function here with appropriate one for answers */}
+              <Button variant="primary" > 
                 Submit
               </Button>
             </Modal.FooterButtons>
@@ -107,4 +104,4 @@ class CoreModal extends React.Component {
   }
 }
 
-export default CoreModal;
+export default LessModal;
