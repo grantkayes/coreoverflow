@@ -10,9 +10,6 @@ import {
   GET_SEARCH_RESULTS
 } from '../reducers/questions';
 
-//TODO: Remove hard coded userId
-const USER_ID = 2
-
 const getQuestions = () => {
   return (dispatch, getState) => {
     dispatch({
@@ -35,14 +32,14 @@ const getQuestions = () => {
   };
 };
 
-const getMyQuestions = () => {
+const getMyQuestions = (user) => {
   return (dispatch, getState) => {
     dispatch({
       type: GET_MY_QUESTIONS_REQUESTED
     });
 
     // Get all my questions associated with my userId
-    axios.get(`http://localhost:5000/questions/${USER_ID}`)
+    axios.get(`http://localhost:5000/questions/${user.email}`)
     .then( response => {
       dispatch({
         type: GET_MY_QUESTIONS_SUCCEEDED,
