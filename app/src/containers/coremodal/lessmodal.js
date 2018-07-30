@@ -22,23 +22,22 @@ class LessModal extends React.Component {
     }
   }
 
-//   submitQuestion = event => {
-//     event.preventDefault();
+  submitAnswer = event => {
+    event.preventDefault();
 
-//     const Question = {
-//       title: this.state.title,
-//       body: this.state.body
-//     };
+    const Answer = {
+      title: this.state.title,
+      body: this.state.body
+    };
 
-//     axios.post('http://localhost:5000/questions', { Question })
-//       .then(res => {
-//         console.log(res);
-//         console.log(res.data);
-//       })
-//   };
+    axios.post('http://localhost:5000/questions', { Answer })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
-    console.log('WHOO we did it reddit!');
     console.log(acceptedFiles[0]);
 
     let data = new FormData();
@@ -76,6 +75,7 @@ class LessModal extends React.Component {
     return (
       <Modal class='modalBody' open={this.props.open} onClickOverlay={this.props.close}>
         <Modal.Header class='modalHeader' onClose={this.props.close}>
+          <Header type="h1"> Answer </Header>
         </Modal.Header>
         <Modal.Body class='modalText'>
           <Tabs>
@@ -88,13 +88,14 @@ class LessModal extends React.Component {
           
         </Modal.Body>
         <Modal.Footer>
-            <Dropzone multiple={false} onDrop={this.onDrop}>Put stuff here </Dropzone>
+            <Dropzone multiple={false} onDrop={this.onDrop}>
+              <Header type="h1">Upload Image</Header>
+            </Dropzone>
             <Modal.FooterButtons>
               <Button variant="tertiary" onClick={this.props.close}>
                 Cancel
                 </Button>
-                {/* need to replace the onCLick function here with appropriate one for answers */}
-              <Button variant="primary" > 
+              <Button variant="primary" onClick={this.submitAnswer}> 
                 Submit
               </Button>
             </Modal.FooterButtons>

@@ -32,6 +32,7 @@ class CoreModal extends React.Component {
 
     axios.post('http://localhost:5000/questions', { Question })
       .then(res => {
+        console.log('response');
         console.log(res);
         console.log(res.data);
       })
@@ -51,6 +52,8 @@ class CoreModal extends React.Component {
       .then(res => {
         console.log(res);
         console.log(res.data);
+        const imageURL = res.data.success[0].location;
+        this.setState({body: `${this.state.body}\n![](${imageURL})`})
       })
   }
 
@@ -92,7 +95,9 @@ class CoreModal extends React.Component {
           
         </Modal.Body>
         <Modal.Footer>
-            <Dropzone multiple={false} onDrop={this.onDrop}>Put stuff here </Dropzone>
+            <Dropzone multiple={false} onDrop={this.onDrop}>
+              <Header type="h1">Upload Image</Header>
+            </Dropzone>
             <Modal.FooterButtons>
               <Button variant="tertiary" onClick={this.props.close}>
                 Cancel

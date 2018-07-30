@@ -3,6 +3,8 @@ import { Flex, Header, Card } from '@procore/core-react';
 
 import Markdown from '../../components/markdown';
 import Voting from '../../components/voting';
+import LessModal from '../coremodal/lessmodal'
+import AlertBanner from '../banner/banner';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,6 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import './index.css';
+import CoreModal from '../coremodal/coremodal';
 
 class DetailedQuestion extends React.Component {
   constructor(props) {
@@ -20,7 +23,9 @@ class DetailedQuestion extends React.Component {
     this.state = {
       upvoted: false,
       downvoted: false,
-      votes: 25
+      votes: 25,
+      isModalOpen: false,
+      isLessModalOpen: false
     };
   }
 
@@ -70,7 +75,18 @@ class DetailedQuestion extends React.Component {
     }
   };
 
+  toggleModal = () => {
+    this.setState({ isModalOpen: !this.state.isModalOpen })
+    console.log(this.state);
+  }
+
+  toggleLessModal = () => {
+    this.setState({ isLessModalOpen: !this.state.isLessModalOpen })
+    console.log(this.state);
+  }
+
   render() {
+    console.log(this.state);
     const input = `
 ## Hello
 
@@ -91,6 +107,8 @@ React.render(
 `;
 
     return (
+      
+
       <Flex
         id="question-container"
         direction="row"
@@ -121,15 +139,20 @@ React.render(
           <Markdown className="question-markdown" text={input} />
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container" justify-content="space-around">
-              <Header className="actions" type="h3">
+              <Header className="actions" type="h3" onClick={this.toggleLessModal}>
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
               </Header>
 
-              <Header className="actions" type="h3">
+              <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
+
+              <Header className="actions" type="h3" onClick={this.toggleModal}>
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
+
+              <CoreModal open={this.state.isModalOpen} close={this.toggleModal} />
+
               <Header className="actions" type="h3">
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
@@ -142,6 +165,8 @@ React.render(
           </Flex>
         </Flex>
       </Flex>
+
+      
     );
   }
 }
