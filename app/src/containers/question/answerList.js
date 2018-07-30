@@ -2,8 +2,13 @@ import React from 'react';
 import { Flex, Header } from '@procore/core-react';
 import Answer from './answer';
 import './index.css';
+import { EDIT_ANSWER_FAILED } from '../../modules/reducers/answers';
 
 class AnswerList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const Answers = this.props.answers.map(answer => {
       const { body, id, questionId, timestamp, up, down } = answer;
@@ -16,6 +21,7 @@ class AnswerList extends React.Component {
           timestamp={timestamp}
           up={up}
           down={down}
+          editAnswer={this.props.editAnswer}
         />
       );
     });
@@ -29,7 +35,7 @@ class AnswerList extends React.Component {
         direction="column"
       >
         <Header className="answer-list-title" type="h1">
-          7 Answers
+          {this.props.answers.length} Answers
         </Header>
         {Answers}
       </Flex>

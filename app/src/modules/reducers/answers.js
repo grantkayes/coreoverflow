@@ -1,6 +1,9 @@
 export const GET_ANSWERS_REQUESTED = 'GET_ANSWERS_REQUESTED';
 export const GET_ANSWERS_SUCCEEDED = 'GET_ANSWERS_SUCEEDED';
 export const GET_ANSWERS_FAILED = 'GET_ANSWERS_FAILED';
+export const EDIT_ANSWER_REQUESTED = 'EDIT_ANSWER_REQUESTED';
+export const EDIT_ANSWER_SUCCEEDED = 'EDIT_ANSWER_SUCCEEDED';
+export const EDIT_ANSWER_FAILED = 'EDIT_ANSWER_FAILED';
 
 const initialState = {
   data: [],
@@ -35,6 +38,18 @@ export default (state = initialState, action) => {
         busy: false,
         error: action.error
       };
+
+    case EDIT_ANSWER_REQUESTED:
+      console.log('edit answers requested');
+      return { ...state };
+
+    case EDIT_ANSWER_SUCCEEDED:
+      console.log('edit answers succeeded');
+      return { ...state };
+
+    case EDIT_ANSWER_FAILED:
+      console.log('edit answer failed');
+      return { ...state };
 
     default:
       return state;
