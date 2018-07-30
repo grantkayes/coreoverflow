@@ -85,4 +85,10 @@ router.get('/:userId', function(req, res, next){
   })
 })
 
+router.post('/', function(req, res, next){
+  console.log(req.body);
+  
+  res.send();
+})
+
 module.exports = router;

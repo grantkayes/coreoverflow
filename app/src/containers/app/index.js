@@ -39,6 +39,7 @@ const App = () => {
           <SideBarContainer />
         </div>
       </div>
+      
     </div>
   );
 }
