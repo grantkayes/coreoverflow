@@ -14,7 +14,7 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const initialState = {}
+// const initialState = {}
 const enhancers = []
 const middleware = [thunk, routerMiddleware(history)]
 

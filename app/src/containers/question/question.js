@@ -4,7 +4,6 @@ import { Flex, Header } from '@procore/core-react';
 import Markdown from '../../components/markdown';
 import Voting from '../../components/voting';
 import LessModal from '../coremodal/lessmodal'
-import AlertBanner from '../banner/banner';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
