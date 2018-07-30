@@ -4,7 +4,9 @@ var seedData = require('../seed_data');
 
 AWS.config.update({
     region: "eu-west-2",
-    endpoint: "http://localhost:8000"
+    endpoint: "http://localhost:8000",
+    accessKeyId: 'myfakeaccessid',
+    secretAccessKey: 'secret'
 });
 var docClient = new AWS.DynamoDB.DocumentClient();
 

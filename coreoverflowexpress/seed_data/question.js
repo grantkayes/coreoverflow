@@ -42,6 +42,7 @@ function createQuestions(num) {
 
   for (var x = 0; x < num - 1; x++) {
     var user = pickRandomUser(users);
+    console.log(user)
 
     questionData.push({
       "id": uuidv4(),
@@ -49,7 +50,7 @@ function createQuestions(num) {
       "questionTitle": randomSentence({min: 10, max: 25}),
       "up": 5,
       "down": 2,
-      "body": randomParagraph({min: 1, max: 20}),
+      "body": randomParagraph({min: 1, max: 2}),
       "user": user.name,
       "userEmail": user.email,
       "timestamp": "2018-07-27T14:21"

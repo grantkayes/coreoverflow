@@ -57,6 +57,7 @@ function createUpdateAnswersParams(id, query) {
 
 //Get all questions
 router.get('/', function(req, res, next){
+  console.log("im here in the routes");
   var params = {
     TableName: "Question",
     ProjectionExpression: "#id, #questionTitle, #up, #body, #down, #user, #userId, #timestamp, #answerCount",
@@ -110,7 +111,7 @@ router.post('/', function(req, res, next){
   console.log(req.body.title);
   const fields = {
     userEmail: req.body.userEmail,
-    title: req.body.title,
+    questionTitle: req.body.title,
     up: 0,
     down: 0,
     body: req.body.body,
