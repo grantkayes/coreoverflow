@@ -7,7 +7,7 @@ import { EmptyState } from '@procore/core-react'
 
 class MyQuestions extends React.Component {
   componentWillMount() {
-    this.props.getMyQuestions()
+    this.props.getMyQuestions(this.props.user)
   }
 
   render() {
@@ -27,10 +27,12 @@ class MyQuestions extends React.Component {
   }
 }
 
-const mapStateToProps = ({ question }) => {
+const mapStateToProps = ({question, user}) => {
+  console.log(user)
   return {
     data: question.data,
     busy: question.busy,
+    user: user.data,
     error: question.error
   }
 }
