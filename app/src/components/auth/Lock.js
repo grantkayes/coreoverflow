@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import AuthLock from './authLock';
+import { login } from '../../modules/actions/user';
 import { AUTH_CONFIG } from './auth0-variables';
 import './index.css'
 
@@ -21,6 +24,19 @@ class Lock extends Component {
       localStorage.setItem('id_token', authResult.idToken);
       localStorage.setItem('expires_at', expiresAt);
 
+      AuthLock.getUserInfo(authResult.accessToken, (err, profile) => {
+          if (err) {
+            return;
+          }
+
+          const user = {
+            email: profile.email,
+            firstName: profile.given_name,
+            lastName: profile.family_name,
+            accessToken: authResult.accessToken
+          }
+          this.props.login(user);
+      })
       this.setState({ loggedIn: true });
     });
   }
@@ -47,4 +63,12 @@ class Lock extends Component {
   }
 }
 
-export default Lock;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      login
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(Lock);
