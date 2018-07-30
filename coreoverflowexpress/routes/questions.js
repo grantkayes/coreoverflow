@@ -65,12 +65,6 @@ router.get('/', function(req, res, next){
   })
 })
 
-// Get all questions matching searchTerm
-router.get('/search', function(req, res, next){
-  console.log(req.query.searchTerm)
-
-})
-
 // Get all questions for a specific userId
 router.get('/:userEmail', function(req, res, next){
   let params = createGetQuestionsParams({ userEmail: req.params.userEmail})
@@ -90,5 +84,23 @@ router.post('/', function(req, res, next){
   
   res.send();
 })
+
+// To delete a specific question
+/*
+router.delete('/:questionId', function(req, res, next){
+  var params = {
+    TableName: "Question",
+    Key:{ "id": req.params.questionId }
+  };
+  
+  docClient.delete(params, function(err, data) {
+    if (err) {
+      console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+      console.log("DeleteItem succeeded:", JSON.stringify(data, null, 2));
+    }
+  });
+})
+*/
 
 module.exports = router;

@@ -7,7 +7,9 @@ import {
   GET_MY_QUESTIONS_REQUESTED,
   GET_MY_QUESTIONS_SUCCEEDED,
   GET_MY_QUESTIONS_FAILED,
-  GET_SEARCH_RESULTS
+  GET_SEARCH_RESULTS, 
+  DELETE_MY_QUESTION,
+  DELETE_MY_QUESTION_FAILED
 } from '../reducers/questions';
 
 const getQuestions = () => {
@@ -64,8 +66,31 @@ const getSearchResults = (searchTerm) => {
   };
 }
 
+const deleteMyQuestions = (questionId) => {
+  return (dispatch, getState) => {
+
+    axios.delete(`http://localhost:5000/questions/${questionId}`)
+    .then( response => {
+      console.log(response);
+      
+      dispatch({
+        type: DELETE_MY_QUESTION,
+        payload: response
+      })
+    })
+    .catch( err => {
+      console.log(err)
+      dispatch({
+        type: DELETE_MY_QUESTION_FAILED,
+        error: err
+      })
+    })
+  }
+}
+
 export { 
   getQuestions, 
   getMyQuestions, 
-  getSearchResults 
+  getSearchResults,
+  deleteMyQuestions 
 };
