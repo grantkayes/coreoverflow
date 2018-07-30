@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { bindActionCreators } from '../../../node_modules/redux'
 import { connect } from 'react-redux'
 import { getSearchResults } from '../../modules/actions/questions'
+import { logout } from '../../modules/actions/user'
 import { push } from 'connected-react-router'
 import onClickOutside from 'react-onclickoutside';
 
@@ -90,6 +91,7 @@ class NavBar extends React.Component {
               toggleProfile={this.toggleProfile}
               navigateDashboard={this.navigateDashboard}
               open={this.state.isProfileOpen}
+              handleLogout={this.props.logout}
             />
           </Flex>
         </ToolHeader.Section>
@@ -102,12 +104,13 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getSearchResults,
+      logout,
       changePage: () => push('/search-results')
     },
     dispatch
   )
 
 export default connect(
-  null, 
+  null,
   mapDispatchToProps
 )(withRouter(onClickOutside(NavBar)))
