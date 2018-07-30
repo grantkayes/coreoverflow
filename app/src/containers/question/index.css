@@ -9,7 +9,6 @@
   padding: 25px 0px;
   margin: 20px 0px;
   padding: 15px 30px;
-  width: 100%;
 }
 
 #answer-list-container {
@@ -42,6 +41,7 @@
   margin-bottom: 10px;
   padding-bottom: 25px;
   border: 1px solid lightgray;
+  width: 100%;
 }
 
 .question-votes {
@@ -50,6 +50,7 @@
 }
 
 .question-info {
+  width: 100%;
 }
 
 .actions-container {

@@ -64,9 +64,9 @@ router.post('/', function(req, res, next) {
     return;
   }
   if (
-    req.body.userId === undefined ||
-    req.body.userId === null ||
-    req.body.userId.trim() === ''
+    req.body.userEmail === undefined ||
+    req.body.userEmail === null ||
+    req.body.userEmail.trim() === ''
   ) {
     res.status(400).send();
     return;
@@ -79,12 +79,13 @@ router.post('/', function(req, res, next) {
 
   const fields = {
     questionId: req.body.questionId.trim(),
-    userId: req.body.userId.trim(),
+    userEmail: req.body.userEmail.trim(),
     up: 0,
     down: 0,
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
   };
+
   const params = createUpdateAnswersParams(uuidv4(), fields);
 
   docClient.update(params, function(err, data) {
@@ -181,6 +182,9 @@ router.patch('/:id', function(req, res, next) {
   }
   const params = createUpdateAnswersParams(req.params.id, req.body);
 
+  const currentUpvotes = req.body.up;
+  const currentDownvotes = req.body.down;
+
   docClient.update(params, function(err, data) {
     if (err) {
       console.error('Unable to update Answer:', JSON.stringify(err, null, 2));
@@ -189,9 +193,27 @@ router.patch('/:id', function(req, res, next) {
     }
 
     console.log('update Answer', JSON.stringify(data, null, 2));
-    res.status(200).json({
-      data: data.Attributes
-    });
+
+    const answersToUsersParams = {
+      TableName: 'Question',
+      ProjectionExpression: '#id, #userEmail, #answerId, #vote',
+      ExpressionAttributeNames: {
+        '#id': 'id',
+        '#userEmail': 'userEmail',
+        '#answerId': 'answerId',
+        '#vote': 'vote' // -1 for downvote, 1 for upvote
+      }
+    };
+
+    // Check whether or not the up and vote count for answers changed
+
+    if (data.up !== currentUpvotes) {
+    } else if (data.down !== currentDownvotes) {
+    } else {
+      res.status(200).json({
+        data: data.Attributes
+      });
+    }
   });
 });
 

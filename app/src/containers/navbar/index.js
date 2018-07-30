@@ -3,6 +3,12 @@ import Notifications from './notifications';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
 import { withRouter } from 'react-router';
+import { bindActionCreators } from '../../../node_modules/redux'
+import { connect } from 'react-redux'
+import { getSearchResults } from '../../modules/actions/questions'
+import { logout } from '../../modules/actions/user'
+import { push } from 'connected-react-router'
+import onClickOutside from 'react-onclickoutside';
 
 import './index.css';
 
@@ -17,7 +23,6 @@ class NavBar extends React.Component {
   }
 
   navigateDashboard = () => {
-    console.log(this.props);
     this.props.history.push('/');
   };
 
@@ -28,34 +33,32 @@ class NavBar extends React.Component {
     });
   };
 
-  onChange = event => {
-    this.setState({
-      input: event.target.value
-    });
+  handleClickOutside = evt => {
+    this.closeDropdowns()
   };
 
-  handleSearch = () => {
-    console.log(this.state.input);
+  onChange = event => {
+    this.setState({ input: event.target.value });
+  };
+
+  handleSearch = (props) => {
+    this.props.getSearchResults(this.state.input)
+    this.props.changePage()
   };
 
   toggleNotifications = () => {
-    console.log('notifications toggle');
-    if (!this.state.isNotificationsOpen) {
-      this.setState({
-        isNotificationsOpen: !this.state.isNotificationsOpen,
-        isProfileOpen: false
-      });
-    }
+    this.setState({
+      isNotificationsOpen: !this.state.isNotificationsOpen,
+      isProfileOpen: false
+    });
   };
 
   toggleProfile = () => {
     console.log('profile toggle');
-    if (!this.state.isProfileOpen) {
       this.setState({
         isProfileOpen: !this.state.isProfileOpen,
         isNotificationsOpen: false
       });
-    }
   };
 
   render() {
@@ -86,7 +89,9 @@ class NavBar extends React.Component {
             <Profile
               handleClickOutside={this.closeDropdowns}
               toggleProfile={this.toggleProfile}
+              navigateDashboard={this.navigateDashboard}
               open={this.state.isProfileOpen}
+              handleLogout={this.props.logout}
             />
           </Flex>
         </ToolHeader.Section>
@@ -95,4 +100,17 @@ class NavBar extends React.Component {
   }
 }
 
-export default withRouter(NavBar);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getSearchResults,
+      logout,
+      changePage: () => push('/search-results')
+    },
+    dispatch
+  )
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(onClickOutside(NavBar)))
