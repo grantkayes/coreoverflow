@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Flex, Header, Card } from '@procore/core-react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faReply,
@@ -10,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import Markdown from '../../components/markdown';
-import Voting from '../../components/voting';
+import Clap from '../../components/clap';
 
 import './index.css';
 
@@ -19,71 +18,30 @@ class Answer extends React.Component {
     super(props);
 
     this.state = {
-      upvoted: false,
-      downvoted: false
+      claps: 0
     };
   }
 
-  onUpvote = answerId => {
-    const upvotes = this.props.up + 1;
+  onClap = () => {
+    console.log('clapping!');
 
-    console.log('I upvoted!');
-    console.log('Current up: ' + upvotes);
-    if (this.state.downvoted) {
-      this.setState({
-        upvoted: true,
-        downvoted: false
-      });
-    } else if (this.state.upvoted) {
-      this.setState({
-        upvoted: false,
-        downvoted: false
-      });
-    } else {
-      this.setState({
-        upvoted: true,
-        downvoted: false
-      });
-    }
-  };
-
-  onDownvote = answerId => {
-    const downvotes = this.props.down - 1;
-
-    console.log('I downvoted!');
-    console.log('Current down: ' + downvotes);
-    if (this.state.upvoted) {
-      this.setState({
-        downvoted: true,
-        upvoted: false
-      });
-    } else if (this.state.downvoted) {
-      this.setState({
-        downvoted: false,
-        upvoted: false
-      });
-    } else {
-      this.setState({
-        downvoted: true,
-        upvoted: false
-      });
-    }
+    this.setState({
+      claps: this.state.claps + 1
+    });
   };
 
   render() {
-    const { body, id, questionId, timestamp, up, down } = this.props;
+    const { body, id, questionId, timestamp, claps } = this.props;
 
     return (
       <Card id="answer-container">
         <Flex justifyContent="flex-start" alignItems="center">
-          <Flex className="answer-card-left">
-            <Voting
-              onUpvote={this.onUpvote}
-              onDownvote={this.onDownvote}
-              upvoted={this.state.upvoted}
-              downvoted={this.state.downvoted}
-              votes={up - down}
-            />
+          <Flex
+            className="answer-card-left"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Clap claps={this.state.claps} onClap={this.onClap} />
           </Flex>
           <Flex className="answer-card-right" direction="column">
             <Flex className="info-container">

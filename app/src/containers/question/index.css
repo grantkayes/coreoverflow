@@ -109,10 +109,12 @@
 }
 
 .answer-card-left {
-  padding-left: 30px;
-  padding-right: 60px;
+  width: 12%;
+  padding-left: 60px;
+  padding-right: 90px;
+  padding-bottom: 30px !important;
 }
 
 .answer-card-right {
-  width: 100%;
+  width: 90%;
 }

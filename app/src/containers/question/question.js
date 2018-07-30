@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Header } from '@procore/core-react';
 
 import Markdown from '../../components/markdown';
-import Voting from '../../components/voting';
+import Clap from '../../components/clap';
 import LessModal from '../coremodal/lessmodal';
 import AlertBanner from '../banner/banner';
 
@@ -28,52 +28,6 @@ class DetailedQuestion extends React.Component {
       isLessModalOpen: false
     };
   }
-
-  onUpvote = () => {
-    console.log('I upvoted!');
-    if (this.state.downvoted) {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        votes: this.state.votes + 2
-      });
-    } else if (this.state.upvoted) {
-      this.setState({
-        upvoted: false,
-        downvoted: false,
-        votes: this.state.votes - 1
-      });
-    } else {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        votes: this.state.votes + 1
-      });
-    }
-  };
-
-  onDownvote = () => {
-    console.log('I downvoted!');
-    if (this.state.upvoted) {
-      this.setState({
-        downvoted: true,
-        upvoted: false,
-        votes: this.state.votes - 2
-      });
-    } else if (this.state.downvoted) {
-      this.setState({
-        downvoted: false,
-        upvoted: false,
-        votes: this.state.votes + 1
-      });
-    } else {
-      this.setState({
-        downvoted: true,
-        upvoted: false,
-        votes: this.state.votes - 1
-      });
-    }
-  };
 
   toggleModal = () => {
     this.setState({ isModalOpen: !this.state.isModalOpen });
@@ -118,13 +72,7 @@ React.render(
           alignItems="center"
           justifyContent="center"
         >
-          <Voting
-            votes={this.state.votes}
-            onUpvote={this.onUpvote}
-            onDownvote={this.onDownvote}
-            upvoted={this.state.upvoted}
-            downvoted={this.state.downvoted}
-          />
+          <Clap claps={31} />
         </Flex>
         <Flex
           justifyContent="center"

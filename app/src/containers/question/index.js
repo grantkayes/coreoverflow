@@ -16,6 +16,11 @@ class DetailedQuestion extends React.Component {
 
     const questionId = this.props.match.params.id;
 
+    this.state = {
+      totalClapCount: 0,
+      clapsCount: 0
+    };
+
     this.props.getAnswers(questionId);
   }
 

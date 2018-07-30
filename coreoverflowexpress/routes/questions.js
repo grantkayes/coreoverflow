@@ -41,13 +41,11 @@ router.get('/', function(req, res, next) {
   var params = {
     TableName: 'Question',
     ProjectionExpression:
-      '#id, #questionTitle, #up, #body, #down, #user, #userEmail, #timestamp, #answerCount',
+      '#id, #questionTitle, #clap, #body, #user, #userEmail, #timestamp, #answerCount',
     ExpressionAttributeNames: {
       '#id': 'id',
       '#questionTitle': 'questionTitle',
-      '#up': 'up',
-      '#body': 'body',
-      '#down': 'down',
+      '#clap': 'clap',
       '#user': 'user',
       '#userEmail': 'userEmail',
       '#timestamp': 'timestamp',
