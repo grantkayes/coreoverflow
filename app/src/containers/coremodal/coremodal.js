@@ -27,10 +27,12 @@ class CoreModal extends React.Component {
 
     const Question = {
       title: this.state.title,
-      body: this.state.body
+      body: this.state.body,
+      user: "Grant K",
+      userEmail: "grant.kayes@procore.com"
     };
 
-    axios.post('http://localhost:5000/questions', { Question })
+    axios.post('http://localhost:5000/questions', Question)
       .then(res => {
         console.log('response');
         console.log(res);
@@ -77,20 +79,20 @@ class CoreModal extends React.Component {
     console.log(this.props); //remove when necessary
     console.log(this.state);
     return (
-      <Modal class='modalBody' open={this.props.open} onClickOverlay={this.props.close}>
-        <Modal.Header class='modalHeader' onClose={this.props.close}>
-          <div class='flex-container'>
-            <Header type='h1' class='flex-item1'>Question</Header>
-            <TextArea class='flex-item2' resize='none' onChange={this.setTitle} />
+      <Modal open={this.props.open} onClickOverlay={this.props.close}>
+        <Modal.Header className='modalHeader' onClose={this.props.close}>
+          <div className='flex-container'>
+            <Header type='h1' className='flex-item1'>Question</Header>
+            <TextArea className='flex-item2' resize='none' onChange={this.setTitle} />
           </div>
         </Modal.Header>
-        <Modal.Body class='modalText'>
+        <Modal.Body className='modalText'>
           <Tabs>
             <Tabs.Tab active><Tabs.Link onClick={this.toggleWrite}><h3>Write</h3></Tabs.Link></Tabs.Tab>
             <Tabs.Tab><Tabs.Link onClick={this.togglePreview}><h3>Preview</h3></Tabs.Link></Tabs.Tab>
           </Tabs>
 
-            {this.state.isWriteActive && <TextArea class="modalTextBody" resize='none' value={this.state.body} onChange={this.setBody} />}
+            {this.state.isWriteActive && <TextArea className="modalTextBody" resize='none' value={this.state.body} onChange={this.setBody} />}
             {this.state.isPreviewActive && <Markdown className="modalTextBody" text={this.state.body} />}
           
         </Modal.Body>

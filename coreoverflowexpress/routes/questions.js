@@ -1,6 +1,7 @@
 var express = require('express');
 var AWS = require('aws-sdk');
 var uuidv4 = require('uuid/v4');
+var moment = require('moment');
 var router = express.Router();
 
 AWS.config.update({
@@ -34,6 +35,24 @@ function createGetQuestionsParams(query) {
     ExpressionAttributeValues,
     FilterExpression: FilterExpression.join(' AND '),
   }
+}
+
+function createUpdateAnswersParams(id, query) {
+  const AttributeUpdates = {};
+ 
+  for (key in query) {
+    AttributeUpdates[key] = {
+      Action: 'PUT',
+      Value: query[key]
+    };
+  }
+ 
+  return {
+    TableName: 'Question',
+    Key: { id: id.trim() },
+    AttributeUpdates,
+    ReturnValues: 'ALL_NEW'
+  };
 }
 
 //Get all questions
@@ -86,9 +105,29 @@ router.get('/:userId', function(req, res, next){
 })
 
 router.post('/', function(req, res, next){
-  console.log(req.body);
-  
-  res.send();
+  console.log('hehexd', req.body);
+  console.log(req.body.userEmail);
+  const fields = {
+    userEmail: req.body.userEmail,
+    title: req.body.title,
+    up: 0,
+    down: 0,
+    body: req.body.body,
+    timestamp: moment().format('YYYY-MM-DDTHH:mm'),
+    answerCount: 0,
+    user: req.body.user
+  };
+  console.log('FUCK u', fields)
+  const params = createUpdateAnswersParams(uuidv4(), fields);
+  console.log('FuCK dynamo', params)
+  docClient.update(params, function(err, data) {
+    if (err) {
+        console.log("no");
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+        res.status(200).send(data)
+    }
+});
 })
 
 module.exports = router;
