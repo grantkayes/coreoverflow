@@ -1,10 +1,11 @@
 import React from 'react'
 import './dashboard.css'
 import QuestionCard from '../../components/questionCard/index'
+import Placeholder from './placeholder';
 import moment from 'moment'
+import LazyLoad from 'react-lazyload';
 
 const Dashboard = props => {
-
   const allQuestions = props.questionData.map((question) => {
     const exampleQuestion = {
       title: question.questionTitle,
@@ -16,7 +17,12 @@ const Dashboard = props => {
       userId: question.userId,
       answerCount: question.answerCount
     }
-    return <QuestionCard key={question.id} question={exampleQuestion} />
+
+    return (
+      <LazyLoad key={question.id} height={150} throttle={350} offset={[0, -200]} placeholder={<Placeholder />} >
+        <QuestionCard key={question.id} question={exampleQuestion} />
+      </LazyLoad > 
+    )
   })
 
   return (
