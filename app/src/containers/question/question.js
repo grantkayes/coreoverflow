@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Header, Card } from '@procore/core-react';
+import { Flex, Header } from '@procore/core-react';
 
 import Markdown from '../../components/markdown';
 import Voting from '../../components/voting';

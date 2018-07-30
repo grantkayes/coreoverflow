@@ -3,8 +3,11 @@ import Notifications from './notifications';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
 import { withRouter } from 'react-router';
+import { bindActionCreators } from '../../../node_modules/redux'
+import { connect } from 'react-redux'
+import { getSearchResults } from '../../modules/actions/questions'
+import { push } from 'connected-react-router'
 import onClickOutside from 'react-onclickoutside';
-import AuthLock from '../../components/auth/authLock';
 
 import './index.css';
 
@@ -34,13 +37,12 @@ class NavBar extends React.Component {
   };
 
   onChange = event => {
-    this.setState({
-      input: event.target.value
-    });
+    this.setState({ input: event.target.value });
   };
 
-  handleSearch = () => {
-    console.log(this.state.input);
+  handleSearch = (props) => {
+    this.props.getSearchResults(this.state.input)
+    this.props.changePage()
   };
 
   toggleNotifications = () => {
@@ -96,4 +98,16 @@ class NavBar extends React.Component {
   }
 }
 
-export default withRouter(onClickOutside(NavBar));
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getSearchResults,
+      changePage: () => push('/search-results')
+    },
+    dispatch
+  )
+
+export default connect(
+  null, 
+  mapDispatchToProps
+)(withRouter(onClickOutside(NavBar)))
