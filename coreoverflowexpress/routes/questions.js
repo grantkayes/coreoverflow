@@ -22,7 +22,7 @@ function createGetQuestionsParams(query) {
   const ExpressionAttributeValues = {};
   const FilterExpression = [];
   const TableName = 'Question';
-  
+
   for (key in query) {
     ExpressionAttributeNames['#' + key] = key;
     ExpressionAttributeValues[':' + key] = query[key];
@@ -91,9 +91,9 @@ router.get('/search', function(req, res, next){
 })
 
 // Get all questions for a specific userId
-router.get('/:userId', function(req, res, next){
-  let params = createGetQuestionsParams({ userId: req.params.userId})
-  
+router.get('/:userEmail', function(req, res, next){
+  let params = createGetQuestionsParams({ userEmail: req.params.userEmail})
+
   docClient.scan(params, function(err, data) {
     if (err) {
       console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
