@@ -5,12 +5,10 @@
 }
 
 #card-container {
-  /* border: 1px solid black; */
   width: 100%;
   padding: 25px 0px;
   margin: 20px 0px;
-  padding: 0px 30px;
-  width: 100%;
+  padding: 15px 30px;
 }
 
 #answer-list-container {
@@ -18,9 +16,9 @@
 }
 
 #answer-container {
-  /* border: 1px solid yellow; */
-  margin: 20px 0px 0px 0px;
+  margin: 40px 0px 10px 0px;
   width: 100%;
+  padding: 30px;
 }
 
 .question-title {
@@ -43,14 +41,16 @@
   margin-bottom: 10px;
   padding-bottom: 25px;
   border: 1px solid lightgray;
+  width: 100%;
 }
 
 .question-votes {
-  padding-left: 70px;
+  padding-left: 50px;
   padding-right: 60px;
 }
 
 .question-info {
+  width: 100%;
 }
 
 .actions-container {
@@ -109,10 +109,12 @@
 }
 
 .answer-card-left {
-  padding-left: 30px;
-  padding-right: 60px;
+  width: 12%;
+  padding-left: 60px;
+  padding-right: 90px;
+  padding-bottom: 30px !important;
 }
 
 .answer-card-right {
-  width: 100%;
+  width: 90%;
 }

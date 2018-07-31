@@ -7,5 +7,5 @@ module.exports = {
   user,
   question,
   answer,
-  notification,
-}
+  notification
+};

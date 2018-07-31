@@ -2,8 +2,8 @@ import React from 'react';
 import { Flex, Header } from '@procore/core-react';
 
 import Markdown from '../../components/markdown';
-import Voting from '../../components/voting';
-import LessModal from '../coremodal/lessmodal'
+import Clap from '../../components/clap';
+import LessModal from '../coremodal/lessmodal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -28,61 +28,15 @@ class DetailedQuestion extends React.Component {
     };
   }
 
-  onUpvote = () => {
-    console.log('I upvoted!');
-    if (this.state.downvoted) {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        votes: this.state.votes + 2
-      });
-    } else if (this.state.upvoted) {
-      this.setState({
-        upvoted: false,
-        downvoted: false,
-        votes: this.state.votes - 1
-      });
-    } else {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        votes: this.state.votes + 1
-      });
-    }
-  };
-
-  onDownvote = () => {
-    console.log('I downvoted!');
-    if (this.state.upvoted) {
-      this.setState({
-        downvoted: true,
-        upvoted: false,
-        votes: this.state.votes - 2
-      });
-    } else if (this.state.downvoted) {
-      this.setState({
-        downvoted: false,
-        upvoted: false,
-        votes: this.state.votes + 1
-      });
-    } else {
-      this.setState({
-        downvoted: true,
-        upvoted: false,
-        votes: this.state.votes - 1
-      });
-    }
-  };
-
   toggleModal = () => {
-    this.setState({ isModalOpen: !this.state.isModalOpen })
+    this.setState({ isModalOpen: !this.state.isModalOpen });
     console.log(this.state);
-  }
+  };
 
   toggleLessModal = () => {
-    this.setState({ isLessModalOpen: !this.state.isLessModalOpen })
+    this.setState({ isLessModalOpen: !this.state.isLessModalOpen });
     console.log(this.state);
-  }
+  };
 
   render() {
     console.log(this.state);
@@ -106,8 +60,6 @@ React.render(
 `;
 
     return (
-      
-
       <Flex
         id="question-container"
         direction="row"
@@ -119,13 +71,7 @@ React.render(
           alignItems="center"
           justifyContent="center"
         >
-          <Voting
-            votes={this.state.votes}
-            onUpvote={this.onUpvote}
-            onDownvote={this.onDownvote}
-            upvoted={this.state.upvoted}
-            downvoted={this.state.downvoted}
-          />
+          <Clap claps={31} />
         </Flex>
         <Flex
           justifyContent="center"
@@ -138,19 +84,29 @@ React.render(
           <Markdown className="question-markdown" text={input} />
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container" justify-content="space-around">
-              <Header className="actions" type="h3" onClick={this.toggleLessModal}>
+              <Header
+                className="actions"
+                type="h3"
+                onClick={this.toggleLessModal}
+              >
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
               </Header>
 
-              <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
+              <LessModal
+                open={this.state.isLessModalOpen}
+                close={this.toggleLessModal}
+              />
 
               <Header className="actions" type="h3" onClick={this.toggleModal}>
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
 
-              <CoreModal open={this.state.isModalOpen} close={this.toggleModal} />
+              <CoreModal
+                open={this.state.isModalOpen}
+                close={this.toggleModal}
+              />
 
               <Header className="actions" type="h3">
                 <FontAwesomeIcon className="edit" icon={faTrash} />
@@ -164,8 +120,6 @@ React.render(
           </Flex>
         </Flex>
       </Flex>
-
-      
     );
   }
 }

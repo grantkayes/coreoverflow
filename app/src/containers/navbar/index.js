@@ -63,7 +63,7 @@ class NavBar extends React.Component {
 
   render() {
     const avatarImageUrl =
-      'http://www.franktop10.com/wp-content/uploads/2017/06/aaeaaqaaaaaaaaliaaaajdc3zwq4mdnhltjim2qtnduwyy1hmwm5lwjlmjayywi5odhjoq.png';
+      'http://coreoverflow.s3.amazonaws.com/1/1364337f-d4f2-4c21-9665-0272e39e809f';
     return (
       <ToolHeader>
         <ToolHeader.Section className="navbar-container">
