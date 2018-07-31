@@ -2,6 +2,7 @@ var express = require('express');
 var AWS = require('aws-sdk');
 var uuidv4 = require('uuid/v4');
 var router = express.Router();
+var moment = require('moment');
 
 AWS.config.update({
   region: 'eu-west-2',
@@ -34,6 +35,24 @@ function createGetQuestionsParams(query) {
     ExpressionAttributeValues,
     FilterExpression: FilterExpression.join(' AND ')
   };
+}
+
+function createUpdateQuestionParams(id, query) {
+ const AttributeUpdates = {};
+
+ for (key in query) {
+   AttributeUpdates[key] = {
+     Action: 'PUT',
+     Value: query[key]
+   };
+ }
+
+ return {
+   TableName: 'Question',
+   Key: { id: id.trim() },
+   AttributeUpdates,
+   ReturnValues: 'ALL_NEW'
+ };
 }
 
 //Get all questions
@@ -81,11 +100,34 @@ router.get('/:userEmail', function(req, res, next) {
   });
 });
 
-router.post('/', function(req, res, next) {
-  console.log(req.body);
+router.post('/', function(req, res, next){
+ console.log(req.body.userEmail);
+ console.log(req.body.title);
+ console.log(req.body)
+ const fields = {
+   userEmail: req.body.userEmail,
+   questionTitle: req.body.title,
+   up: 0,
+   down: 0,
+   body: req.body.body,
+   timestamp: moment().format('YYYY-MM-DDTHH:mm'),
+   answerCount: 0,
+   user: req.body.user,
+   answers: {},
+ };
 
-  res.send();
+ console.log(fields)
+ const params = createUpdateQuestionParams(uuidv4(), fields);
+ console.log('params', params)
+ docClient.update(params, function(err, data) {
+   if (err) {
+       console.log("no");
+   } else {
+       console.log("Added item:", JSON.stringify(data, null, 2));
+       res.status(200).send(data)
+   }
 });
+})
 
 // To delete a specific question
 router.delete('/:questionId', function(req, res, next) {
