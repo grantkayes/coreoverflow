@@ -68,12 +68,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-// Get all questions matching searchTerm
-router.get('/search', function(req, res, next) {
-  console.log(req.query.searchTerm);
-});
-
-// Get all questions for a specific userEmail
+// Get all questions for a specific userId
 router.get('/:userEmail', function(req, res, next) {
   let params = createGetQuestionsParams({ userEmail: req.params.userEmail });
 
@@ -91,6 +86,52 @@ router.post('/', function(req, res, next) {
   console.log(req.body);
 
   res.send();
+});
+
+// To delete a specific question
+router.delete('/:questionId', function(req, res, next) {
+  console.log('within DELETE endpoint');
+  var params = {
+    TableName: 'Question',
+    Key: { id: req.params.questionId }
+  };
+
+  docClient.delete(params, function(err, data) {
+    if (err) {
+      console.error(
+        'Unable to delete item. Error JSON:',
+        JSON.stringify(err, null, 2)
+      );
+    } else {
+      console.log('DeleteItem succeeded:', JSON.stringify(data, null, 2));
+    }
+  });
+});
+
+// Update a specific question
+router.patch('/:questionId', function(req, res, next) {
+  console.log('within PATCH endpoint');
+
+  var params = {
+    TableName: 'Question',
+    Key: { id: req.params.questionId }
+    // UpdateExpression: "set info.rating = :r, info.plot=:p, info.actors=:a",
+    // ExpressionAttributeValues:{
+    //     ":r":5.5,
+    //     ":p":"Everything happens all at once.",
+    //     ":a":["Larry", "Moe", "Curly"]
+    // },
+    // ReturnValues:"UPDATED_NEW"
+  };
+
+  // console.log("Updating the item...");
+  // docClient.update(params, function(err, data) {
+  //   if (err) {
+  //     console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+  //   } else {
+  //     console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+  //   }
+  // });
 });
 
 module.exports = router;

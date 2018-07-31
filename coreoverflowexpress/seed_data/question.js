@@ -25,6 +25,10 @@ function pickRandomUser(users) {
   return users[Math.floor(Math.random() * users.length)];
 }
 
+function pickRandomNumber() {
+  return Math.floor(Math.random() * 9 + 1);
+}
+
 function createQuestions(num) {
   var questionData = [
     {

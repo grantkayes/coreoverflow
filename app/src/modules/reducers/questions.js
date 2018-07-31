@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const GET_QUESTIONS_REQUESTED = 'GET_QUESTIONS_REQUESTED';
 export const GET_QUESTIONS_SUCCEEDED = 'GET_QUESTIONS_SUCEEDED';
 export const GET_QUESTIONS_FAILED = 'GET_QUESTIONS_FAILED';
@@ -5,6 +7,8 @@ export const GET_MY_QUESTIONS_REQUESTED = 'GET_MY_QUESTIONS_REQUESTED';
 export const GET_MY_QUESTIONS_SUCCEEDED = 'GET_MY_QUESTIONS_SUCEEDED';
 export const GET_MY_QUESTIONS_FAILED = 'GET_MY_QUESTIONS_FAILED';
 export const GET_SEARCH_RESULTS = 'GET_SEARCH_RESULTS';
+export const DELETE_MY_QUESTION = 'DELETE_MY_QUESTION';
+export const DELETE_MY_QUESTION_FAILED = 'DELETE_MY_QUESTION_FAILED';
 
 const initialState = {
   data: [],
@@ -25,9 +29,16 @@ export default (state = initialState, action) => {
 
     case GET_QUESTIONS_SUCCEEDED:
       console.log('get questions succeeded');
+      let payload = action.payload.data.Items
+
+      //Sort by most recent time
+      payload.sort(function(time1, time2){
+        return moment(time1.timestamp) - moment(time2.timestamp)
+      })
+
       return {
         ...state,
-        data: action.payload.data.Items,
+        data: payload,
         busy: false,
         error: null
       };
@@ -83,6 +94,14 @@ export default (state = initialState, action) => {
         error: action.error,
         searchData: filtered
       }
+
+    case DELETE_MY_QUESTION:
+      console.log('delete my question');
+      return
+    
+    case DELETE_MY_QUESTION_FAILED:
+      console.log('delete my question failed');
+      return
 
     default:
       return state;
