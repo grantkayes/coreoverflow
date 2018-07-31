@@ -63,23 +63,33 @@ function createGetAnswerParams(query) {
   };
 }
 
-function createUpdateAnswersParams(id, query) {
-  const AttributeUpdates = {};
+// UpdateExpression: `SET #answers = list_append(if_not_exists(#answers, :empty_list), :newAnswer)`,
+// "ExpressionAttributeNames" : {
+//   "#answers" : "answers"
+// },
+// ExpressionAttributeValues:{
+//     ":newAnswer": [query],
+//     ":empty_list":[]
+// },
 
-  for (key in query) {
-    AttributeUpdates[key] = {
-      Action: 'PUT',
-      Value: query[key]
-    };
-  }
+// UpdateExpression = "SET map.#number = :string"
+// ExpressionAttributeNames = { "#number" : "1" }
+// ExpressionAttributeValues = { ":string" : "the string to store in the map at key value 1" }
+// ConditionExpression = "attribute_not_exists(map.#number)"
 
+function createUpdateAnswersParams(questionId, id, query) {
   return {
-    TableName: 'Answer',
-    Key: { id: id.trim() },
-    AttributeUpdates,
+    TableName: 'Question',
+    Key: { id: questionId.trim() },
+    UpdateExpression: "SET answers.#answerId = :answer",
+    ExpressionAttributeNames: { "#answerId" : id },
+    ExpressionAttributeValues: { ":answer" : query },
+    ConditionExpression: "attribute_not_exists(answers.#answerId)",
     ReturnValues: 'ALL_NEW'
   };
 }
+
+
 
 AWS.config.update({
   region: 'eu-west-2',
@@ -120,8 +130,9 @@ router.post('/', function(req, res, next) {
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
   };
-  const params = createUpdateAnswersParams(uuidv4(), fields);
-
+  console.log(fields);
+  const params = createUpdateAnswersParams(req.body.questionId, uuidv4(), fields);
+  console.log('params', params);
   docClient.update(params, function(err, data) {
     if (err) {
       console.error('Unable to add Answer:', JSON.stringify(err, null, 2));
@@ -129,33 +140,35 @@ router.post('/', function(req, res, next) {
       return;
     }
 
-    const questionParams = {
-      TableName: 'Question',
-      Key: { id: req.body.questionId.trim() },
-      AttributeUpdates: {
-        answerCount: {
-          Action: 'ADD',
-          Value: 1
-        }
-      },
-      ReturnValues: 'ALL_NEW'
-    };
+    console.log(data);
 
-    docClient.update(questionParams, function(err, questionData) {
-      if (err) {
-        console.error(
-          'Unable to update Question:',
-          JSON.stringify(err, null, 2)
-        );
-        res.status(500).send();
-        return;
-      }
-      const question = questionData.Attributes;
-      sendSlackNotification(question.userEmail, question.questionTitle, question.id);
-      res.status(200).json({
-        data: data.Attributes
-      });
-    });
+    // const questionParams = {
+    //   TableName: 'Question',
+    //   Key: { id: req.body.questionId.trim() },
+    //   AttributeUpdates: {
+    //     answerCount: {
+    //       Action: 'ADD',
+    //       Value: 1
+    //     }
+    //   },
+    //   ReturnValues: 'ALL_NEW'
+    // };
+    //
+    // docClient.update(questionParams, function(err, questionData) {
+    //   if (err) {
+    //     console.error(
+    //       'Unable to update Question:',
+    //       JSON.stringify(err, null, 2)
+    //     );
+    //     res.status(500).send();
+    //     return;
+    //   }
+    //   const question = questionData.Attributes;
+    //   sendSlackNotification(question.userEmail, question.questionTitle, question.id);
+    //   res.status(200).json({
+    //     data: data.Attributes
+    //   });
+    // });
   });
 });
 
