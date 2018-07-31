@@ -35,6 +35,7 @@
 }
 
 .question-user-info {
+  min-width: 210px;
   align-self: flex-end;
 }
 .subtext {
