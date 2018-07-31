@@ -10,3 +10,11 @@
   margin: 0px 5px;
   padding: 0;
 }
+
+.placeholder {
+  height: 100px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

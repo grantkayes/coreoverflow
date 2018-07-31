@@ -85,6 +85,7 @@ router.post('/', function(req, res, next) {
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
   };
   const params = createUpdateAnswersParams(uuidv4(), fields);
+  console.log(params)
 
   docClient.update(params, function(err, data) {
     if (err) {
