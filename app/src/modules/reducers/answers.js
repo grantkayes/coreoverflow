@@ -41,15 +41,46 @@ export default (state = initialState, action) => {
 
     case EDIT_ANSWER_REQUESTED:
       console.log('edit answers requested');
-      return { ...state };
+
+      return {
+        ...state,
+        busy: true,
+        error: null
+      };
 
     case EDIT_ANSWER_SUCCEEDED:
       console.log('edit answers succeeded');
-      return { ...state };
+      const { data } = action.payload;
+
+      const answerId = data.id;
+      const changes = data.data;
+
+      const answers = state.data.map(
+        answer =>
+          answerId === answer.id
+            ? {
+                ...answer,
+                ...changes
+              }
+            : answer
+      );
+
+      return {
+        ...state,
+        data: answers,
+        busy: false,
+        error: null
+      };
+    // return { ...state };
 
     case EDIT_ANSWER_FAILED:
       console.log('edit answer failed');
-      return { ...state };
+      console.log(action.error);
+      return {
+        ...state,
+        busy: false,
+        error: action.error
+      };
 
     default:
       return state;

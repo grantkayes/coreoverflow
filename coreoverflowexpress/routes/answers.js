@@ -80,12 +80,12 @@ router.post('/', function(req, res, next) {
   const fields = {
     questionId: req.body.questionId.trim(),
     userId: req.body.userId.trim(),
-    clap: 0,
+    claps: 0,
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
   };
   const params = createUpdateAnswersParams(uuidv4(), fields);
-  console.log(params)
+  console.log(params);
 
   docClient.update(params, function(err, data) {
     if (err) {

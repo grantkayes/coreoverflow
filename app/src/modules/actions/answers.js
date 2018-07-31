@@ -35,7 +35,10 @@ const getAnswers = questionId => {
 };
 
 const patchAnswer = (answerId, body) => {
-  return axios.patch(`/${answerId}`, body);
+  console.log(answerId);
+  return axios.patch(`http://localhost:5000/answers/${answerId}`, {
+    data: body
+  });
 };
 
 const editAnswer = (answerId, body) => {
@@ -44,17 +47,19 @@ const editAnswer = (answerId, body) => {
       type: EDIT_ANSWER_REQUESTED
     });
 
-    patchAnswer(answerId, body).then(response =>
-      dispatch({
-        type: EDIT_ANSWER_SUCCEEDED,
-        payload: response.data
-      }).catch(err =>
+    patchAnswer(answerId, body)
+      .then(response =>
+        dispatch({
+          type: EDIT_ANSWER_SUCCEEDED,
+          payload: response.data
+        })
+      )
+      .catch(err =>
         dispatch({
           type: EDIT_ANSWER_FAILED,
           error: err
         })
-      )
-    );
+      );
   };
 };
 

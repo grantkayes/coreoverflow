@@ -16,18 +16,12 @@ import './index.css';
 class Answer extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      claps: 0
-    };
   }
 
   onClap = () => {
     console.log('clapping!');
 
-    this.setState({
-      claps: this.state.claps + 1
-    });
+    this.props.editAnswer(this.props.id, { claps: this.props.claps + 1 });
   };
 
   render() {
@@ -41,7 +35,7 @@ class Answer extends React.Component {
             justifyContent="center"
             alignItems="center"
           >
-            <Clap claps={this.state.claps} onClap={this.onClap} />
+            <Clap claps={claps} onClap={this.onClap} />
           </Flex>
           <Flex className="answer-card-right" direction="column">
             <Flex className="info-container">

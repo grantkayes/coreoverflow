@@ -11,22 +11,20 @@ class AnswerList extends React.Component {
 
   render() {
     const Answers = this.props.answers.map(answer => {
-      const { body, id, questionId, timestamp, up, down } = answer;
+      const { body, id, questionId, timestamp, claps } = answer;
 
       return (
         <Answer
+          key={id}
           body={body}
           id={id}
           questionId={questionId}
           timestamp={timestamp}
-          up={up}
-          down={down}
+          claps={claps}
           editAnswer={this.props.editAnswer}
         />
       );
     });
-
-    console.log(Answers);
 
     return (
       <Flex
