@@ -64,9 +64,9 @@ router.post('/', function(req, res, next) {
     return;
   }
   if (
-    req.body.userEmail === undefined ||
-    req.body.userEmail === null ||
-    req.body.userEmail.trim() === ''
+    req.body.userId === undefined ||
+    req.body.userId === null ||
+    req.body.userId.trim() === ''
   ) {
     res.status(400).send();
     return;
@@ -79,14 +79,13 @@ router.post('/', function(req, res, next) {
 
   const fields = {
     questionId: req.body.questionId.trim(),
-    userEmail: req.body.userEmail.trim(),
-    up: 0,
-    down: 0,
+    userId: req.body.userId.trim(),
+    claps: 0,
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
   };
   const params = createUpdateAnswersParams(uuidv4(), fields);
-  console.log(params)
+  console.log(params);
 
   docClient.update(params, function(err, data) {
     if (err) {

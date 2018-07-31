@@ -3,7 +3,7 @@ import { Flex, Header } from '@procore/core-react';
 
 import Markdown from '../../components/markdown';
 import Voting from '../../components/voting';
-import LessModal from '../coremodal/lessmodal'
+import LessModal from '../coremodal/lessmodal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -84,10 +84,15 @@ class DetailedQuestion extends React.Component {
     console.log(this.state);
   }
 
-  confirmAction = () => {
+  confirmDelete = () => {
     const answer = window.confirm("Are you sure you want to delete?");
     if (answer) {
-      alert("ayyy git git git git");
+      axios.delete('http://localhost:5000/questions', )
+      .then(res => {
+        console.log('response');
+        console.log(res);
+        console.log(res.data);
+      })
     } else {
       alert("jazz music stops");
     }
@@ -162,7 +167,7 @@ React.render(
 
               <CoreModal open={this.state.isModalOpen} close={this.toggleModal} />
 
-              <Header className="actions" type="h3" onClick={this.confirmAction}>
+              <Header className="actions" type="h3" onClick={this.confirmDelete}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
               </Header>

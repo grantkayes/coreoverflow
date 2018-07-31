@@ -1,0 +1,26 @@
+.num {
+  font-size: 16px;
+  text-align: center;
+  line-height: 50px;
+}
+
+.clap {
+  border: 1px solid #f47e42;
+  padding: 3px 12px;
+
+  border-radius: 50%;
+  font-size: 50px;
+  color: #f47e42;
+  transition: all 0.2s ease-in-out;
+}
+
+.clap:hover {
+  color: #f47e52;
+  border: 1px solid #f47e52;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.clap:active {
+  transform: scale(1.3);
+}

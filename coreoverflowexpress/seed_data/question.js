@@ -18,31 +18,31 @@ var users = [
   {
     name: 'Grant Kayes',
     email: 'grant.kayes@procore.com'
-  },
-]
+  }
+];
 
 function pickRandomUser(users) {
   return users[Math.floor(Math.random() * users.length)];
 }
 
 function pickRandomNumber() {
-  return Math.floor((Math.random() * 9) + 1);
+  return Math.floor(Math.random() * 9 + 1);
 }
 
 function createQuestions(num) {
   var questionData = [
     {
-      "id": "1",
-      "answerCount": 4,
-      "questionTitle": "How do I make this work?",
-      "up": 5,
-      "down": 2,
-      "body": "I am not sure what to do to make this work. The issue arise when I do this.",
-      "user": "Elton Xue",
-      "userEmail": "elton.xue@procore.com",
-      "timestamp": "2018-07-27T14:21"
+      id: '1',
+      answerCount: 4,
+      questionTitle: 'How do I make this work?',
+      claps: 5,
+      body:
+        'I am not sure what to do to make this work. The issue arise when I do this.',
+      user: 'Elton Xue',
+      userEmail: 'elton.xue@procore.com',
+      timestamp: '2018-07-27T14:21'
     }
-  ]
+  ];
 
   for (var x = 0; x < num - 1; x++) {
     var user = pickRandomUser(users);
@@ -64,6 +64,6 @@ function createQuestions(num) {
 }
 
 module.exports = {
-  name: "Question",
+  name: 'Question',
   data: createQuestions(100)
-}
+};
