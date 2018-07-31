@@ -14,10 +14,6 @@ import Clap from '../../components/clap';
 import './index.css';
 
 class Answer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   onClap = () => {
     console.log('clapping!');
 

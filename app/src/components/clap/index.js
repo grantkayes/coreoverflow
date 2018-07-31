@@ -1,11 +1,7 @@
 import React from 'react';
 import { Flex, Icon } from '@procore/core-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronUp,
-  faChevronDown,
-  faHeart
-} from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import './index.css';
 
 const Clap = props => {
