@@ -75,13 +75,22 @@ class DetailedQuestion extends React.Component {
   };
 
   toggleModal = () => {
-    this.setState({ isModalOpen: !this.state.isModalOpen })
+    this.setState({ isModalOpen: !this.state.isModalOpen });
     console.log(this.state);
   }
 
   toggleLessModal = () => {
-    this.setState({ isLessModalOpen: !this.state.isLessModalOpen })
+    this.setState({ isLessModalOpen: !this.state.isLessModalOpen });
     console.log(this.state);
+  }
+
+  confirmAction = () => {
+    const answer = window.confirm("Are you sure you want to delete?");
+    if (answer) {
+      alert("ayyy git git git git");
+    } else {
+      alert("jazz music stops");
+    }
   }
 
   render() {
@@ -143,6 +152,7 @@ React.render(
                 Answer
               </Header>
 
+              
               <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
 
               <Header className="actions" type="h3" onClick={this.toggleModal}>
@@ -152,10 +162,12 @@ React.render(
 
               <CoreModal open={this.state.isModalOpen} close={this.toggleModal} />
 
-              <Header className="actions" type="h3">
+              <Header className="actions" type="h3" onClick={this.confirmAction}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
               </Header>
+
+
             </Flex>
 
             <Header className="record-info" type="h3">

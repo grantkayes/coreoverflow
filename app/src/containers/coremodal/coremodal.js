@@ -82,8 +82,8 @@ class CoreModal extends React.Component {
       <Modal open={this.props.open} onClickOverlay={this.props.close}>
         <Modal.Header className='modalHeader' onClose={this.props.close}>
           <div className='flex-container'>
-            <Header type='h1' className='flex-item1'>Question</Header>
-            <TextArea className='flex-item2' resize='none' onChange={this.setTitle} />
+            <Header type='h1' className='flex-item1'>Question: </Header>
+            <input className='flex-item2' resize='none' onChange={this.setTitle} />
           </div>
         </Modal.Header>
         <Modal.Body className='modalText'>
@@ -97,8 +97,8 @@ class CoreModal extends React.Component {
           
         </Modal.Body>
         <Modal.Footer>
-            <Dropzone multiple={false} onDrop={this.onDrop}>
-              <Header type="h1">Upload Image</Header>
+            <Dropzone className="dropzone" multiple={false} onDrop={this.onDrop}>
+              <Header>Click to upload image, or drag and drop file here</Header>
             </Dropzone>
             <Modal.FooterButtons>
               <Button variant="tertiary" onClick={this.props.close}>
