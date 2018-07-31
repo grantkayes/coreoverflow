@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const GET_QUESTIONS_REQUESTED = 'GET_QUESTIONS_REQUESTED';
 export const GET_QUESTIONS_SUCCEEDED = 'GET_QUESTIONS_SUCEEDED';
 export const GET_QUESTIONS_FAILED = 'GET_QUESTIONS_FAILED';
@@ -27,9 +29,16 @@ export default (state = initialState, action) => {
 
     case GET_QUESTIONS_SUCCEEDED:
       console.log('get questions succeeded');
+      let payload = action.payload.data.Items
+
+      //Sort by most recent time
+      payload.sort(function(time1, time2){
+        return moment(time1.timestamp) - moment(time2.timestamp)
+      })
+
       return {
         ...state,
-        data: action.payload.data.Items,
+        data: payload,
         busy: false,
         error: null
       };
