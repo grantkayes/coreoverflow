@@ -55,12 +55,12 @@ function createUpdateQuestionParams(id, query) {
  };
 }
 
-//Get all questions
+//Get all questions [DONE]
 router.get('/', function(req, res, next) {
   var params = {
     TableName: 'Question',
     ProjectionExpression:
-      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount',
+      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount, #answers',
     ExpressionAttributeNames: {
       '#id': 'id',
       '#questionTitle': 'questionTitle',
@@ -69,7 +69,8 @@ router.get('/', function(req, res, next) {
       '#user': 'user',
       '#userEmail': 'userEmail',
       '#timestamp': 'timestamp',
-      '#answerCount': 'answerCount'
+      '#answerCount': 'answerCount',
+      '#answers': 'answers'
     }
   };
 
@@ -86,7 +87,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-// Get all questions for a specific userId
+// Get all questions for a specific userId [DONE]
 router.get('/:userEmail', function(req, res, next) {
   let params = createGetQuestionsParams({ userEmail: req.params.userEmail });
 
@@ -100,36 +101,32 @@ router.get('/:userEmail', function(req, res, next) {
   });
 });
 
+// To post a question [DONE]
 router.post('/', function(req, res, next){
- console.log(req.body.userEmail);
- console.log(req.body.title);
- console.log(req.body)
- const fields = {
-   userEmail: req.body.userEmail,
-   questionTitle: req.body.title,
-   up: 0,
-   down: 0,
-   body: req.body.body,
-   timestamp: moment().format('YYYY-MM-DDTHH:mm'),
-   answerCount: 0,
-   user: req.body.user,
-   answers: {},
- };
+  const fields = {
+    userEmail: req.body.userEmail,
+    questionTitle: req.body.title,
+    up: 0,
+    down: 0,
+    body: req.body.body,
+    timestamp: moment().format('YYYY-MM-DDTHH:mm'),
+    answerCount: 0,
+    user: req.body.user,
+    answers: {},
+  };
 
- console.log(fields)
- const params = createUpdateQuestionParams(uuidv4(), fields);
- console.log('params', params)
- docClient.update(params, function(err, data) {
-   if (err) {
-       console.log("no");
-   } else {
-       console.log("Added item:", JSON.stringify(data, null, 2));
-       res.status(200).send(data)
-   }
-});
+  const params = createUpdateQuestionParams(uuidv4(), fields);
+  docClient.update(params, function(err, data) {
+    if (err) {
+      console.log("Error: ", err);
+    } else {
+      console.log("Added item:", JSON.stringify(data, null, 2));
+      res.status(200).send(data)
+    }
+  })
 })
 
-// To delete a specific question
+// To delete a specific question [DONE]
 router.delete('/:questionId', function(req, res, next) {
   console.log('within DELETE endpoint');
   var params = {
@@ -149,7 +146,7 @@ router.delete('/:questionId', function(req, res, next) {
   });
 });
 
-// Update a specific question
+// Update a specific question [DONE]
 router.patch('/:questionId', function(req, res, next) {
   console.log('within PATCH endpoint');
 
