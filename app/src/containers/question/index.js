@@ -3,7 +3,7 @@ import { Flex, Card } from '@procore/core-react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAnswers } from '../../modules/actions/answers';
+import { getAnswers, editAnswer } from '../../modules/actions/answers';
 
 import Question from './question';
 import AnswerList from './answerList';
@@ -28,6 +28,7 @@ class DetailedQuestion extends React.Component {
             answers={this.props.answers}
             answersBusy={this.props.answersBusy}
             answersError={this.props.answersError}
+            editAnswer={this.props.editAnswer}
           />
         </Card>
       </Flex>
@@ -44,7 +45,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getAnswers
+      getAnswers,
+      editAnswer
     },
     dispatch
   );
