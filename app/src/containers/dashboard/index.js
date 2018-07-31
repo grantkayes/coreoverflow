@@ -19,7 +19,7 @@ const Dashboard = props => {
     }
 
     return (
-      <LazyLoad key={question.id} height={150} throttle={350} offset={[0, -200]} placeholder={<Placeholder />} >
+      <LazyLoad key={question.id} height={150} offset={[-100, -200]} placeholder={<Placeholder />} >
         <QuestionCard key={question.id} question={exampleQuestion} />
       </LazyLoad > 
     )

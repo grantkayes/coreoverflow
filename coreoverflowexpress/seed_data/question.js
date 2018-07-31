@@ -25,6 +25,10 @@ function pickRandomUser(users) {
   return users[Math.floor(Math.random() * users.length)];
 }
 
+function pickRandomNumber() {
+  return Math.floor((Math.random() * 9) + 1);
+}
+
 function createQuestions(num) {
   var questionData = [
     {
@@ -53,7 +57,7 @@ function createQuestions(num) {
       "body": randomParagraph({min: 1, max: 2}),
       "user": user.name,
       "userEmail": user.email,
-      "timestamp": "2018-07-27T14:21"
+      "timestamp": `2018-07-1${pickRandomNumber()}T14:21`
     })
   }
   return questionData;

@@ -19,11 +19,10 @@ seedData.forEach(function(table) {
       TableName: table.name,
       Item: dataPoint
     };
-    console.log(params)
-  docClient.put(params, function(err, data) {
-         if (err) {
-             console.error("Unable to add data to", table.name, "table. Error JSON:", JSON.stringify(err, null, 2));
-         } else {
+    docClient.put(params, function(err, data) {
+      if (err) {
+        console.error("Unable to add data to", table.name, "table. Error JSON:", JSON.stringify(err, null, 2));
+      } else {
              console.log("PutItem succeeded:", dataPoint);
          }
       });
