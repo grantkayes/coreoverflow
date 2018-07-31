@@ -2,8 +2,44 @@ var express = require('express');
 var moment = require('moment');
 var AWS = require('aws-sdk');
 var uuidv4 = require('uuid/v4');
+const { WebClient } = require('@slack/client');
+
+const token = process.env.SLACK_TOKEN;
+
+const web = new WebClient(token);
 
 var router = express.Router();
+
+
+function sendSlackNotification(email, title, id) {
+  web.users.lookupByEmail({ email })
+    .then((res) => {
+      const userId = res.user.id
+      web.im.open({
+        token: process.env.SLACK_BOT_TOKEN,
+        user: userId,
+        return_im: true,
+      })
+      .then((res) => {
+        web.chat.postMessage({
+          token: process.env.SLACK_BOT_TOKEN,
+          channel: res.channel.id,
+          text: `:wave: Hey! Your question has been answered!`,
+          attachments: [
+            {
+              title,
+              title_link: `http://localhost:3000/question/${id}`,
+            }
+          ]
+        })
+          .then((res) => {
+        // `res` contains information about the posted message
+          console.log('Message sent: ', res.ts);
+        })
+          .catch(console.error);
+      })
+    })
+}
 
 function createGetAnswerParams(query) {
   if (Object.keys(query).length === 0) {
@@ -64,9 +100,9 @@ router.post('/', function(req, res, next) {
     return;
   }
   if (
-    req.body.userId === undefined ||
-    req.body.userId === null ||
-    req.body.userId.trim() === ''
+    req.body.userEmail === undefined ||
+    req.body.userEmail === null ||
+    req.body.userEmail.trim() === ''
   ) {
     res.status(400).send();
     return;
@@ -79,13 +115,12 @@ router.post('/', function(req, res, next) {
 
   const fields = {
     questionId: req.body.questionId.trim(),
-    userId: req.body.userId.trim(),
+    userEmail: req.body.userEmail.trim(),
     claps: 0,
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
   };
   const params = createUpdateAnswersParams(uuidv4(), fields);
-  console.log(params);
 
   docClient.update(params, function(err, data) {
     if (err) {
@@ -94,7 +129,6 @@ router.post('/', function(req, res, next) {
       return;
     }
 
-    console.log('PUT ANSWER SUCCEEDED:', data);
     const questionParams = {
       TableName: 'Question',
       Key: { id: req.body.questionId.trim() },
@@ -116,7 +150,8 @@ router.post('/', function(req, res, next) {
         res.status(500).send();
         return;
       }
-      console.log('update Count');
+      const question = questionData.Attributes;
+      sendSlackNotification(question.userEmail, question.questionTitle, question.id);
       res.status(200).json({
         data: data.Attributes
       });
