@@ -1,0 +1,20 @@
+#dashboard {
+  background-color: #f5f5f5;
+  border: 1px solid #e6e6e6;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#dashboard-header {
+  margin: 0px 5px;
+  padding: 0;
+}
+
+.placeholder {
+  height: 100px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
