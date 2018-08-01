@@ -52,7 +52,7 @@ function createAnswers(questionId, questionDate) {
 
     var firstName = user.name.substr(0,user.name.indexOf(' '));
     var lastName = user.name.substr(user.name.indexOf(' ')+1);
-    
+
     ans[ansId] = {
       firstName,
       lastName,
@@ -81,7 +81,7 @@ function createQuestions(num) {
       "answerCount": ansCount,
       "questionTitle": randomSentence({min: 10, max: 25}),
       "claps": pickRandomNumber(),
-      "body": randomParagraph({min: 1, max: 2}),
+      "body": randomParagraph({min: 2, max: 20}),
       "user": user.name,
       "userEmail": user.email,
       "timestamp": questionDate.format('YYYY-MM-DDTHH:mm'),

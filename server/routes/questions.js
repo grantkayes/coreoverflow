@@ -61,7 +61,7 @@ router.get('/', function(req, res, next) {
   var params = {
     TableName: 'Question',
     ProjectionExpression:
-      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount, #answers',
+      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount',
     ExpressionAttributeNames: {
       '#id': 'id',
       '#questionTitle': 'questionTitle',
@@ -71,7 +71,6 @@ router.get('/', function(req, res, next) {
       '#userEmail': 'userEmail',
       '#timestamp': 'timestamp',
       '#answerCount': 'answerCount',
-      '#answers': 'answers'
     }
   };
   console.log(req.query)
