@@ -21,7 +21,6 @@ const SideBarContainer = props => (
 );
 
 const mapStateToProps = ({ sidebar }) => {
-  console.log(sidebar);
   return {
     isModalOpen: sidebar.isModalOpen
   };

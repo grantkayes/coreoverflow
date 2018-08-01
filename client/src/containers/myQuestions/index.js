@@ -28,7 +28,6 @@ class MyQuestions extends React.Component {
 }
 
 const mapStateToProps = ({question, user}) => {
-  console.log(user)
   return {
     data: question.data,
     busy: question.busy,

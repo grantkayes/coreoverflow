@@ -99,15 +99,13 @@ class LessModal extends React.Component {
   };
 
   render() {
-    console.log(this.props); //remove when necessary
-    console.log(this.state);
     return (
       <Modal
         class="modalBody"
         open={this.props.open}
         onClickOverlay={this.props.close}
       >
-        <Modal.Header class="lessModalHeader" onClose={this.props.close}>
+        <Modal.Header className="lessModalHeader" onClose={this.props.close}>
           <Header type="h1">Your Answer </Header>
         </Modal.Header>
         <Modal.Body class="modalText">

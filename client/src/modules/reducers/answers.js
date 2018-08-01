@@ -27,8 +27,6 @@ export default (state = initialState, action) => {
 
     case GET_ANSWERS_SUCCEEDED:
       console.log('get answers succeeded');
-      console.log(action.payload);
-
       const payload = action.payload.data;
 
       //Sort by most recent time
@@ -79,7 +77,6 @@ export default (state = initialState, action) => {
     case EDIT_ANSWER_SUCCEEDED:
       console.log('edit answers succeeded');
       const { data } = action.payload;
-      console.log('data', data)
       const answerId = data.id;
       const changes = data;
 
