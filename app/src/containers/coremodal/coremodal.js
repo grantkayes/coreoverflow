@@ -27,6 +27,12 @@ class CoreModal extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if(this.props.type === 'edit'){
+      this.updateModalData(this.props.olderData)
+    }
+  } 
+
   //Put in reducer
   submitQuestion = (event, props) => {
     event.preventDefault();
@@ -55,15 +61,21 @@ class CoreModal extends React.Component {
 
     axios.post('http://localhost:5000/upload', data)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
         const imageURL = res.data.success[0].location;
         this.setState({body: `${this.state.body}\n![](${imageURL})`})
       })
   }
 
   handleUpdate = (props) => {
-    this.props.updateQuestions(this.state.title, this.state.body);
+    const updateData = {
+      title: this.state.title,
+      body: this.state.body,
+      tags: this.state.tags,
+      questionId: this.props.olderData.id
+    }
+
+    this.props.updateQuestions(updateData);
+    this.props.close()
   }
 
   setTitle = (event) => {
@@ -86,13 +98,21 @@ class CoreModal extends React.Component {
     this.setState({tags})
   }
 
+  updateModalData = (oldData) => {
+    this.setState({
+      title: oldData.questionTitle,
+      body: oldData.body,
+      tags: oldData.tags
+    })
+  }
+
   render() {
     return (
       <Modal open={this.props.open} onClickOverlay={this.props.close}>
         <Modal.Header className='modalHeader' onClose={this.props.close}>
           <div className='flex-container'>
             <Header type='h1' className='flex-item1'>Question Title: </Header>
-            <input className='flex-item2' resize='none' onChange={this.setTitle} />
+            <input className='flex-item2' resize='none' onChange={this.setTitle} value={this.state.title} />
           </div>
         </Modal.Header>
         <Modal.Body className='modalText'>

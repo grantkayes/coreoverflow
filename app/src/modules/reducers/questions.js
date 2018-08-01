@@ -93,7 +93,6 @@ export default (state = initialState, action) => {
 
     case GET_CURRENT_QUESTION_SUCCEEDED:
       console.log('getting current question succeeded...');
-       console.log('action.payload', action.payload.data.data)
       return {
         ...state,
         currentQuestion: action.payload.data.data,
@@ -146,9 +145,21 @@ export default (state = initialState, action) => {
 
     case UPDATE_QUESTIONS_SUCCEEDED:
       console.log('update questions succeeded');
+      const changes = action.payload.dataPayload
+
+      //Update state 
+      const newArray = state.data.map(
+        question =>
+          question.id === changes.questionId
+            ? {
+              ...question,
+              ...changes
+            } : question   
+      )
+
       return {
         ...state,
-        data: action.payload.data,
+        data: newArray,
         busy: false,
         error: null
       };

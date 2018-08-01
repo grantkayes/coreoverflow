@@ -57,3 +57,7 @@ button:disabled {
   margin-right: 2px;
   background-color: #f47e42;
 }
+
+.tags-container {
+  margin: 0px 0px 5px 0px;
+}

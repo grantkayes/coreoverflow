@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Header } from '@procore/core-react';
+import { Flex, Header, Token } from '@procore/core-react';
 import moment from 'moment';
 
 import Markdown from '../../components/markdown';
@@ -79,17 +79,14 @@ class DetailedQuestion extends React.Component {
 
   toggleQuestionModal = () => {
     this.setState({ isQuestionModalOpen: !this.state.isQuestionModalOpen });
-    console.log(this.state);
   }
 
   toggleEditQuestionModal = () => {
     this.setState({ isEditQuestionModalOpen: !this.state.isEditQuestionModalOpen });
-    console.log(this.state);
   }
 
   toggleLessModal = () => {
     this.setState({ isLessModalOpen: !this.state.isLessModalOpen });
-    console.log(this.state);
   }
 
   confirmDelete = () => {
@@ -102,8 +99,7 @@ class DetailedQuestion extends React.Component {
   }
 
   render() {
-    const { answerCount, questionTitle, body, user, claps, timestamp } = this.props.question;
-    console.log(this.state);
+    const { answerCount, questionTitle, body, user, claps, timestamp, tags } = this.props.question;
     const input = `
 ## Hello
 
@@ -123,9 +119,18 @@ React.render(
 \`\`\`
 `;
 
+    let tagContainer = ""
+    if(tags) {
+      tagContainer = tags.map((tag, index) => {
+        return (    
+          <Token key={index} className="tag">
+            <Token.Label>{tag}</Token.Label>
+          </Token>
+        )
+      })
+    }
+
     return (
-
-
       <Flex
         id="question-container"
         direction="row"
@@ -148,43 +153,37 @@ React.render(
             {questionTitle}
           </Header>
           <Markdown className="question-markdown" text={body} />
+          <Flex className="tags-container" direction="row">
+            {tagContainer}
+          </Flex>
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container" justify-content="space-around">
               <Header className="actions" type="h3" onClick={this.toggleLessModal}>
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
               </Header>
-
-
               <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
-
               <Header className="actions" type="h3" onClick={this.toggleEditQuestionModal}>
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
-
               <CoreModal
                 open={this.state.isEditQuestionModalOpen}
                 close={this.toggleEditQuestionModal}
-                type={this.props.type}
+                type='edit'
+                olderData={this.props.question}
               />
-
               <Header className="actions" type="h3" onClick={this.confirmDelete}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
               </Header>
-
-
             </Flex>
-
             <Header className="record-info" type="h3">
               Asked by {user} on <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
             </Header>
           </Flex>
         </Flex>
       </Flex>
-
-
     );
   }
 }

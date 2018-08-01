@@ -1,9 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Box, Card, Flex, Link } from '@procore/core-react';
+import { Box, Card, Flex, Link, Token } from '@procore/core-react';
 import './index.css';
-import TagsInput from 'react-tagsinput'
-import { Token } from '@procore/core-react'
 import 'react-tagsinput/react-tagsinput.css' 
 
 const QuestionCard = props => {
@@ -24,14 +22,16 @@ const QuestionCard = props => {
   if (body && body.length > 250) {
     bodyText = body.substring(0, 250) + '...';
   }
-
-  const tagContainer = tags.map((tag) => {
-    return (    
-      <Token className="tag">
-        <Token.Label>{tag}</Token.Label>
-      </Token>
-    )
-  })
+  let tagContainer = ""
+  if(tags) {
+    tagContainer = tags.map((tag) => {
+      return (    
+        <Token className="tag">
+          <Token.Label>{tag}</Token.Label>
+        </Token>
+      )
+    })
+  }
 
   return (
     <Card className="card" level="30">

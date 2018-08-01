@@ -75,7 +75,7 @@ router.get('/', function(req, res, next) {
       '#tags': 'tags'
     }
   };
-  console.log(req.query)
+
   if (req.query.id) {
     const params = {
       TableName: 'Question',
@@ -183,10 +183,11 @@ router.patch('/:questionId', function(req, res, next) {
   var params = {
     TableName: "Question",
     Key:{ "id": req.params.questionId },
-    UpdateExpression: "set questionTitle = :t, body = :b",
+    UpdateExpression: "set questionTitle = :qt, body = :b, tags = :t",
     ExpressionAttributeValues:{
-        ":t": req.body.title,
-        ":b": req.body.text
+        ":qt": req.body.title,
+        ":b": req.body.text,
+        ":t": req.body.tags
     },
     ReturnValues:"UPDATED_NEW"
   };
@@ -196,6 +197,15 @@ router.patch('/:questionId', function(req, res, next) {
       console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
     } else {
       console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+
+      const dataPayload = {
+        questionId: req.params.questionId,
+        questionTitle: data.Attributes.questionTitle,
+        body: data.Attributes.body,
+        tags: data.Attributes.tags
+      }
+
+      res.status(200).json({ dataPayload });
     }
   });
 })
