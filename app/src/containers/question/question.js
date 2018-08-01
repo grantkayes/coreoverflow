@@ -115,7 +115,7 @@ React.render(
             </Flex>
 
             <Header className="record-info" type="h3">
-              Asked by Elton Xue on July 22, 2018
+              Asked by Elton Xue on <i>July 22, 2018</i>
             </Header>
           </Flex>
         </Flex>

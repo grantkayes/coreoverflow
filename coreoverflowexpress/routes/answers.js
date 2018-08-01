@@ -60,26 +60,26 @@ router.post('/', function(req, res, next) {
     req.body.questionId === null ||
     req.body.questionId.trim() === ''
   ) {
-    res.status(400).send();
+    res.status(400).send('questionId field missing');
     return;
   }
   if (
-    req.body.userId === undefined ||
-    req.body.userId === null ||
-    req.body.userId.trim() === ''
+    req.body.userEmail === undefined ||
+    req.body.userEmail === null ||
+    req.body.userEmail.trim() === ''
   ) {
-    res.status(400).send();
+    res.status(400).send('userEmail field missing');
     return;
   }
   //body is optional but should still be a
   if (req.body.body === undefined || req.body.body === null) {
-    res.status(400).send();
+    res.status(400).send('body field missing');
     return;
   }
 
   const fields = {
     questionId: req.body.questionId.trim(),
-    userId: req.body.userId.trim(),
+    userEmail: req.body.userEmail.trim(),
     claps: 0,
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
