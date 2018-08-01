@@ -7,11 +7,9 @@ import {
   GET_MY_QUESTIONS_REQUESTED,
   GET_MY_QUESTIONS_SUCCEEDED,
   GET_MY_QUESTIONS_FAILED,
-  GET_CURRENT_QUESTION_REQUESTED,
-  GET_CURRENT_QUESTION_SUCCEEDED,
-  GET_CURRENT_QUESTION_FAILED,
-  GET_SEARCH_RESULTS,
-  DELETE_MY_QUESTION,
+  GET_SEARCH_RESULTS, 
+  DELETE_MY_QUESTION_REQUESTED,
+  DELETE_MY_QUESTION_SUCCEEDED,
   DELETE_MY_QUESTION_FAILED,
   UPDATE_QUESTIONS_REQUESTED,
   UPDATE_QUESTIONS_SUCCEEDED,
@@ -126,13 +124,16 @@ const getSearchResults = (searchTerm) => {
 
 const deleteMyQuestions = (questionId) => {
   return (dispatch, getState) => {
+    dispatch({
+      type: DELETE_MY_QUESTION_REQUESTED
+    });
 
     axios.delete(`http://localhost:5000/questions/${questionId}`)
     .then( response => {
       console.log(response);
 
       dispatch({
-        type: DELETE_MY_QUESTION,
+        type: DELETE_MY_QUESTION_SUCCEEDED,
         payload: response
       })
     })
