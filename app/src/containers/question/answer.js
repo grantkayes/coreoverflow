@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import { Flex, Header, Card } from '@procore/core-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,18 +11,62 @@ import {
 
 import Markdown from '../../components/markdown';
 import Clap from '../../components/clap';
+import LessModal from '../coremodal/lessmodal';
 
 import './index.css';
 
 class Answer extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isEditModalOpen: false,
+      isSubmitModalOpen: false,
+      modalType: 'edit'
+    };
   }
-
   onClap = () => {
-    console.log('clapping!');
+    this.props.editAnswer(this.props.id, { questionId: this.props.questionId, claps: this.props.claps + 1 });
+  };
 
-    this.props.editAnswer(this.props.id, { claps: this.props.claps + 1 });
+  toggleSubmitModal = () => {
+    this.setState({
+      isSubmitModalOpen: !this.state.isSubmitModalOpen,
+      modalType: 'submit'
+    });
+  };
+
+  toggleEditModal = () => {
+    console.log('toggling');
+    this.setState({
+      isEditModalOpen: !this.state.isEditModalOpen,
+      modalType: 'edit'
+    });
+  };
+
+  editAnswer = answer => {
+    const { body } = answer;
+
+    this.props.editAnswer(this.props.id, { questionId: this.props.questionId, body });
+  };
+
+  submitAnswer = answer => {
+    const { questionId, userEmail, userFirstName, userLastName } = this.props;
+    const { body } = answer;
+
+    console.log('this.props', this.props)
+
+    const reqBody = {
+      questionId,
+      userEmail,
+      firstName: userFirstName,
+      lastName: userLastName,
+      body
+    };
+
+    console.log(reqBody);
+
+    this.props.submitAnswer(reqBody);
   };
 
   render() {
@@ -40,16 +85,41 @@ class Answer extends React.Component {
           <Flex className="answer-card-right" direction="column">
             <Flex className="info-container">
               <Header className="record-info record-info-answer" type="h3">
-                Answered by Sonia Xu on {timestamp}
+                Answered by {`${this.props.userFirstName} ${this.props.userLastName}`} on{' '}
+                <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
               </Header>
 
               <Flex className="actions-container" justifyContent="flex-end">
-                <Header className="actions" type="h3">
+                <LessModal
+                  body={''}
+                  open={this.state.isSubmitModalOpen}
+                  close={this.toggleSubmitModal}
+                  editAnswer={this.editAnswer}
+                  submitAnswer={this.submitAnswer}
+                  modalType={this.state.modalType}
+                />
+                <Header
+                  onClick={this.toggleSubmitModal}
+                  className="actions"
+                  type="h3"
+                >
                   <FontAwesomeIcon className="answer" icon={faReply} />
                   Reply
                 </Header>
 
-                <Header className="actions" type="h3">
+                <LessModal
+                  body={body}
+                  open={this.state.isEditModalOpen}
+                  close={this.toggleEditModal}
+                  editAnswer={this.editAnswer}
+                  submitAnswer={this.submitAnswer}
+                  modalType={this.state.modalType}
+                />
+                <Header
+                  onClick={this.toggleEditModal}
+                  className="actions"
+                  type="h3"
+                >
                   <FontAwesomeIcon className="edit" icon={faStickyNote} />
                   Edit
                 </Header>

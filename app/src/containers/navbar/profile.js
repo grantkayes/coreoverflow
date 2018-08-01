@@ -33,9 +33,6 @@ class Profile extends React.Component {
             <Flex className="notification" alignItems="center">
               Go to Slack
             </Flex>
-            <Flex className="notification" alignItems="center">
-              My Questions
-            </Flex>
             <Flex className="notification" alignItems="center" onClick={this.handleLogout}>
               Log out
             </Flex>

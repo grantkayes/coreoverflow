@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flex, Header } from '@procore/core-react';
+import moment from 'moment';
 
 import Markdown from '../../components/markdown';
 import Clap from '../../components/clap';
@@ -39,6 +40,7 @@ class DetailedQuestion extends React.Component {
   };
 
   render() {
+    const { answerCount, questionTitle, body, user, claps, timestamp } = this.props.question;
     console.log(this.state);
     const input = `
 ## Hello
@@ -71,7 +73,7 @@ React.render(
           alignItems="center"
           justifyContent="center"
         >
-          <Clap claps={31} />
+          <Clap claps={claps} />
         </Flex>
         <Flex
           justifyContent="center"
@@ -79,9 +81,9 @@ React.render(
           direction="column"
         >
           <Header className="question-title" type="h3">
-            What are Procore's Values?
+            {questionTitle}
           </Header>
-          <Markdown className="question-markdown" text={input} />
+          <Markdown className="question-markdown" text={body} />
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container" justify-content="space-around">
               <Header
@@ -115,7 +117,7 @@ React.render(
             </Flex>
 
             <Header className="record-info" type="h3">
-              Asked by Elton Xue on July 22, 2018
+              Asked by {user} on <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
             </Header>
           </Flex>
         </Flex>

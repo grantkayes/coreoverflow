@@ -9,10 +9,14 @@ export const GET_MY_QUESTIONS_FAILED = 'GET_MY_QUESTIONS_FAILED';
 export const GET_SEARCH_RESULTS = 'GET_SEARCH_RESULTS';
 export const DELETE_MY_QUESTION = 'DELETE_MY_QUESTION';
 export const DELETE_MY_QUESTION_FAILED = 'DELETE_MY_QUESTION_FAILED';
+export const GET_CURRENT_QUESTION_REQUESTED = 'GET_CURRENT_QUESTION_REQUESTED';
+export const GET_CURRENT_QUESTION_SUCCEEDED = 'GET_CURRENT_QUESTION_SUCEEDED';
+export const GET_CURRENT_QUESTION_FAILED = 'GET_CURRENT_QUESTION_FAILED';
 
 const initialState = {
   data: [],
   searchData: [],
+  currentQuestion: {},
   busy: false,
   error: null
 };
@@ -50,7 +54,7 @@ export default (state = initialState, action) => {
         busy: false,
         error: action.error
       };
-      
+
     case GET_MY_QUESTIONS_REQUESTED:
       console.log('getting MY questions requested...');
       return {
@@ -76,6 +80,32 @@ export default (state = initialState, action) => {
         error: action.error
       };
 
+    case GET_CURRENT_QUESTION_REQUESTED:
+      console.log('getting current question requested...');
+      return {
+        ...state,
+        busy: true,
+        error: null
+      };
+
+    case GET_CURRENT_QUESTION_SUCCEEDED:
+      console.log('getting current question succeeded...');
+       console.log('action.payload', action.payload.data.data)
+      return {
+        ...state,
+        currentQuestion: action.payload.data.data,
+        busy: false,
+        error: null
+      };
+
+    case GET_CURRENT_QUESTION_FAILED:
+      console.log('getting current question failed...');
+      return {
+        ...state,
+        busy: false,
+        error: action.error
+      };
+
     case GET_SEARCH_RESULTS:
       console.log('getting search results');
       let searchterm = action.payload.toLowerCase();
@@ -85,7 +115,7 @@ export default (state = initialState, action) => {
         let questionTitle = question.questionTitle.toLowerCase();
         let questionBody = question.body.toLowerCase();
 
-        return (questionTitle.includes(searchterm) || questionBody.includes(searchterm)) 
+        return (questionTitle.includes(searchterm) || questionBody.includes(searchterm))
       })
 
       return {
@@ -98,7 +128,7 @@ export default (state = initialState, action) => {
     case DELETE_MY_QUESTION:
       console.log('delete my question');
       return
-    
+
     case DELETE_MY_QUESTION_FAILED:
       console.log('delete my question failed');
       return

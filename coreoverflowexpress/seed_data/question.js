@@ -40,7 +40,8 @@ function createQuestions(num) {
         'I am not sure what to do to make this work. The issue arise when I do this.',
       user: 'Elton Xue',
       userEmail: 'elton.xue@procore.com',
-      timestamp: '2018-07-27T14:21'
+      timestamp: '2018-07-27T14:21',
+      answers: {}
     }
   ];
 
@@ -55,7 +56,8 @@ function createQuestions(num) {
       body: randomParagraph({ min: 1, max: 20 }),
       user: user.name,
       userEmail: user.email,
-      timestamp: '2018-07-27T14:21'
+      timestamp: '2018-07-27T14:21',
+      answers: {}
     });
   }
   return questionData;

@@ -39,6 +39,9 @@ function sendSlackNotification(email, title, id) {
           .catch(console.error);
       })
     })
+    .catch((err) => {
+      console.error('User not found in slack')
+    })
 }
 
 function createGetAnswerParams(query) {
@@ -143,7 +146,7 @@ router.post('/', function(req, res, next) {
   }
   //body is optional but should still be a
   if (req.body.body === undefined || req.body.body === null) {
-    res.status(400).send();
+    res.status(400).send('body field missing');
     return;
   }
 
@@ -168,9 +171,13 @@ router.post('/', function(req, res, next) {
     }
 
     const question = data.Attributes;
+    const answer = {
+      id: answerId,
+      ...question.answers[answerId]
+    }
     sendSlackNotification(question.userEmail, question.questionTitle, question.id);
     res.status(200).json({
-      data: data.Attributes
+      data: answer
     });
   });
 });
@@ -195,7 +202,7 @@ router.post('/', function(req, res, next) {
 // });
 //
 router.get('/', function(req, res, next) {
-  console.log(req.query);
+  console.log('grr', req.query);
   if (req.query.questionId === undefined || req.query.questionId === null || req.query.questionId.trim() === '') {
     res.status(400).send();
     return;
@@ -213,13 +220,16 @@ router.get('/', function(req, res, next) {
       console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
       res.status(500).send();
     } else {
-      console.log('Query succeeded.', data.Item.answers);
       const listData = []
 
-      for (key in data.Item.answers) {
-        const answerObj = data.Item.answers[key]
-        answerObj.id = key;
-        listData.push(answerObj);
+      if (data.Item) {
+        console.log('Query succeeded.', data.Item.answers);
+
+        for (key in data.Item.answers) {
+          const answerObj = data.Item.answers[key]
+          answerObj.id = key;
+          listData.push(answerObj);
+        }
       }
 
       res.send({
@@ -239,9 +249,7 @@ router.patch('/:id', function(req, res, next) {
     res.status(400).send();
     return;
   }
-  console.log('adf');
   const params = createUpdateAnswersParams(req.body.questionId.trim(), req.params.id, req.body);
-  console.log('params', params)
 
   docClient.update(params, function(err, data) {
     if (err) {
@@ -249,10 +257,16 @@ router.patch('/:id', function(req, res, next) {
       res.status(500).send();
       return;
     }
+    const id = req.params.id.trim()
+    const answer = {
+      id,
+      ...data.Attributes.answers[id]
+    }
 
-    console.log('update Answer', JSON.stringify(data, null, 2));
+    console.log('data:', data.Attributes)
+    console.log('new data:', answer)
     res.status(200).json({
-      data: data.Attributes
+      data: answer
     });
   });
 });
