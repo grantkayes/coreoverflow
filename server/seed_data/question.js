@@ -1,6 +1,7 @@
 var uuidv4 = require('uuid/v4');
 var randomSentence = require('random-sentence');
 var randomParagraph = require('random-paragraph');
+var randomWords = require('random-words');
 var moment = require('moment');
 
 var users = [
@@ -26,9 +27,19 @@ function pickRandomUser(users) {
   return users[Math.floor(Math.random() * users.length)];
 }
 
-function pickRandomNumber() {
-  return Math.floor(Math.random() * 30 + 1);
+function pickRandomNumber(x) {
+  return Math.floor(Math.random() * x + 1);
 }
+
+// function createRandomTags() {
+//   var tags = [];
+//   var randomTagNum = pickRandomNumber(5);
+//   for (var x = 0; x < randomTagNum; x++) {
+//     tags.push(randomWord());
+//   }
+//
+//   return tags;
+// }
 
 function pickRandomDate() {
   var today = moment()
@@ -43,7 +54,7 @@ function pickRandomDateAfter(date) {
 
 function createAnswers(questionId, questionDate) {
   var ans = {};
-  var ansCount = pickRandomNumber();
+  var ansCount = pickRandomNumber(30);
 
   for (var x = 0; x < ansCount; x++) {
     var ansId = uuidv4();
@@ -59,7 +70,7 @@ function createAnswers(questionId, questionDate) {
       questionId,
       userEmail: user.email,
       body: randomParagraph({min: 2, max: 20}),
-      claps: pickRandomNumber(),
+      claps: pickRandomNumber(20),
       timestamp: pickRandomDateAfter(questionDate).format('YYYY-MM-DDTHH:mm')
     }
   }
@@ -73,19 +84,23 @@ function createQuestions(num) {
     var user = pickRandomUser(users);
     var questionId = uuidv4();
     var questionDate = pickRandomDate();
+
     var ans = createAnswers(questionId, questionDate);
     var ansCount = Object.keys(ans).length;
+
+    var tags = randomWords({ min: 1, max: 5 })
 
     questionData.push({
       "id": questionId,
       "answerCount": ansCount,
       "questionTitle": randomSentence({min: 10, max: 25}),
-      "claps": pickRandomNumber(),
+      "claps": pickRandomNumber(20),
       "body": randomParagraph({min: 2, max: 20}),
       "user": user.name,
       "userEmail": user.email,
       "timestamp": questionDate.format('YYYY-MM-DDTHH:mm'),
-      "answers": ans
+      "answers": ans,
+      "tags": tags
     })
   }
   return questionData;

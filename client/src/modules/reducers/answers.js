@@ -79,7 +79,6 @@ export default (state = initialState, action) => {
     case EDIT_ANSWER_SUCCEEDED:
       console.log('edit answers succeeded');
       const { data } = action.payload;
-      console.log('data', data)
       const answerId = data.id;
       const changes = data;
 
