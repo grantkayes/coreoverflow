@@ -9,6 +9,9 @@ import {
   submitAnswer
 } from '../../modules/actions/answers';
 
+import {
+  getCurrentQuestion
+} from '../../modules/actions/questions';
 
 import Question from './question';
 import AnswerList from './answerList';
@@ -21,6 +24,7 @@ class DetailedQuestion extends React.Component {
 
     const questionId = this.props.match.params.id;
 
+    this.props.getCurrentQuestion(questionId);
     this.props.getAnswers(questionId);
   }
 
@@ -28,9 +32,7 @@ class DetailedQuestion extends React.Component {
     return (
       <Flex id="main-container" justifyContent="center" direction="column">
         <Card id="card-container" className="card" level="30">
-          <Question
-            type='edit'
-          />
+          <Question question={this.props.question}/>
           <AnswerList
             answers={this.props.answers}
             answersBusy={this.props.answersBusy}
@@ -54,12 +56,14 @@ const mapStateToProps = state => ({
   answersError: state.answers.error,
   userEmail: state.user.data.email,
   userFirstName: state.user.data.firstName,
-  userLastName: state.user.data.lastName
+  userLastName: state.user.data.lastName,
+  question: state.question.currentQuestion,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      getCurrentQuestion,
       getAnswers,
       editAnswer,
       submitAnswer

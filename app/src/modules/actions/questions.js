@@ -7,7 +7,10 @@ import {
   GET_MY_QUESTIONS_REQUESTED,
   GET_MY_QUESTIONS_SUCCEEDED,
   GET_MY_QUESTIONS_FAILED,
-  GET_SEARCH_RESULTS, 
+  GET_CURRENT_QUESTION_REQUESTED,
+  GET_CURRENT_QUESTION_SUCCEEDED,
+  GET_CURRENT_QUESTION_FAILED,
+  GET_SEARCH_RESULTS,
   DELETE_MY_QUESTION,
   DELETE_MY_QUESTION_FAILED,
   UPDATE_QUESTIONS_REQUESTED,
@@ -89,6 +92,29 @@ const getMyQuestions = (user) => {
   }
 }
 
+const getCurrentQuestion = (id) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: GET_CURRENT_QUESTION_REQUESTED
+    });
+
+    // Get all my questions associated with my userId
+    axios.get(`http://localhost:5000/questions/?id=${id}`)
+    .then( response => {
+      dispatch({
+        type: GET_CURRENT_QUESTION_SUCCEEDED,
+        payload: response
+      })
+    })
+    .catch( err => {
+      dispatch({
+        type: GET_CURRENT_QUESTION_FAILED,
+        error: err
+      })
+    })
+  }
+}
+
 const getSearchResults = (searchTerm) => {
   return (dispatch, getState) => {
     dispatch({
@@ -104,7 +130,7 @@ const deleteMyQuestions = (questionId) => {
     axios.delete(`http://localhost:5000/questions/${questionId}`)
     .then( response => {
       console.log(response);
-      
+
       dispatch({
         type: DELETE_MY_QUESTION,
         payload: response
@@ -120,10 +146,11 @@ const deleteMyQuestions = (questionId) => {
   }
 }
 
-export { 
-  getQuestions, 
-  getMyQuestions, 
+export {
+  getQuestions,
+  getMyQuestions,
+  getCurrentQuestion,
   getSearchResults,
   deleteMyQuestions,
-  updateQuestions 
+  updateQuestions
 };

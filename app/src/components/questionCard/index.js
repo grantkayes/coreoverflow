@@ -8,6 +8,7 @@ import 'react-tagsinput/react-tagsinput.css'
 
 const QuestionCard = props => {
   const {
+    id,
     title,
     body,
     up,
@@ -73,7 +74,7 @@ const QuestionCard = props => {
           <Flex direction="column" className="right-side-container">
             <Box>
               {/* TODO: remove hard coded URL */}
-              <Link href={`http://localhost:3000/question/1`}>
+              <Link href={`http://localhost:3000/question/${id}`}>
                 <p className="card-title">{title}</p>
               </Link>
             </Box>
