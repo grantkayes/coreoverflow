@@ -26,7 +26,7 @@ class Answer extends React.Component {
     };
   }
   onClap = () => {
-    this.props.editAnswer(this.props.id, { claps: this.props.claps + 1 });
+    this.props.editAnswer(this.props.id, { questionId: this.props.questionId, claps: this.props.claps + 1 });
   };
 
   toggleSubmitModal = () => {
@@ -47,18 +47,20 @@ class Answer extends React.Component {
   editAnswer = answer => {
     const { body } = answer;
 
-    this.props.editAnswer(this.props.id, { body });
+    this.props.editAnswer(this.props.id, { questionId: this.props.questionId, body });
   };
 
   submitAnswer = answer => {
-    const { questionId, userEmail, firstName, lastName } = this.props;
+    const { questionId, userEmail, userFirstName, userLastName } = this.props;
     const { body } = answer;
+
+    console.log('this.props', this.props)
 
     const reqBody = {
       questionId,
       userEmail,
-      firstName,
-      lastName,
+      firstName: userFirstName,
+      lastName: userLastName,
       body
     };
 
@@ -83,7 +85,7 @@ class Answer extends React.Component {
           <Flex className="answer-card-right" direction="column">
             <Flex className="info-container">
               <Header className="record-info record-info-answer" type="h3">
-                Answered by Sonia Xu on{' '}
+                Answered by {`${this.props.userFirstName} ${this.props.userLastName}`} on{' '}
                 <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
               </Header>
 

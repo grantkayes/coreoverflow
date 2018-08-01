@@ -8,12 +8,13 @@ import LazyLoad from 'react-lazyload';
 const Dashboard = props => {
   const allQuestions = props.questionData.map((question) => {
     const exampleQuestion = {
+      id: question.id,
       title: question.questionTitle,
       body: question.body,
       up: question.up,
       down: question.down,
       timestamp: moment(question.timestamp),
-      user: question.user, 
+      user: question.user,
       userId: question.userId,
       answerCount: question.answerCount
     }
@@ -21,7 +22,7 @@ const Dashboard = props => {
     return (
       <LazyLoad key={question.id} height={150} offset={[-100, -200]} placeholder={<Placeholder />} >
         <QuestionCard key={question.id} question={exampleQuestion} />
-      </LazyLoad > 
+      </LazyLoad >
     )
   })
 
