@@ -80,8 +80,6 @@ class CoreModal extends React.Component {
   }
 
   render() {
-    console.log(this.props); //remove when necessary
-    console.log(this.state);
     return (
       <Modal open={this.props.open} onClickOverlay={this.props.close}>
         <Modal.Header className='modalHeader' onClose={this.props.close}>

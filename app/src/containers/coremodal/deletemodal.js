@@ -4,21 +4,29 @@ import {
   Button,
   ConfirmModal
 } from '@procore/core-react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { deleteMyQuestions } from '../../modules/actions/questions';
 
 class DeleteModal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-    };
   };
+
+  handleDelete = () => {
+    this.props.deleteMyQuestions('f7edf38f-9941-406b-a155-375245ee2b04'); //HARDCODED LMAO
+    this.props.close();
+  }
 
   render() {
     return (
       <ConfirmModal
         open={this.props.open}
+        close={this.props.close}
         onClickOverlay={this.props.close}
         onClose={this.props.close}
+        delete={this.props.delete}
         headline="Delete your question?"
       >
         <Modal.Body>
@@ -28,7 +36,7 @@ class DeleteModal extends React.Component {
             <Button variant="tertiary" onClick={this.props.close}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={this.props.close}>
+            <Button variant="primary" onClick={this.handleDelete}>
               Confirm
             </Button>
           </Modal.FooterButtons>
@@ -39,4 +47,15 @@ class DeleteModal extends React.Component {
 
 };
 
-export default DeleteModal;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      deleteMyQuestions
+    },
+    dispatch
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(DeleteModal);
