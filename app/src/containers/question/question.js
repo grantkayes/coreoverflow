@@ -14,6 +14,7 @@ import {
 
 import './index.css';
 import CoreModal from '../coremodal/coremodal';
+import DeleteModal from '../coremodal/deletemodal';
 
 class DetailedQuestion extends React.Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class DetailedQuestion extends React.Component {
       votes: 25,
       isQuestionModalOpen: false,
       isEditQuestionModalOpen: false,
-      isLessModalOpen: false
+      isLessModalOpen: false,
+      isDeleteModalOpen: false,
     };
   }
 
@@ -90,13 +92,13 @@ class DetailedQuestion extends React.Component {
     console.log(this.state);
   }
 
+  toggleDeleteModal = () => {
+    this.setState({ isDeleteModalOpen: !this.state.isDeleteModalOpen });
+  }
+
   confirmDelete = () => {
-    const answer = window.confirm("Are you sure you want to delete?");
-    if (answer) {
-      alert('Okay')
-    } else {
-      alert("jazz music stops");
-    }
+    window.alert('deleting question...');
+    this.toggleDeleteModal();
   }
 
   render() {
@@ -172,10 +174,12 @@ React.render(
                 type={this.props.type}
               />
 
-              <Header className="actions" type="h3" onClick={this.confirmDelete}>
+              <Header className="actions" type="h3" onClick={this.toggleDeleteModal}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
               </Header>
+
+              <DeleteModal open={this.state.isDeleteModalOpen} close={this.confirmDelete}/>
 
 
             </Flex>
