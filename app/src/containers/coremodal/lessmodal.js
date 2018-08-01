@@ -46,7 +46,8 @@ class LessModal extends React.Component {
   submitAnswer = event => {
     event.preventDefault();
     const answer = {
-      body: this.state.body
+      body: this.state.body,
+
     };
 
     if (this.state.body.length > 100) {

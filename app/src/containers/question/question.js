@@ -1,9 +1,11 @@
 import React from 'react';
 import { Flex, Header } from '@procore/core-react';
+import moment from 'moment';
 
 import Markdown from '../../components/markdown';
 import Voting from '../../components/voting';
 import LessModal from '../coremodal/lessmodal';
+import Clap from '../../components/clap'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -100,6 +102,7 @@ class DetailedQuestion extends React.Component {
   }
 
   render() {
+    const { answerCount, questionTitle, body, user, claps, timestamp } = this.props.question;
     console.log(this.state);
     const input = `
 ## Hello
@@ -121,7 +124,7 @@ React.render(
 `;
 
     return (
-      
+
 
       <Flex
         id="question-container"
@@ -134,13 +137,7 @@ React.render(
           alignItems="center"
           justifyContent="center"
         >
-          <Voting
-            votes={this.state.votes}
-            onUpvote={this.onUpvote}
-            onDownvote={this.onDownvote}
-            upvoted={this.state.upvoted}
-            downvoted={this.state.downvoted}
-          />
+          <Clap claps={claps} />
         </Flex>
         <Flex
           justifyContent="center"
@@ -148,9 +145,9 @@ React.render(
           direction="column"
         >
           <Header className="question-title" type="h3">
-            What are Procore's Values?
+            {questionTitle}
           </Header>
-          <Markdown className="question-markdown" text={input} />
+          <Markdown className="question-markdown" text={body} />
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container" justify-content="space-around">
               <Header className="actions" type="h3" onClick={this.toggleLessModal}>
@@ -158,7 +155,7 @@ React.render(
                 Answer
               </Header>
 
-              
+
               <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
 
               <Header className="actions" type="h3" onClick={this.toggleEditQuestionModal}>
@@ -166,8 +163,8 @@ React.render(
                 Edit
               </Header>
 
-              <CoreModal 
-                open={this.state.isEditQuestionModalOpen} 
+              <CoreModal
+                open={this.state.isEditQuestionModalOpen}
                 close={this.toggleEditQuestionModal}
                 type={this.props.type}
               />
@@ -181,13 +178,13 @@ React.render(
             </Flex>
 
             <Header className="record-info" type="h3">
-              Asked by Elton Xue on <i>July 22, 2018</i>
+              Asked by {user} on <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
             </Header>
           </Flex>
         </Flex>
       </Flex>
 
-      
+
     );
   }
 }

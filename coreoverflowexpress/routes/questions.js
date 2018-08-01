@@ -74,6 +74,31 @@ router.get('/', function(req, res, next) {
       '#answers': 'answers'
     }
   };
+  console.log(req.query)
+  if (req.query.id) {
+    const params = {
+      TableName: 'Question',
+      Key: {
+        id: req.query.id.trim()
+      }
+    };
+
+    docClient.get(params, function(err, data) {
+      if (err) {
+        console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
+        res.status(500).send();
+      } else {
+        if (!data.Item) {
+          res.status(404).send()
+        }
+        else {
+          res.status(200).json({data: data.Item})
+        }
+        return;
+      }
+    });
+    return;
+  }
 
   docClient.scan(params, function(err, data) {
     if (err) {
