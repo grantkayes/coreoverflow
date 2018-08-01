@@ -6,6 +6,7 @@ import moment from 'moment'
 import LazyLoad from 'react-lazyload';
 
 const Dashboard = props => {
+  console.log(props.questionData)
   const allQuestions = props.questionData.map((question) => {
     const exampleQuestion = {
       title: question.questionTitle,
@@ -15,7 +16,8 @@ const Dashboard = props => {
       timestamp: moment(question.timestamp),
       user: question.user, 
       userId: question.userId,
-      answerCount: question.answerCount
+      answerCount: question.answerCount,
+      tags: question.tags
     }
 
     return (

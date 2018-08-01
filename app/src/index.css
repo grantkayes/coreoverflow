@@ -52,3 +52,8 @@ button:disabled {
   position: fixed;
   right: 0px;
 }
+
+.tag {
+  margin-right: 2px;
+  background-color: #f47e42;
+}

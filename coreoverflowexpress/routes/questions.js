@@ -61,7 +61,7 @@ router.get('/', function(req, res, next) {
   var params = {
     TableName: 'Question',
     ProjectionExpression:
-      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount, #answers',
+      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount, #answers, #tags',
     ExpressionAttributeNames: {
       '#id': 'id',
       '#questionTitle': 'questionTitle',
@@ -71,7 +71,8 @@ router.get('/', function(req, res, next) {
       '#userEmail': 'userEmail',
       '#timestamp': 'timestamp',
       '#answerCount': 'answerCount',
-      '#answers': 'answers'
+      '#answers': 'answers',
+      '#tags': 'tags'
     }
   };
 
@@ -83,6 +84,7 @@ router.get('/', function(req, res, next) {
       );
     } else {
       console.log("Scan succeeded.");
+      console.log(data)
       res.status(200).send(data)
     }
   });
@@ -114,9 +116,11 @@ router.post('/', function(req, res, next){
     answerCount: 0,
     user: req.body.user,
     answers: {},
+    tags: req.body.tags
   };
 
   const params = createUpdateQuestionParams(uuidv4(), fields);
+
   docClient.update(params, function(err, data) {
     if (err) {
       console.log("Error: ", err);

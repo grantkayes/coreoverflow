@@ -2,6 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import { Box, Card, Flex, Link } from '@procore/core-react';
 import './index.css';
+import TagsInput from 'react-tagsinput'
+import { Token } from '@procore/core-react'
+import 'react-tagsinput/react-tagsinput.css' 
 
 const QuestionCard = props => {
   const {
@@ -12,13 +15,22 @@ const QuestionCard = props => {
     timestamp,
     user,
     answerCount,
-    userId
+    userId,
+    tags
   } = props.question;
 
   let bodyText = body;
   if (body && body.length > 250) {
     bodyText = body.substring(0, 250) + '...';
   }
+
+  const tagContainer = tags.map((tag) => {
+    return (    
+      <Token className="tag">
+        <Token.Label>{tag}</Token.Label>
+      </Token>
+    )
+  })
 
   return (
     <Card className="card" level="30">
@@ -66,8 +78,9 @@ const QuestionCard = props => {
               </Link>
             </Box>
             <Box>
-              <Flex>
+              <Flex direction="column">
                 <p className="card-body">{bodyText}</p>
+                <p className="card-body">{tagContainer}</p>
               </Flex>
             </Box>
             <Flex className="question-user-info" direction="column">
