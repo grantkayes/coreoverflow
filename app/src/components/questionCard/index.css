@@ -37,6 +37,8 @@
 .question-user-info {
   min-width: 210px;
   align-self: flex-end;
+  text-align: right;
+  display: block;
 }
 .subtext {
   font-size: 12px;

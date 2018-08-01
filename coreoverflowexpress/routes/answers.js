@@ -2,8 +2,44 @@ var express = require('express');
 var moment = require('moment');
 var AWS = require('aws-sdk');
 var uuidv4 = require('uuid/v4');
+const { WebClient } = require('@slack/client');
+
+const token = process.env.SLACK_TOKEN;
+
+const web = new WebClient(token);
 
 var router = express.Router();
+
+
+function sendSlackNotification(email, title, id) {
+  web.users.lookupByEmail({ email })
+    .then((res) => {
+      const userId = res.user.id
+      web.im.open({
+        token: process.env.SLACK_BOT_TOKEN,
+        user: userId,
+        return_im: true,
+      })
+      .then((res) => {
+        web.chat.postMessage({
+          token: process.env.SLACK_BOT_TOKEN,
+          channel: res.channel.id,
+          text: `:wave: Hey! Your question has been answered!`,
+          attachments: [
+            {
+              title,
+              title_link: `http://localhost:3000/question/${id}`,
+            }
+          ]
+        })
+          .then((res) => {
+        // `res` contains information about the posted message
+          console.log('Message sent: ', res.ts);
+        })
+          .catch(console.error);
+      })
+    })
+}
 
 function createGetAnswerParams(query) {
   if (Object.keys(query).length === 0) {
@@ -27,23 +63,33 @@ function createGetAnswerParams(query) {
   };
 }
 
-function createUpdateAnswersParams(id, query) {
-  const AttributeUpdates = {};
+// UpdateExpression: `SET #answers = list_append(if_not_exists(#answers, :empty_list), :newAnswer)`,
+// "ExpressionAttributeNames" : {
+//   "#answers" : "answers"
+// },
+// ExpressionAttributeValues:{
+//     ":newAnswer": [query],
+//     ":empty_list":[]
+// },
 
-  for (key in query) {
-    AttributeUpdates[key] = {
-      Action: 'PUT',
-      Value: query[key]
-    };
-  }
+// UpdateExpression = "SET map.#number = :string"
+// ExpressionAttributeNames = { "#number" : "1" }
+// ExpressionAttributeValues = { ":string" : "the string to store in the map at key value 1" }
+// ConditionExpression = "attribute_not_exists(map.#number)"
 
+function createUpdateAnswersParams(questionId, id, query) {
   return {
-    TableName: 'Answer',
-    Key: { id: id.trim() },
-    AttributeUpdates,
+    TableName: 'Question',
+    Key: { id: questionId.trim() },
+    UpdateExpression: "SET answers.#answerId = :answer",
+    ExpressionAttributeNames: { "#answerId" : id },
+    ExpressionAttributeValues: { ":answer" : query },
+    ConditionExpression: "attribute_not_exists(answers.#answerId)",
     ReturnValues: 'ALL_NEW'
   };
 }
+
+
 
 AWS.config.update({
   region: 'eu-west-2',
@@ -64,9 +110,9 @@ router.post('/', function(req, res, next) {
     return;
   }
   if (
-    req.body.userId === undefined ||
-    req.body.userId === null ||
-    req.body.userId.trim() === ''
+    req.body.userEmail === undefined ||
+    req.body.userEmail === null ||
+    req.body.userEmail.trim() === ''
   ) {
     res.status(400).send();
     return;
@@ -79,14 +125,14 @@ router.post('/', function(req, res, next) {
 
   const fields = {
     questionId: req.body.questionId.trim(),
-    userId: req.body.userId.trim(),
+    userEmail: req.body.userEmail.trim(),
     claps: 0,
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
   };
-  const params = createUpdateAnswersParams(uuidv4(), fields);
-  console.log(params);
-
+  console.log(fields);
+  const params = createUpdateAnswersParams(req.body.questionId, uuidv4(), fields);
+  console.log('params', params);
   docClient.update(params, function(err, data) {
     if (err) {
       console.error('Unable to add Answer:', JSON.stringify(err, null, 2));
@@ -94,33 +140,35 @@ router.post('/', function(req, res, next) {
       return;
     }
 
-    console.log('PUT ANSWER SUCCEEDED:', data);
-    const questionParams = {
-      TableName: 'Question',
-      Key: { id: req.body.questionId.trim() },
-      AttributeUpdates: {
-        answerCount: {
-          Action: 'ADD',
-          Value: 1
-        }
-      },
-      ReturnValues: 'ALL_NEW'
-    };
+    console.log(data);
 
-    docClient.update(questionParams, function(err, questionData) {
-      if (err) {
-        console.error(
-          'Unable to update Question:',
-          JSON.stringify(err, null, 2)
-        );
-        res.status(500).send();
-        return;
-      }
-      console.log('update Count');
-      res.status(200).json({
-        data: data.Attributes
-      });
-    });
+    // const questionParams = {
+    //   TableName: 'Question',
+    //   Key: { id: req.body.questionId.trim() },
+    //   AttributeUpdates: {
+    //     answerCount: {
+    //       Action: 'ADD',
+    //       Value: 1
+    //     }
+    //   },
+    //   ReturnValues: 'ALL_NEW'
+    // };
+    //
+    // docClient.update(questionParams, function(err, questionData) {
+    //   if (err) {
+    //     console.error(
+    //       'Unable to update Question:',
+    //       JSON.stringify(err, null, 2)
+    //     );
+    //     res.status(500).send();
+    //     return;
+    //   }
+    //   const question = questionData.Attributes;
+    //   sendSlackNotification(question.userEmail, question.questionTitle, question.id);
+    //   res.status(200).json({
+    //     data: data.Attributes
+    //   });
+    // });
   });
 });
 
