@@ -106,7 +106,7 @@ router.post('/', function(req, res, next) {
     req.body.questionId === null ||
     req.body.questionId.trim() === ''
   ) {
-    res.status(400).send();
+    res.status(400).send('questionId field missing');
     return;
   }
   if (
@@ -114,12 +114,12 @@ router.post('/', function(req, res, next) {
     req.body.userEmail === null ||
     req.body.userEmail.trim() === ''
   ) {
-    res.status(400).send();
+    res.status(400).send('userEmail field missing');
     return;
   }
   //body is optional but should still be a
   if (req.body.body === undefined || req.body.body === null) {
-    res.status(400).send();
+    res.status(400).send('body field missing');
     return;
   }
 
