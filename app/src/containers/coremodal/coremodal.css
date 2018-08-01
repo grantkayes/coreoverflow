@@ -2,13 +2,13 @@
   padding: 0;
   margin: 0;
   list-style: none;
-  
+
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  
+
   -webkit-flex-flow: row;
   flex-flow: row;
   flex-direction: row;
@@ -20,13 +20,13 @@
   padding: 0;
   margin: 0;
   list-style: none;
-  
+
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  
+
   /* -webkit-flex-flow: row;
   flex-flow: row;
   flex-direction: row;
@@ -53,8 +53,17 @@
   width: 100%;
 }
 
+.lessModalHeaderText {
+  color: green;
+  padding-bottom: 0px;
+}
+
 .modalHeader {
   padding: 40px;
+}
+
+.lessModalHeader {
+  padding-left: 20px;
 }
 
 .modalBody {
@@ -72,9 +81,44 @@
 
 .modalTextBody {
   padding: 5px;
-  min-height: 250px;
-  max-height: 250px;
+  min-height: 300px;
+  max-height: 300px;
   overflow-y: auto;
   width: 100%;
-  
+}
+
+.modalFooter {
+  padding-top: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.imageIcon {
+  font-size: 16px;
+}
+
+.uploadContainer {
+  width: 50%;
+}
+
+.uploadImage {
+  width: 93px;
+}
+
+.uploadImageText {
+  font-size: 16px;
+  border: 1px solid black;
+}
+
+.error {
+  color: red;
+  font-weight: lighter;
+  font-style: italic;
+
+  width: 100%;
+}
+
+img[alt='pic'] {
+  max-width: 500px;
+  display: block;
 }

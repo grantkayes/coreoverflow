@@ -22,6 +22,11 @@ class AnswerList extends React.Component {
           timestamp={timestamp}
           claps={claps}
           editAnswer={this.props.editAnswer}
+          submitAnswer={this.props.submitAnswer}
+          questionId={this.props.questionId}
+          userEmail={this.props.userEmail}
+          userFirstName={this.props.userFirstName}
+          userLastName={this.props.userLastName}
         />
       );
     });
