@@ -1,5 +1,4 @@
 import React from 'react';
-import Notifications from './notifications';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
 import { withRouter } from 'react-router';
@@ -81,11 +80,6 @@ class NavBar extends React.Component {
             onChange={this.onChange}
           />
           <Flex className="icons-container" justifyContent="space-around">
-            <Notifications
-              handleClickOutside={this.closeDropdowns}
-              toggleNotifications={this.toggleNotifications}
-              open={this.state.isNotificationsOpen}
-            />
             <Profile
               handleClickOutside={this.closeDropdowns}
               toggleProfile={this.toggleProfile}
