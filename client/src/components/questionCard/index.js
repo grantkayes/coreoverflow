@@ -8,8 +8,7 @@ const QuestionCard = props => {
     id,
     title,
     body,
-    up,
-    down,
+    claps,
     timestamp,
     user,
     answerCount,
@@ -32,7 +31,7 @@ const QuestionCard = props => {
           >
             <Box className="votes-container">
               <Flex alignItems="center" direction="column">
-                <p className="card-vote-num">{up - down}</p>
+                <p className="card-vote-num">{claps}</p>
                 <p className="card-vote-text">votes</p>
               </Flex>
             </Box>
