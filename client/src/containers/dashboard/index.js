@@ -15,7 +15,8 @@ const Dashboard = props => {
       timestamp: moment(question.timestamp),
       user: question.user,
       userId: question.userId,
-      answerCount: question.answerCount
+      answerCount: question.answerCount,
+      tags: question.tags
     }
 
     return (

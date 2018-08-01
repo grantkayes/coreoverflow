@@ -27,8 +27,6 @@ export default (state = initialState, action) => {
 
     case GET_ANSWERS_SUCCEEDED:
       console.log('get answers succeeded');
-      console.log(action.payload);
-
       const payload = action.payload.data;
 
       //Sort by most recent time

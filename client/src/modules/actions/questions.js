@@ -43,23 +43,23 @@ const getQuestions = () => {
   };
 };
 
-const updateQuestions = (title, body) => {
+const updateQuestions = (updateData) => {
   return (dispatch, getState) => {
     dispatch({
       type: UPDATE_QUESTIONS_REQUESTED
     });
-    axios.patch('http://localhost:5000/questions/78a4d6b1-e791-46a3-a056-9a052a24c6a5', {
-      title: title,
-      text: body
+
+    axios.patch(`http://localhost:5000/questions/${updateData.questionId}`, {
+      title: updateData.title,
+      text: updateData.body,
+      tags: updateData.tags
     })
     .then(response => {
-      console.log('res', response);
       return dispatch({
         type: UPDATE_QUESTIONS_SUCCEEDED,
-        payload: response
+        payload: response.data
       })
-    }
-    )
+    })
     .catch(err => {
       console.log(err);
       dispatch({

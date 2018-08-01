@@ -20,9 +20,10 @@
 } 
 
 .flex-item1 {
-  font-size: 16px;
+  width: 35%;
+  font-size: 18px;
   font-weight: bold;
-
+  color: #4d4d4d;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -60,11 +61,6 @@
   align-items: center;
 }
 
-.flex-item1 {
-  width: 20%;
-  font-size: 20;
-}
-
 .flex-item2 {
   width: 100%;
   height: 30px;
@@ -78,10 +74,6 @@
 .lessModalHeaderText {
   color: green;
   padding-bottom: 0px;
-}
-
-.modalHeader {
-  padding: 40px;
 }
 
 .lessModalHeader {
@@ -98,7 +90,8 @@
 }
 
 .modalText {
-  padding: 20px;
+  /* overflow: hidden; */
+  margin: 0px !important;
 }
 
 .modalTextBody {
