@@ -44,8 +44,6 @@ const updateQuestions = (title, body) => {
     dispatch({
       type: UPDATE_QUESTIONS_REQUESTED
     });
-    console.log("made it to Question actions");
-    console.log(title, body);
     axios.patch('http://localhost:5000/questions/78a4d6b1-e791-46a3-a056-9a052a24c6a5', {
       title: title,
       text: body

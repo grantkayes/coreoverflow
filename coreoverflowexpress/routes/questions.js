@@ -38,27 +38,6 @@ function createGetQuestionsParams(query) {
   };
 }
 
-<<<<<<< HEAD
-function createUpdateAnswersParams(id, query) {
-  const AttributeUpdates = {};
- 
-  for (key in query) {
-    AttributeUpdates[key] = {
-      Action: 'PUT',
-      Value: query[key]
-    };
-  }
- 
-  return {
-    TableName: 'Question',
-    Key: { id: id.trim() },
-    AttributeUpdates,
-    ReturnValues: 'ALL_NEW'
-  };
-}
-
-//Get all questions
-=======
 function createUpdateQuestionParams(id, query) {
  const AttributeUpdates = {};
 
@@ -78,7 +57,6 @@ function createUpdateQuestionParams(id, query) {
 }
 
 //Get all questions [DONE]
->>>>>>> 48cc258551193f0243e0ef072b02bcecd9b57f84
 router.get('/', function(req, res, next) {
   var params = {
     TableName: 'Question',
@@ -124,14 +102,8 @@ router.get('/:userEmail', function(req, res, next) {
   });
 });
 
-<<<<<<< HEAD
-router.post('/', function(req, res, next){
-  console.log(req.body.userEmail);
-  console.log(req.body.title);
-=======
 // To post a question [DONE]
 router.post('/', function(req, res, next){
->>>>>>> 48cc258551193f0243e0ef072b02bcecd9b57f84
   const fields = {
     userEmail: req.body.userEmail,
     questionTitle: req.body.title,
@@ -140,19 +112,6 @@ router.post('/', function(req, res, next){
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm'),
     answerCount: 0,
-<<<<<<< HEAD
-    user: req.body.user
-  };
-  const params = createUpdateAnswersParams(uuidv4(), fields);
-  docClient.update(params, function(err, data) {
-    if (err) {
-        console.log("no");
-    } else {
-        console.log("Added item:", JSON.stringify(data, null, 2));
-        res.status(200).send(data)
-    }
-});
-=======
     user: req.body.user,
     answers: {},
   };
@@ -166,7 +125,6 @@ router.post('/', function(req, res, next){
       res.status(200).send(data)
     }
   })
->>>>>>> 48cc258551193f0243e0ef072b02bcecd9b57f84
 })
 
 // To delete a specific question [DONE]
