@@ -180,7 +180,11 @@ React.render(
                 Delete
               </Header>
 
-              <DeleteModal open={this.state.isDeleteModalOpen} delete={this.confirmDelete} close={this.toggleDeleteModal}/>
+              <DeleteModal 
+                open={this.state.isDeleteModalOpen} 
+                delete={this.confirmDelete} 
+                close={this.toggleDeleteModal}
+              />
 
 
             </Flex>
