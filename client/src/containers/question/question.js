@@ -3,9 +3,8 @@ import { Flex, Header, Token } from '@procore/core-react';
 import moment from 'moment';
 
 import Markdown from '../../components/markdown';
-import Voting from '../../components/voting';
-import LessModal from '../coremodal/lessmodal';
 import Clap from '../../components/clap'
+import LessModal from '../coremodal/lessmodal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -16,6 +15,7 @@ import {
 
 import './index.css';
 import CoreModal from '../coremodal/coremodal';
+import DeleteModal from '../coremodal/deletemodal';
 
 class DetailedQuestion extends React.Component {
   constructor(props) {
@@ -27,7 +27,8 @@ class DetailedQuestion extends React.Component {
       votes: 25,
       isQuestionModalOpen: false,
       isEditQuestionModalOpen: false,
-      isLessModalOpen: false
+      isLessModalOpen: false,
+      isDeleteModalOpen: false,
     };
   }
 
@@ -89,13 +90,14 @@ class DetailedQuestion extends React.Component {
     this.setState({ isLessModalOpen: !this.state.isLessModalOpen });
   }
 
+  toggleDeleteModal = () => {
+    this.setState({ isDeleteModalOpen: !this.state.isDeleteModalOpen });
+  }
+
   confirmDelete = () => {
-    const answer = window.confirm("Are you sure you want to delete?");
-    if (answer) {
-      alert('Okay')
-    } else {
-      alert("jazz music stops");
-    }
+    window.alert('deleting question...');
+
+    this.toggleDeleteModal();
   }
 
   render() {
@@ -142,7 +144,7 @@ React.render(
           alignItems="center"
           justifyContent="center"
         >
-          <Clap claps={claps} />
+          <Clap claps={claps}/>
         </Flex>
         <Flex
           justifyContent="center"
@@ -173,10 +175,15 @@ React.render(
                 type='edit'
                 olderData={this.props.question}
               />
-              <Header className="actions" type="h3" onClick={this.confirmDelete}>
+
+              <Header className="actions" type="h3" onClick={this.toggleDeleteModal}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
               </Header>
+
+              <DeleteModal open={this.state.isDeleteModalOpen} delete={this.confirmDelete} close={this.toggleDeleteModal}/>
+
+
             </Flex>
             <Header className="record-info" type="h3">
               Asked by {user} on <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
