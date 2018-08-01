@@ -3,7 +3,11 @@ import { Flex, Card } from '@procore/core-react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getAnswers, editAnswer } from '../../modules/actions/answers';
+import {
+  getAnswers,
+  editAnswer,
+  submitAnswer
+} from '../../modules/actions/answers';
 
 
 import Question from './question';
@@ -32,6 +36,11 @@ class DetailedQuestion extends React.Component {
             answersBusy={this.props.answersBusy}
             answersError={this.props.answersError}
             editAnswer={this.props.editAnswer}
+            submitAnswer={this.props.submitAnswer}
+            questionId={this.props.match.params.id}
+            userEmail={this.props.userEmail}
+            userFirstName={this.props.userFirstName}
+            userLastName={this.props.userLastName}
           />
         </Card>
       </Flex>
@@ -42,14 +51,18 @@ class DetailedQuestion extends React.Component {
 const mapStateToProps = state => ({
   answers: state.answers.data,
   answersBusy: state.answers.busy,
-  answersError: state.answers.error
+  answersError: state.answers.error,
+  userEmail: state.user.data.email,
+  userFirstName: state.user.data.firstName,
+  userLastName: state.user.data.lastName
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getAnswers,
-      editAnswer
+      editAnswer,
+      submitAnswer
     },
     dispatch
   );

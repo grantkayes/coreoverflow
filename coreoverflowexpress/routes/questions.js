@@ -3,6 +3,7 @@ var AWS = require('aws-sdk');
 var uuidv4 = require('uuid/v4');
 var moment = require('moment');
 var router = express.Router();
+var moment = require('moment');
 
 AWS.config.update({
   region: 'eu-west-2',
@@ -37,6 +38,7 @@ function createGetQuestionsParams(query) {
   };
 }
 
+<<<<<<< HEAD
 function createUpdateAnswersParams(id, query) {
   const AttributeUpdates = {};
  
@@ -56,11 +58,32 @@ function createUpdateAnswersParams(id, query) {
 }
 
 //Get all questions
+=======
+function createUpdateQuestionParams(id, query) {
+ const AttributeUpdates = {};
+
+ for (key in query) {
+   AttributeUpdates[key] = {
+     Action: 'PUT',
+     Value: query[key]
+   };
+ }
+
+ return {
+   TableName: 'Question',
+   Key: { id: id.trim() },
+   AttributeUpdates,
+   ReturnValues: 'ALL_NEW'
+ };
+}
+
+//Get all questions [DONE]
+>>>>>>> 48cc258551193f0243e0ef072b02bcecd9b57f84
 router.get('/', function(req, res, next) {
   var params = {
     TableName: 'Question',
     ProjectionExpression:
-      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount',
+      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount, #answers',
     ExpressionAttributeNames: {
       '#id': 'id',
       '#questionTitle': 'questionTitle',
@@ -69,7 +92,8 @@ router.get('/', function(req, res, next) {
       '#user': 'user',
       '#userEmail': 'userEmail',
       '#timestamp': 'timestamp',
-      '#answerCount': 'answerCount'
+      '#answerCount': 'answerCount',
+      '#answers': 'answers'
     }
   };
 
@@ -86,7 +110,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-// Get all questions for a specific userId
+// Get all questions for a specific userId [DONE]
 router.get('/:userEmail', function(req, res, next) {
   let params = createGetQuestionsParams({ userEmail: req.params.userEmail });
 
@@ -100,9 +124,14 @@ router.get('/:userEmail', function(req, res, next) {
   });
 });
 
+<<<<<<< HEAD
 router.post('/', function(req, res, next){
   console.log(req.body.userEmail);
   console.log(req.body.title);
+=======
+// To post a question [DONE]
+router.post('/', function(req, res, next){
+>>>>>>> 48cc258551193f0243e0ef072b02bcecd9b57f84
   const fields = {
     userEmail: req.body.userEmail,
     questionTitle: req.body.title,
@@ -111,6 +140,7 @@ router.post('/', function(req, res, next){
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm'),
     answerCount: 0,
+<<<<<<< HEAD
     user: req.body.user
   };
   const params = createUpdateAnswersParams(uuidv4(), fields);
@@ -122,9 +152,24 @@ router.post('/', function(req, res, next){
         res.status(200).send(data)
     }
 });
+=======
+    user: req.body.user,
+    answers: {},
+  };
+
+  const params = createUpdateQuestionParams(uuidv4(), fields);
+  docClient.update(params, function(err, data) {
+    if (err) {
+      console.log("Error: ", err);
+    } else {
+      console.log("Added item:", JSON.stringify(data, null, 2));
+      res.status(200).send(data)
+    }
+  })
+>>>>>>> 48cc258551193f0243e0ef072b02bcecd9b57f84
 })
 
-// To delete a specific question
+// To delete a specific question [DONE]
 router.delete('/:questionId', function(req, res, next) {
   console.log('within DELETE endpoint');
   var params = {
@@ -144,7 +189,7 @@ router.delete('/:questionId', function(req, res, next) {
   });
 });
 
-// Update a specific question
+// Update a specific question [DONE]
 router.patch('/:questionId', function(req, res, next) {
   console.log('within PATCH endpoint');
 

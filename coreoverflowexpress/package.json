@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "auth0": "^2.11.0",
+    "@slack/client": "^4.3.1",
     "aws-sdk": "^2.279.1",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",

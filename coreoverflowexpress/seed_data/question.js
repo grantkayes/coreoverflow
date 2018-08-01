@@ -40,7 +40,8 @@ function createQuestions(num) {
         'I am not sure what to do to make this work. The issue arise when I do this.',
       user: 'Elton Xue',
       userEmail: 'elton.xue@procore.com',
-      timestamp: '2018-07-27T14:21'
+      timestamp: '2018-07-27T14:21',
+      answers: {}
     }
   ];
 
@@ -49,6 +50,7 @@ function createQuestions(num) {
     console.log(user)
 
     questionData.push({
+<<<<<<< HEAD
       "id": uuidv4(),
       "answerCount": 4,
       "questionTitle": randomSentence({min: 10, max: 25}),
@@ -59,6 +61,18 @@ function createQuestions(num) {
       "userEmail": user.email,
       "timestamp": `2018-07-1${pickRandomNumber()}T14:21`
     })
+=======
+      id: uuidv4(),
+      answerCount: 4,
+      questionTitle: randomSentence({ min: 10, max: 25 }),
+      claps: 5,
+      body: randomParagraph({ min: 1, max: 20 }),
+      user: user.name,
+      userEmail: user.email,
+      timestamp: '2018-07-27T14:21',
+      answers: {}
+    });
+>>>>>>> 48cc258551193f0243e0ef072b02bcecd9b57f84
   }
   return questionData;
 }

@@ -1,7 +1,11 @@
-export const GET_ANSWERS_REQUESTED = 'GET_ANSWERS_REQUESTED';
+import moment from 'moment';
+
+export const ANSWERS_ACTION_REQUESTED = 'ANSWERS_ACTION_REQUESTED';
+
 export const GET_ANSWERS_SUCCEEDED = 'GET_ANSWERS_SUCEEDED';
 export const GET_ANSWERS_FAILED = 'GET_ANSWERS_FAILED';
-export const EDIT_ANSWER_REQUESTED = 'EDIT_ANSWER_REQUESTED';
+export const SUBMIT_ANSWER_SUCCEEDED = 'SUBMIT_ANSWER_SUCCEEDED';
+export const SUBMIT_ANSWER_FAILED = 'SUBMIT_ANSWER_FAILED';
 export const EDIT_ANSWER_SUCCEEDED = 'EDIT_ANSWER_SUCCEEDED';
 export const EDIT_ANSWER_FAILED = 'EDIT_ANSWER_FAILED';
 
@@ -13,8 +17,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_ANSWERS_REQUESTED:
-      console.log('get answers requested...');
+    case ANSWERS_ACTION_REQUESTED:
+      console.log('answers requested...');
       return {
         ...state,
         busy: true,
@@ -24,9 +28,18 @@ export default (state = initialState, action) => {
     case GET_ANSWERS_SUCCEEDED:
       console.log('get answers succeeded');
       console.log(action.payload);
+
+      const payload = action.payload.data;
+
+      //Sort by most recent time
+      payload.sort(
+        (answer1, answer2) =>
+          moment(answer2.timestamp) - moment(answer1.timestamp)
+      );
+
       return {
         ...state,
-        data: action.payload.data,
+        data: payload,
         busy: false,
         error: null
       };
@@ -39,13 +52,28 @@ export default (state = initialState, action) => {
         error: action.error
       };
 
-    case EDIT_ANSWER_REQUESTED:
-      console.log('edit answers requested');
+    case SUBMIT_ANSWER_SUCCEEDED:
+      console.log('submit answer succeeded');
+      console.log(
+        'action payload for submitting answers: ' + action.payload.data
+      );
+
+      const newData = [action.payload.data, ...state.data];
 
       return {
         ...state,
-        busy: true,
+        data: newData,
+        busy: false,
         error: null
+      };
+
+    case SUBMIT_ANSWER_FAILED:
+      console.log('submit answer failed');
+      console.log(action.error);
+      return {
+        ...state,
+        busy: false,
+        error: action.error
       };
 
     case EDIT_ANSWER_SUCCEEDED:
@@ -53,7 +81,7 @@ export default (state = initialState, action) => {
       const { data } = action.payload;
 
       const answerId = data.id;
-      const changes = data.data;
+      const changes = data;
 
       const answers = state.data.map(
         answer =>
@@ -71,7 +99,6 @@ export default (state = initialState, action) => {
         busy: false,
         error: null
       };
-    // return { ...state };
 
     case EDIT_ANSWER_FAILED:
       console.log('edit answer failed');
