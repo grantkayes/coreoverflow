@@ -2,6 +2,26 @@
   padding: 0;
   margin: 0;
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* .core-modal {
+} */
+
+.modalTextBody {
+  padding: 5px;
+  min-height: 250px;
+  max-height: 250px;
+  overflow-y: auto;
+  width: 500px;
+  
+} 
+
+.flex-item1 {
+  font-size: 16px;
+  font-weight: bold;
 
   display: -webkit-box;
   display: -moz-box;
@@ -16,6 +36,12 @@
   align-items: center;
 }
 
+/* .dropzone {
+  height: 30px;
+  width: 50px;
+} */
+
+
 .flex-container2 {
   padding: 0;
   margin: 0;
@@ -27,11 +53,11 @@
   display: -webkit-flex;
   display: flex;
 
-  /* -webkit-flex-flow: row;
+   -webkit-flex-flow: row;
   flex-flow: row;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center; */
+  align-items: center;
 }
 
 .flex-item1 {
@@ -43,10 +69,6 @@
   width: 100%;
   height: 30px;
 }
-
-/* .flex-item3 {
-  align-content: left;
-} */
 
 .modalHeaderText {
   height: 30px;

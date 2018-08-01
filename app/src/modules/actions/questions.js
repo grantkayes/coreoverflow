@@ -12,7 +12,10 @@ import {
   GET_CURRENT_QUESTION_FAILED,
   GET_SEARCH_RESULTS,
   DELETE_MY_QUESTION,
-  DELETE_MY_QUESTION_FAILED
+  DELETE_MY_QUESTION_FAILED,
+  UPDATE_QUESTIONS_REQUESTED,
+  UPDATE_QUESTIONS_SUCCEEDED,
+  UPDATE_QUESTIONS_FAILED
 } from '../reducers/questions';
 
 const getQuestions = () => {
@@ -22,11 +25,13 @@ const getQuestions = () => {
     });
 
     axios.get('http://localhost:5000/questions/')
-    .then(response =>
-      dispatch({
+    .then(response => {
+      console.log('res', response)
+      return dispatch({
         type: GET_QUESTIONS_SUCCEEDED,
         payload: response
       })
+    }
     )
     .catch(err =>
       dispatch({
@@ -34,6 +39,33 @@ const getQuestions = () => {
         error: err
       })
     );
+  };
+};
+
+const updateQuestions = (title, body) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: UPDATE_QUESTIONS_REQUESTED
+    });
+    axios.patch('http://localhost:5000/questions/78a4d6b1-e791-46a3-a056-9a052a24c6a5', {
+      title: title,
+      text: body
+    })
+    .then(response => {
+      console.log('res', response);
+      return dispatch({
+        type: UPDATE_QUESTIONS_SUCCEEDED,
+        payload: response
+      })
+    }
+    )
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: UPDATE_QUESTIONS_FAILED,
+        error: err
+      });
+    });
   };
 };
 
@@ -119,5 +151,6 @@ export {
   getMyQuestions,
   getCurrentQuestion,
   getSearchResults,
-  deleteMyQuestions
+  deleteMyQuestions,
+  updateQuestions
 };

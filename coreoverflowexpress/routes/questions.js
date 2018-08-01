@@ -1,6 +1,7 @@
 var express = require('express');
 var AWS = require('aws-sdk');
 var uuidv4 = require('uuid/v4');
+var moment = require('moment');
 var router = express.Router();
 var moment = require('moment');
 

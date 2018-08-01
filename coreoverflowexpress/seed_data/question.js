@@ -47,8 +47,21 @@ function createQuestions(num) {
 
   for (var x = 0; x < num - 1; x++) {
     var user = pickRandomUser(users);
+    console.log(user)
 
     questionData.push({
+<<<<<<< HEAD
+      "id": uuidv4(),
+      "answerCount": 4,
+      "questionTitle": randomSentence({min: 10, max: 25}),
+      "up": 5,
+      "down": 2,
+      "body": randomParagraph({min: 1, max: 2}),
+      "user": user.name,
+      "userEmail": user.email,
+      "timestamp": `2018-07-1${pickRandomNumber()}T14:21`
+    })
+=======
       id: uuidv4(),
       answerCount: 4,
       questionTitle: randomSentence({ min: 10, max: 25 }),
@@ -59,6 +72,7 @@ function createQuestions(num) {
       timestamp: '2018-07-27T14:21',
       answers: {}
     });
+>>>>>>> 48cc258551193f0243e0ef072b02bcecd9b57f84
   }
   return questionData;
 }

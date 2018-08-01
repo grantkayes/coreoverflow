@@ -12,6 +12,9 @@ export const DELETE_MY_QUESTION_FAILED = 'DELETE_MY_QUESTION_FAILED';
 export const GET_CURRENT_QUESTION_REQUESTED = 'GET_CURRENT_QUESTION_REQUESTED';
 export const GET_CURRENT_QUESTION_SUCCEEDED = 'GET_CURRENT_QUESTION_SUCEEDED';
 export const GET_CURRENT_QUESTION_FAILED = 'GET_CURRENT_QUESTION_FAILED';
+export const UPDATE_QUESTIONS_REQUESTED = 'UPDATE_QUESTIONS_REQUESTED';
+export const UPDATE_QUESTIONS_SUCCEEDED = 'UPDATE_QUESTIONS_SUCCEEDED';
+export const UPDATE_QUESTIONS_FAILED= 'UPDATE_QUESTIONS_FAILED';
 
 const initialState = {
   data: [],
@@ -132,6 +135,27 @@ export default (state = initialState, action) => {
     case DELETE_MY_QUESTION_FAILED:
       console.log('delete my question failed');
       return
+
+    case UPDATE_QUESTIONS_REQUESTED:
+      console.log('update questions requested...');
+      return {
+        ...state,
+        busy: true,
+        error: null
+      };
+
+    case UPDATE_QUESTIONS_SUCCEEDED:
+      console.log('update questions succeeded');
+      return {
+        ...state,
+        data: action.payload.data,
+        busy: false,
+        error: null
+      };
+
+    case UPDATE_QUESTIONS_FAILED:
+      console.log('update questions failed');
+      return state;
 
     default:
       return state;
