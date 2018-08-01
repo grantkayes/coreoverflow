@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Header } from '@procore/core-react';
 
 import Markdown from '../../components/markdown';
-import Clap from '../../components/clap';
+import Voting from '../../components/voting';
 import LessModal from '../coremodal/lessmodal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,20 +23,81 @@ class DetailedQuestion extends React.Component {
       upvoted: false,
       downvoted: false,
       votes: 25,
-      isModalOpen: false,
+      isQuestionModalOpen: false,
+      isEditQuestionModalOpen: false,
       isLessModalOpen: false
     };
   }
 
-  toggleModal = () => {
-    this.setState({ isModalOpen: !this.state.isModalOpen });
-    console.log(this.state);
+  onUpvote = () => {
+    console.log('I upvoted!');
+    if (this.state.downvoted) {
+      this.setState({
+        upvoted: true,
+        downvoted: false,
+        votes: this.state.votes + 2
+      });
+    } else if (this.state.upvoted) {
+      this.setState({
+        upvoted: false,
+        downvoted: false,
+        votes: this.state.votes - 1
+      });
+    } else {
+      this.setState({
+        upvoted: true,
+        downvoted: false,
+        votes: this.state.votes + 1
+      });
+    }
   };
+
+  onDownvote = () => {
+    console.log('I downvoted!');
+    if (this.state.upvoted) {
+      this.setState({
+        downvoted: true,
+        upvoted: false,
+        votes: this.state.votes - 2
+      });
+    } else if (this.state.downvoted) {
+      this.setState({
+        downvoted: false,
+        upvoted: false,
+        votes: this.state.votes + 1
+      });
+    } else {
+      this.setState({
+        downvoted: true,
+        upvoted: false,
+        votes: this.state.votes - 1
+      });
+    }
+  };
+
+  toggleQuestionModal = () => {
+    this.setState({ isQuestionModalOpen: !this.state.isQuestionModalOpen });
+    console.log(this.state);
+  }
+
+  toggleEditQuestionModal = () => {
+    this.setState({ isEditQuestionModalOpen: !this.state.isEditQuestionModalOpen });
+    console.log(this.state);
+  }
 
   toggleLessModal = () => {
     this.setState({ isLessModalOpen: !this.state.isLessModalOpen });
     console.log(this.state);
-  };
+  }
+
+  confirmDelete = () => {
+    const answer = window.confirm("Are you sure you want to delete?");
+    if (answer) {
+      alert('Okay')
+    } else {
+      alert("jazz music stops");
+    }
+  }
 
   render() {
     console.log(this.state);
@@ -60,6 +121,8 @@ React.render(
 `;
 
     return (
+      
+
       <Flex
         id="question-container"
         direction="row"
@@ -71,7 +134,13 @@ React.render(
           alignItems="center"
           justifyContent="center"
         >
-          <Clap claps={31} />
+          <Voting
+            votes={this.state.votes}
+            onUpvote={this.onUpvote}
+            onDownvote={this.onDownvote}
+            upvoted={this.state.upvoted}
+            downvoted={this.state.downvoted}
+          />
         </Flex>
         <Flex
           justifyContent="center"
@@ -84,34 +153,31 @@ React.render(
           <Markdown className="question-markdown" text={input} />
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container" justify-content="space-around">
-              <Header
-                className="actions"
-                type="h3"
-                onClick={this.toggleLessModal}
-              >
+              <Header className="actions" type="h3" onClick={this.toggleLessModal}>
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
               </Header>
 
-              <LessModal
-                open={this.state.isLessModalOpen}
-                close={this.toggleLessModal}
-              />
+              
+              <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
 
-              <Header className="actions" type="h3" onClick={this.toggleModal}>
+              <Header className="actions" type="h3" onClick={this.toggleEditQuestionModal}>
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
 
-              <CoreModal
-                open={this.state.isModalOpen}
-                close={this.toggleModal}
+              <CoreModal 
+                open={this.state.isEditQuestionModalOpen} 
+                close={this.toggleEditQuestionModal}
+                type={this.props.type}
               />
 
-              <Header className="actions" type="h3">
+              <Header className="actions" type="h3" onClick={this.confirmDelete}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
               </Header>
+
+
             </Flex>
 
             <Header className="record-info" type="h3">
@@ -120,6 +186,8 @@ React.render(
           </Flex>
         </Flex>
       </Flex>
+
+      
     );
   }
 }

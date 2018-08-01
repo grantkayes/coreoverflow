@@ -66,6 +66,7 @@ class LessModal extends React.Component {
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
+    console.log('WHOO we did it reddit!');
     console.log(acceptedFiles[0]);
 
     let data = new FormData();
