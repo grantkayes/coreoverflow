@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getAnswers, editAnswer } from '../../modules/actions/answers';
 
+
 import Question from './question';
 import AnswerList from './answerList';
 
@@ -23,7 +24,9 @@ class DetailedQuestion extends React.Component {
     return (
       <Flex id="main-container" justifyContent="center" direction="column">
         <Card id="card-container" className="card" level="30">
-          <Question />
+          <Question
+            type='edit'
+          />
           <AnswerList
             answers={this.props.answers}
             answersBusy={this.props.answersBusy}

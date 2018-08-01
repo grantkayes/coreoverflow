@@ -22,17 +22,16 @@ class LessModal extends React.Component {
     }
   }
 
-  submitQuestion = event => {
+  submitAnswer = event => {
     event.preventDefault();
 
-    const Question = {
-      title: this.state.title,
+    const Answer = {
       body: this.state.body,
       user: "Grant K",
       userEmail: "grant.kayes@procore.com"
     };
 
-    axios.post('http://localhost:5000/questions', Question)
+    axios.post('http://localhost:5000/questions', Answer)
       .then(res => {
         console.log('response');
         console.log(res);

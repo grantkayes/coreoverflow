@@ -23,7 +23,8 @@ class DetailedQuestion extends React.Component {
       upvoted: false,
       downvoted: false,
       votes: 25,
-      isModalOpen: false,
+      isQuestionModalOpen: false,
+      isEditQuestionModalOpen: false,
       isLessModalOpen: false
     };
   }
@@ -74,8 +75,13 @@ class DetailedQuestion extends React.Component {
     }
   };
 
-  toggleModal = () => {
-    this.setState({ isModalOpen: !this.state.isModalOpen });
+  toggleQuestionModal = () => {
+    this.setState({ isQuestionModalOpen: !this.state.isQuestionModalOpen });
+    console.log(this.state);
+  }
+
+  toggleEditQuestionModal = () => {
+    this.setState({ isEditQuestionModalOpen: !this.state.isEditQuestionModalOpen });
     console.log(this.state);
   }
 
@@ -87,12 +93,7 @@ class DetailedQuestion extends React.Component {
   confirmDelete = () => {
     const answer = window.confirm("Are you sure you want to delete?");
     if (answer) {
-      axios.delete('http://localhost:5000/questions', )
-      .then(res => {
-        console.log('response');
-        console.log(res);
-        console.log(res.data);
-      })
+      alert('Okay')
     } else {
       alert("jazz music stops");
     }
@@ -160,12 +161,16 @@ React.render(
               
               <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
 
-              <Header className="actions" type="h3" onClick={this.toggleModal}>
+              <Header className="actions" type="h3" onClick={this.toggleEditQuestionModal}>
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
 
-              <CoreModal open={this.state.isModalOpen} close={this.toggleModal} />
+              <CoreModal 
+                open={this.state.isEditQuestionModalOpen} 
+                close={this.toggleEditQuestionModal}
+                type={this.props.type}
+              />
 
               <Header className="actions" type="h3" onClick={this.confirmDelete}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />

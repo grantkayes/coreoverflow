@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { toggleModal } from '../../modules/sidebar.js';
-import CoreModal from '../coremodal/coremodal'
+import CoreModal from '../coremodal/coremodal';
 
 const SideBarContainer = props => (
   <div>
@@ -12,7 +12,11 @@ const SideBarContainer = props => (
       toggleModal={props.toggleModal}
       changePage={() => props.changePage()}
     />
-    <CoreModal open={props.isModalOpen} close={props.toggleModal}/>
+    <CoreModal 
+      open={props.isModalOpen} 
+      close={props.toggleModal}
+      type='post'
+    />
   </div>
 );
 

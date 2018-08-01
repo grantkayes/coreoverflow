@@ -1,14 +1,14 @@
-import React from 'react'
-import { Modal, Button, Header } from '@procore/core-react'
-import { TextArea } from '@procore/core-react'
-import { Tabs } from '@procore/core-react'
-import Markdown from '../../components/markdown'
-import Dropzone from 'react-dropzone'
-import axios from 'axios'
+import React from 'react';
+import { Modal, Button, Header } from '@procore/core-react';
+import { TextArea } from '@procore/core-react';
+import { Tabs } from '@procore/core-react';
+import { updateQuestions } from '../../modules/actions/questions';
+import Markdown from '../../components/markdown';
+import Dropzone from 'react-dropzone';
+import axios from 'axios';
 import './coremodal.css';
-// import { push } from 'connected-react-router'
-// import { bindActionCreators } from 'redux'
-// import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 class CoreModal extends React.Component {
 
@@ -18,10 +18,12 @@ class CoreModal extends React.Component {
       title: '',
       body: '',
       isWriteActive: true,
-      isPreviewActive: false
+      isPreviewActive: false,
+      type : this.props.type
     }
   }
 
+  //Put in reducer
   submitQuestion = event => {
     event.preventDefault();
 
@@ -57,6 +59,10 @@ class CoreModal extends React.Component {
         const imageURL = res.data.success[0].location;
         this.setState({body: `${this.state.body}\n![](${imageURL})`})
       })
+  }
+
+  handleUpdate = (props) => {
+    this.props.updateQuestions(this.state.title, this.state.body);
   }
 
   setTitle = (event) => {
@@ -103,10 +109,11 @@ class CoreModal extends React.Component {
             <Modal.FooterButtons>
               <Button variant="tertiary" onClick={this.props.close}>
                 Cancel
-                </Button>
-              <Button variant="primary" onClick={this.submitQuestion}>
-                Submit
               </Button>
+
+              {this.state.type === 'edit' && <Button variant="primary" onClick={this.handleUpdate}> Submit Edit </Button>}
+              {this.state.type === 'post' && <Button variant="primary" onClick={this.submitQuestion}> Submit </Button>}
+              
             </Modal.FooterButtons>
         </Modal.Footer> 
       </Modal>
@@ -114,4 +121,15 @@ class CoreModal extends React.Component {
   }
 }
 
-export default CoreModal;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateQuestions
+    },
+    dispatch
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CoreModal);
