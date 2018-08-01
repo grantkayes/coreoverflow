@@ -77,14 +77,38 @@ function createGetAnswerParams(query) {
 // ExpressionAttributeValues = { ":string" : "the string to store in the map at key value 1" }
 // ConditionExpression = "attribute_not_exists(map.#number)"
 
-function createUpdateAnswersParams(questionId, id, query) {
+function createPostAnswersParams(questionId, id, query) {
   return {
     TableName: 'Question',
     Key: { id: questionId.trim() },
-    UpdateExpression: "SET answers.#answerId = :answer",
-    ExpressionAttributeNames: { "#answerId" : id },
-    ExpressionAttributeValues: { ":answer" : query },
+    UpdateExpression: "SET answers.#answerId = :answer, answerCount = answerCount + :count",
+    ExpressionAttributeNames: { "#answerId" : id.trim() },
+    ExpressionAttributeValues: { ":answer" : query, ':count': 1 },
     ConditionExpression: "attribute_not_exists(answers.#answerId)",
+    ReturnValues: 'ALL_NEW'
+  };
+}
+
+function createUpdateAnswersParams(questionId, id, query) {
+  let UpdateExpression = []
+  let ExpressionAttributeNames = { "#answerId": id.trim() };
+  let ExpressionAttributeValues = {};
+
+  for (key in query) {
+    UpdateExpression.push(`answers.#answerId.#${key} = :${key}`);
+    ExpressionAttributeNames[`#${key}`] = key;
+    ExpressionAttributeValues[`:${key}`] = query[key];
+  }
+
+  UpdateExpression = 'SET ' + UpdateExpression.join(',');
+  console.log(UpdateExpression);
+  return {
+    TableName: 'Question',
+    Key: { id: questionId.trim() },
+    UpdateExpression,
+    ExpressionAttributeNames,
+    ExpressionAttributeValues,
+    ConditionExpression: "attribute_exists(answers.#answerId)",
     ReturnValues: 'ALL_NEW'
   };
 }
@@ -101,19 +125,19 @@ AWS.config.update({
 var docClient = new AWS.DynamoDB.DocumentClient();
 
 router.post('/', function(req, res, next) {
-  if (
-    req.body.questionId === undefined ||
-    req.body.questionId === null ||
-    req.body.questionId.trim() === ''
-  ) {
+  if (req.body.questionId === undefined || req.body.questionId === null || req.body.questionId.trim() === '') {
     res.status(400).send();
     return;
   }
-  if (
-    req.body.userEmail === undefined ||
-    req.body.userEmail === null ||
-    req.body.userEmail.trim() === ''
-  ) {
+  if (req.body.userEmail === undefined || req.body.userEmail === null || req.body.userEmail.trim() === '') {
+    res.status(400).send();
+    return;
+  }
+  if (req.body.firstName === undefined || req.body.firstName === null || req.body.firstName.trim() === '') {
+    res.status(400).send();
+    return;
+  }
+  if (req.body.lastName === undefined || req.body.lastName === null || req.body.lastName.trim() === '') {
     res.status(400).send();
     return;
   }
@@ -126,13 +150,16 @@ router.post('/', function(req, res, next) {
   const fields = {
     questionId: req.body.questionId.trim(),
     userEmail: req.body.userEmail.trim(),
+    firstName: req.body.firstName.trim(),
+    lastName: req.body.lastName.trim(),
     claps: 0,
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm')
   };
-  console.log(fields);
-  const params = createUpdateAnswersParams(req.body.questionId, uuidv4(), fields);
-  console.log('params', params);
+
+  const answerId = uuidv4();
+  const params = createPostAnswersParams(req.body.questionId, answerId, fields);
+
   docClient.update(params, function(err, data) {
     if (err) {
       console.error('Unable to add Answer:', JSON.stringify(err, null, 2));
@@ -140,78 +167,63 @@ router.post('/', function(req, res, next) {
       return;
     }
 
-    console.log(data);
-
-    // const questionParams = {
-    //   TableName: 'Question',
-    //   Key: { id: req.body.questionId.trim() },
-    //   AttributeUpdates: {
-    //     answerCount: {
-    //       Action: 'ADD',
-    //       Value: 1
-    //     }
-    //   },
-    //   ReturnValues: 'ALL_NEW'
-    // };
-    //
-    // docClient.update(questionParams, function(err, questionData) {
-    //   if (err) {
-    //     console.error(
-    //       'Unable to update Question:',
-    //       JSON.stringify(err, null, 2)
-    //     );
-    //     res.status(500).send();
-    //     return;
-    //   }
-    //   const question = questionData.Attributes;
-    //   sendSlackNotification(question.userEmail, question.questionTitle, question.id);
-    //   res.status(200).json({
-    //     data: data.Attributes
-    //   });
-    // });
-  });
-});
-
-router.get('/', function(req, res, next) {
-  console.log('zhag');
-  let params = createGetAnswerParams(req.query);
-  params.TableName = 'Answer';
-
-  docClient.scan(params, function(err, data) {
-    if (err) {
-      console.log(err);
-      res.status(500).send();
-      return;
-    }
-    console.log(data);
-    console.log('success');
+    const question = data.Attributes;
+    sendSlackNotification(question.userEmail, question.questionTitle, question.id);
     res.status(200).json({
-      data: data.Items
+      data: data.Attributes
     });
   });
 });
 
-router.get('/:id', function(req, res, next) {
-  console.log('bob');
+// router.get('/', function(req, res, next) {
+//   console.log('zhag');
+//   let params = createGetAnswerParams(req.query);
+//   params.TableName = 'Answer';
+//
+//   docClient.scan(params, function(err, data) {
+//     if (err) {
+//       console.log(err);
+//       res.status(500).send();
+//       return;
+//     }
+//     console.log(data);
+//     console.log('success');
+//     res.status(200).json({
+//       data: data.Items
+//     });
+//   });
+// });
+//
+router.get('/', function(req, res, next) {
+  console.log(req.query);
+  if (req.query.questionId === undefined || req.query.questionId === null || req.query.questionId.trim() === '') {
+    res.status(400).send();
+    return;
+  }
+
   const params = {
-    TableName: 'Answer',
-    KeyConditionExpression: '#id = :id',
-    ExpressionAttributeNames: {
-      '#id': 'id'
-    },
-    ExpressionAttributeValues: {
-      ':id': req.params.id
+    TableName: 'Question',
+    Key: {
+      id: req.query.questionId.trim()
     }
   };
 
-  docClient.query(params, function(err, data) {
+  docClient.get(params, function(err, data) {
     if (err) {
       console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
       res.status(500).send();
     } else {
-      console.log('Query succeeded.');
+      console.log('Query succeeded.', data.Item.answers);
+      const listData = []
+
+      for (key in data.Item.answers) {
+        const answerObj = data.Item.answers[key]
+        answerObj.id = key;
+        listData.push(answerObj);
+      }
+
       res.send({
-        data: data.Items
+        data: listData
       });
       return;
     }
@@ -219,15 +231,17 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.patch('/:id', function(req, res, next) {
-  if (
-    req.params.id === undefined ||
-    req.params.id === null ||
-    req.params.id.trim() === ''
-  ) {
-    res.status(400).send('PATCH ANSWER: Missing Id');
+  if (req.params.id === undefined || req.params.id === null || req.params.id.trim() === '') {
+    res.status(400).send('PATCH ANSWER: Missing id');
     return;
   }
-  const params = createUpdateAnswersParams(req.params.id, req.body);
+  if (req.body.questionId === undefined || req.body.questionId === null || req.body.questionId.trim() === '') {
+    res.status(400).send();
+    return;
+  }
+  console.log('adf');
+  const params = createUpdateAnswersParams(req.body.questionId.trim(), req.params.id, req.body);
+  console.log('params', params)
 
   docClient.update(params, function(err, data) {
     if (err) {
@@ -244,23 +258,26 @@ router.patch('/:id', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
-  if (
-    req.params.id === undefined ||
-    req.params.id === null ||
-    req.params.id.trim() === ''
-  ) {
+  if (req.params.id === undefined || req.params.id === null || req.params.id.trim() === '') {
     res.status(400).send('PATCH ANSWER: Missing Id');
     return;
   }
 
+  if (req.body.questionId === undefined || req.body.questionId === null || req.body.questionId.trim() === '') {
+    res.status(400).send('PATCH ANSWER: Missing Question Id');
+    return;
+  }
+
   const params = {
-    TableName: 'Answer',
+    TableName: 'Question',
     Key: {
-      id: req.params.id.trim()
-    }
+      id: req.body.questionId.trim()
+    },
+    UpdateExpression: `REMOVE answers.#answerId`,
+    ExpressionAttributeNames: { "#answerId" : req.params.id.trim() },
   };
 
-  docClient.delete(params, function(err, data) {
+  docClient.update(params, function(err, data) {
     if (err) {
       console.error('Unable to delete Answer:', JSON.stringify(err, null, 2));
       res.status(500).send();
