@@ -11,12 +11,12 @@ const Dashboard = props => {
       id: question.id,
       title: question.questionTitle,
       body: question.body,
-      up: question.up,
-      down: question.down,
+      claps: question.claps,
       timestamp: moment(question.timestamp),
       user: question.user,
       userId: question.userId,
-      answerCount: question.answerCount
+      answerCount: question.answerCount,
+      tags: question.tags
     }
 
     return (

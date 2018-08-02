@@ -4,7 +4,11 @@ var AWS = require('aws-sdk');
 var uuidv4 = require('uuid/v4');
 const { WebClient } = require('@slack/client');
 
+require('dotenv').config();
+
 const token = process.env.SLACK_TOKEN;
+
+const PUBLIC_URL = process.env.PUBLIC_URL;
 
 const web = new WebClient(token);
 
@@ -30,7 +34,7 @@ function sendSlackNotification(email, title, id) {
               attachments: [
                 {
                   title,
-                  title_link: `http://localhost:3000/question/${id}`
+                  title_link: PUBLIC_URL + `/question/${id}`
                 }
               ]
             })
@@ -120,10 +124,10 @@ function createUpdateAnswersParams(questionId, id, query) {
 }
 
 AWS.config.update({
-  region: 'eu-west-2',
-  endpoint: 'http://localhost:8000',
-  accessKeyId: 'myfakeaccessid',
-  secretAccessKey: 'secret'
+  region: process.env.DYNAMO_REGION,
+  endpoint: process.env.DYNAMO_ENDPOINT,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 
 var docClient = new AWS.DynamoDB.DocumentClient();

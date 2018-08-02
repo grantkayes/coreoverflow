@@ -1,11 +1,10 @@
 import React from 'react';
-import { Flex, Header } from '@procore/core-react';
+import { Flex, Header, Token } from '@procore/core-react';
 import moment from 'moment';
 
 import Markdown from '../../components/markdown';
-import Voting from '../../components/voting';
-import LessModal from '../coremodal/lessmodal';
 import Clap from '../../components/clap'
+import LessModal from '../coremodal/lessmodal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -16,6 +15,7 @@ import {
 
 import './index.css';
 import CoreModal from '../coremodal/coremodal';
+import DeleteModal from '../coremodal/deletemodal';
 
 class DetailedQuestion extends React.Component {
   constructor(props) {
@@ -27,7 +27,8 @@ class DetailedQuestion extends React.Component {
       votes: 25,
       isQuestionModalOpen: false,
       isEditQuestionModalOpen: false,
-      isLessModalOpen: false
+      isLessModalOpen: false,
+      isDeleteModalOpen: false,
     };
   }
 
@@ -79,31 +80,28 @@ class DetailedQuestion extends React.Component {
 
   toggleQuestionModal = () => {
     this.setState({ isQuestionModalOpen: !this.state.isQuestionModalOpen });
-    console.log(this.state);
   }
 
   toggleEditQuestionModal = () => {
     this.setState({ isEditQuestionModalOpen: !this.state.isEditQuestionModalOpen });
-    console.log(this.state);
   }
 
   toggleLessModal = () => {
     this.setState({ isLessModalOpen: !this.state.isLessModalOpen });
-    console.log(this.state);
+  }
+
+  toggleDeleteModal = () => {
+    this.setState({ isDeleteModalOpen: !this.state.isDeleteModalOpen });
   }
 
   confirmDelete = () => {
-    const answer = window.confirm("Are you sure you want to delete?");
-    if (answer) {
-      alert('Okay')
-    } else {
-      alert("jazz music stops");
-    }
+    window.alert('deleting question...');
+
+    this.toggleDeleteModal();
   }
 
   render() {
-    const { answerCount, questionTitle, body, user, claps, timestamp } = this.props.question;
-    console.log(this.state);
+    const { answerCount, questionTitle, body, user, claps, timestamp, tags } = this.props.question;
     const input = `
 ## Hello
 
@@ -123,9 +121,18 @@ React.render(
 \`\`\`
 `;
 
+    let tagContainer = ""
+    if(tags) {
+      tagContainer = tags.map((tag, index) => {
+        return (    
+          <Token key={index} className="tag">
+            <Token.Label>{tag}</Token.Label>
+          </Token>
+        )
+      })
+    }
+
     return (
-
-
       <Flex
         id="question-container"
         direction="row"
@@ -137,7 +144,7 @@ React.render(
           alignItems="center"
           justifyContent="center"
         >
-          <Clap claps={claps} />
+          <Clap claps={claps}/>
         </Flex>
         <Flex
           justifyContent="center"
@@ -148,43 +155,42 @@ React.render(
             {questionTitle}
           </Header>
           <Markdown className="question-markdown" text={body} />
+          <Flex className="tags-container" direction="row">
+            {tagContainer}
+          </Flex>
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container" justify-content="space-around">
               <Header className="actions" type="h3" onClick={this.toggleLessModal}>
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
               </Header>
-
-
               <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
-
               <Header className="actions" type="h3" onClick={this.toggleEditQuestionModal}>
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
-
               <CoreModal
                 open={this.state.isEditQuestionModalOpen}
                 close={this.toggleEditQuestionModal}
-                type={this.props.type}
+                type='edit'
+                olderData={this.props.question}
               />
 
-              <Header className="actions" type="h3" onClick={this.confirmDelete}>
+              <Header className="actions" type="h3" onClick={this.toggleDeleteModal}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
               </Header>
 
+              <DeleteModal open={this.state.isDeleteModalOpen} delete={this.confirmDelete} close={this.toggleDeleteModal}/>
+
 
             </Flex>
-
             <Header className="record-info" type="h3">
               Asked by {user} on <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
             </Header>
           </Flex>
         </Flex>
       </Flex>
-
-
     );
   }
 }

@@ -7,7 +7,8 @@ export const GET_MY_QUESTIONS_REQUESTED = 'GET_MY_QUESTIONS_REQUESTED';
 export const GET_MY_QUESTIONS_SUCCEEDED = 'GET_MY_QUESTIONS_SUCEEDED';
 export const GET_MY_QUESTIONS_FAILED = 'GET_MY_QUESTIONS_FAILED';
 export const GET_SEARCH_RESULTS = 'GET_SEARCH_RESULTS';
-export const DELETE_MY_QUESTION = 'DELETE_MY_QUESTION';
+export const DELETE_MY_QUESTION_REQUESTED = 'DELETE_MY_QUESTION_REQUESTED';
+export const DELETE_MY_QUESTION_SUCCEEDED = 'DELETE_MY_QUESTION_SUCCEEDED'
 export const DELETE_MY_QUESTION_FAILED = 'DELETE_MY_QUESTION_FAILED';
 export const GET_CURRENT_QUESTION_REQUESTED = 'GET_CURRENT_QUESTION_REQUESTED';
 export const GET_CURRENT_QUESTION_SUCCEEDED = 'GET_CURRENT_QUESTION_SUCEEDED';
@@ -93,7 +94,6 @@ export default (state = initialState, action) => {
 
     case GET_CURRENT_QUESTION_SUCCEEDED:
       console.log('getting current question succeeded...');
-       console.log('action.payload', action.payload.data.data)
       return {
         ...state,
         currentQuestion: action.payload.data.data,
@@ -128,13 +128,26 @@ export default (state = initialState, action) => {
         searchData: filtered
       }
 
-    case DELETE_MY_QUESTION:
-      console.log('delete my question');
-      return
+    case DELETE_MY_QUESTION_REQUESTED:
+      console.log('delete my question requested..');
+      return {
+        ...state,
+        busy: true,
+        error: null
+      };
+    
+    case DELETE_MY_QUESTION_SUCCEEDED:
+      console.log('delete my question succeeded');
+      return {
+        ...state,
+        data: action.payload.data,
+        busy: false,
+        error: null
+      };
 
     case DELETE_MY_QUESTION_FAILED:
       console.log('delete my question failed');
-      return
+      return state;
 
     case UPDATE_QUESTIONS_REQUESTED:
       console.log('update questions requested...');
@@ -146,9 +159,21 @@ export default (state = initialState, action) => {
 
     case UPDATE_QUESTIONS_SUCCEEDED:
       console.log('update questions succeeded');
+      const changes = action.payload.dataPayload
+
+      //Update state 
+      const newArray = state.data.map(
+        question =>
+          question.id === changes.questionId
+            ? {
+              ...question,
+              ...changes
+            } : question   
+      )
+
       return {
         ...state,
-        data: action.payload.data,
+        data: newArray,
         busy: false,
         error: null
       };

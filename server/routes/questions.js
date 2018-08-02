@@ -7,6 +7,7 @@ var moment = require('moment');
 
 require('dotenv').config();
 
+console.log(process.env.DYNAMO_REGION);
 AWS.config.update({
   region: process.env.DYNAMO_REGION,
   endpoint: process.env.DYNAMO_ENDPOINT,
@@ -63,7 +64,7 @@ router.get('/', function(req, res, next) {
   var params = {
     TableName: 'Question',
     ProjectionExpression:
-      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount, #answers',
+      '#id, #questionTitle, #claps, #body, #user, #userEmail, #timestamp, #answerCount, #answers, #tags',
     ExpressionAttributeNames: {
       '#id': 'id',
       '#questionTitle': 'questionTitle',
@@ -73,10 +74,10 @@ router.get('/', function(req, res, next) {
       '#userEmail': 'userEmail',
       '#timestamp': 'timestamp',
       '#answerCount': 'answerCount',
-      '#answers': 'answers'
+      '#answers': 'answers',
+      '#tags': 'tags'
     }
   };
-  console.log(req.query);
   if (req.query.id) {
     const params = {
       TableName: 'Question',
@@ -84,6 +85,9 @@ router.get('/', function(req, res, next) {
         id: req.query.id.trim()
       }
     };
+
+    console.log('hello');
+    console.log(req.query.id);
 
     docClient.get(params, function(err, data) {
       if (err) {
@@ -109,6 +113,7 @@ router.get('/', function(req, res, next) {
       );
     } else {
       console.log('Scan succeeded.');
+      console.log(data);
       res.status(200).send(data);
     }
   });
@@ -139,10 +144,12 @@ router.post('/', function(req, res, next) {
     timestamp: moment().format('YYYY-MM-DDTHH:mm'),
     answerCount: 0,
     user: req.body.user,
-    answers: {}
+    answers: {},
+    tags: req.body.tags
   };
 
   const params = createUpdateQuestionParams(uuidv4(), fields);
+
   docClient.update(params, function(err, data) {
     if (err) {
       console.log('Error: ', err);
@@ -180,10 +187,11 @@ router.patch('/:questionId', function(req, res, next) {
   var params = {
     TableName: 'Question',
     Key: { id: req.params.questionId },
-    UpdateExpression: 'set questionTitle = :t, body = :b',
+    UpdateExpression: 'set questionTitle = :qt, body = :b, tags = :t',
     ExpressionAttributeValues: {
-      ':t': req.body.title,
-      ':b': req.body.text
+      ':qt': req.body.title,
+      ':b': req.body.text,
+      ':t': req.body.tags
     },
     ReturnValues: 'UPDATED_NEW'
   };
@@ -196,6 +204,15 @@ router.patch('/:questionId', function(req, res, next) {
       );
     } else {
       console.log('UpdateItem succeeded:', JSON.stringify(data, null, 2));
+
+      const dataPayload = {
+        questionId: req.params.questionId,
+        questionTitle: data.Attributes.questionTitle,
+        body: data.Attributes.body,
+        tags: data.Attributes.tags
+      };
+
+      res.status(200).json({ dataPayload });
     }
   });
 });

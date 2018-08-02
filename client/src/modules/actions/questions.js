@@ -11,7 +11,8 @@ import {
   GET_CURRENT_QUESTION_SUCCEEDED,
   GET_CURRENT_QUESTION_FAILED,
   GET_SEARCH_RESULTS,
-  DELETE_MY_QUESTION,
+  DELETE_MY_QUESTION_REQUESTED,
+  DELETE_MY_QUESTION_SUCCEEDED,
   DELETE_MY_QUESTION_FAILED,
   UPDATE_QUESTIONS_REQUESTED,
   UPDATE_QUESTIONS_SUCCEEDED,
@@ -44,21 +45,22 @@ const getQuestions = () => {
   };
 };
 
-const updateQuestions = (title, body) => {
+const updateQuestions = updateData => {
   return (dispatch, getState) => {
     dispatch({
       type: UPDATE_QUESTIONS_REQUESTED
     });
+
     axios
-      .patch(PUBLIC_URL + '/questions/78a4d6b1-e791-46a3-a056-9a052a24c6a5', {
-        title: title,
-        text: body
+      .patch(PUBLIC_URL + `/questions/${updateData.questionId}`, {
+        title: updateData.title,
+        text: updateData.body,
+        tags: updateData.tags
       })
       .then(response => {
-        console.log('res', response);
         return dispatch({
           type: UPDATE_QUESTIONS_SUCCEEDED,
-          payload: response
+          payload: response.data
         });
       })
       .catch(err => {
@@ -130,13 +132,17 @@ const getSearchResults = searchTerm => {
 
 const deleteMyQuestions = questionId => {
   return (dispatch, getState) => {
+    dispatch({
+      type: DELETE_MY_QUESTION_REQUESTED
+    });
+
     axios
       .delete(PUBLIC_URL + `/questions/${questionId}`)
       .then(response => {
         console.log(response);
 
         dispatch({
-          type: DELETE_MY_QUESTION,
+          type: DELETE_MY_QUESTION_SUCCEEDED,
           payload: response
         });
       })

@@ -4,7 +4,6 @@ import {
   Button,
   Header,
   Flex,
-  Toast,
   TextArea,
   Tabs
 } from '@procore/core-react';
@@ -46,8 +45,7 @@ class LessModal extends React.Component {
   submitAnswer = event => {
     event.preventDefault();
     const answer = {
-      body: this.state.body,
-
+      body: this.state.body
     };
 
     if (this.state.body.length > 100) {
@@ -100,18 +98,16 @@ class LessModal extends React.Component {
   };
 
   render() {
-    console.log(this.props); //remove when necessary
-    console.log(this.state);
     return (
       <Modal
-        class="modalBody"
+        className="modalBody"
         open={this.props.open}
         onClickOverlay={this.props.close}
       >
-        <Modal.Header class="lessModalHeader" onClose={this.props.close}>
+        <Modal.Header className="lessModalHeader" onClose={this.props.close}>
           <Header type="h1">Your Answer </Header>
         </Modal.Header>
-        <Modal.Body class="modalText">
+        <Modal.Body className="modalText">
           <Tabs>
             <Tabs.Tab active>
               <Tabs.Link onClick={this.toggleWrite}>
@@ -127,7 +123,7 @@ class LessModal extends React.Component {
 
           {this.state.isWriteActive && (
             <TextArea
-              class="modalTextBody"
+              className="modalTextBody"
               resize="none"
               value={this.state.body}
               onChange={this.setBody}
