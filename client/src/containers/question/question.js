@@ -155,7 +155,7 @@ React.render(
             {questionTitle}
           </Header>
           <Markdown className="question-markdown" text={body} />
-          <Flex className="tags-container" direction="row" justifyContent='flex-end'>
+          <Flex className="tags-container" direction="row" justifyContent='flex-end' style={{ margin:'5px 0 10px 0', width: '100%' }}>
             {tagContainer}
           </Flex>
           <Flex className="info-container" justifyContent="space-between">

@@ -89,8 +89,8 @@ const QuestionCard = props => {
                 <Link href={`http://localhost:3000/profile/userid=${userId}`}>
                   {` ${user}`}
                 </Link>
+                {` on ${timestamp.format('ll')}`}
               </p>
-              <p className="subtext">on {timestamp.format('ll')}</p>
             </Flex>
           </Flex>
         </Flex>
