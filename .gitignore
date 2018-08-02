@@ -1,3 +1,5 @@
 node_modules/
 .env
 env.json
+up.json
+server/.env

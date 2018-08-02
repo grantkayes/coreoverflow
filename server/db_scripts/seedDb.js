@@ -1,13 +1,16 @@
-var AWS = require("aws-sdk");
+var AWS = require('aws-sdk');
 var fs = require('fs');
 var seedData = require('../seed_data');
 
+require('dotenv').config();
+
 AWS.config.update({
-    region: "eu-west-2",
-    endpoint: "http://localhost:8000",
-    accessKeyId: 'myfakeaccessid',
-    secretAccessKey: 'secret'
+  region: process.env.DYNAMO_REGION,
+
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
+
 var docClient = new AWS.DynamoDB.DocumentClient();
 
 // var cars = JSON.parse(fs.readFileSync('carData.json', 'utf8'));
@@ -21,10 +24,15 @@ seedData.forEach(function(table) {
     };
     docClient.put(params, function(err, data) {
       if (err) {
-        console.error("Unable to add data to", table.name, "table. Error JSON:", JSON.stringify(err, null, 2));
+        console.error(
+          'Unable to add data to',
+          table.name,
+          'table. Error JSON:',
+          JSON.stringify(err, null, 2)
+        );
       } else {
-             console.log("PutItem succeeded:", dataPoint);
-         }
-      });
-  })
+        console.log('PutItem succeeded:', dataPoint);
+      }
+    });
+  });
 });

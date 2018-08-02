@@ -9,12 +9,12 @@ import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import './coremodal.css';
-import TagsInput from 'react-tagsinput'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-import 'react-tagsinput/react-tagsinput.css'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import TagsInput from 'react-tagsinput';
+import 'react-tagsinput/react-tagsinput.css';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 class CoreModal extends React.Component {
   constructor(props) {
@@ -47,17 +47,15 @@ class CoreModal extends React.Component {
       tags: this.state.tags
     };
 
-    console.log('questionTAG', question)
-
-    axios.post('http://localhost:5000/questions', question).then(res => {
+    axios.post(PUBLIC_URL + '/questions', question).then(res => {
       this.props.toggleModal();
       const questionId = res.data.Attributes.id;
-      this.props.changePage(questionId)
+      this.props.changePage(questionId);
       this.setState({
         title: '',
         body: '',
         tags: []
-      })
+      });
     });
   };
 
@@ -68,7 +66,7 @@ class CoreModal extends React.Component {
       data.append('doc', file);
     });
 
-    axios.post('http://localhost:5000/upload', data).then(res => {
+    axios.post(PUBLIC_URL + '/upload', data).then(res => {
       const imageURL = res.data.success[0].location;
       this.setState({ body: `${this.state.body}\n![](${imageURL})` });
     });
@@ -134,14 +132,10 @@ class CoreModal extends React.Component {
         <Modal.Body className="modalText">
           <Tabs>
             <Tabs.Tab active>
-              <Tabs.Link onClick={this.toggleWrite}>
-                Write
-              </Tabs.Link>
+              <Tabs.Link onClick={this.toggleWrite}>Write</Tabs.Link>
             </Tabs.Tab>
             <Tabs.Tab>
-              <Tabs.Link onClick={this.togglePreview}>
-                Preview
-              </Tabs.Link>
+              <Tabs.Link onClick={this.togglePreview}>Preview</Tabs.Link>
             </Tabs.Tab>
           </Tabs>
 
@@ -214,7 +208,7 @@ const mapDispatchToProps = dispatch =>
     {
       updateQuestions,
       toggleModal,
-      changePage: (id) => push(`/question/${id}`)
+      changePage: id => push(PUBLIC_URL + `/question/${id}`)
     },
     dispatch
   );

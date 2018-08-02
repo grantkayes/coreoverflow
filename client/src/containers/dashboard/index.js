@@ -9,7 +9,7 @@ const Dashboard = props => {
   let questionData = [...props.questionData];
   let all = [];
 
-  while (questionData.length) all.push(questionData.splice(0, 3));
+  while (questionData.length) all.push(questionData.splice(0, 6));
 
   const allQuestions = all.map((questionArr, index) => {
     const exampleQuestions = questionArr.map(question => {
