@@ -9,17 +9,21 @@ const lock = new Auth0Lock(AUTH_CONFIG.clientId, AUTH_CONFIG.domain, {
     sso: false,
     redirect: false,
     params: {
-      scope: 'openid profile email',
+      scope: 'openid profile email'
     }
   },
   container: AUTH_CONFIG.container,
   theme: {
     logo: 'https://images-na.ssl-images-amazon.com/images/I/615dQnf0l1L.png',
-    socialButtonStyle: 'large',
+    socialButtonStyle: 'large'
   },
   languageDictionary: {
     title: 'Core Overflow'
-  },
+  }
 });
 
-export default lock
+console.log('AUTH0 INFORMATION:');
+console.log(AUTH_CONFIG);
+console.log(process.env);
+
+export default lock;

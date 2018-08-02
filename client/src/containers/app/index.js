@@ -13,8 +13,10 @@ import '@procore/core-css';
 import '@procore/core-icons';
 import './index.css';
 
-const App = () => {
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
+const App = () => {
+  console.log('THIS IS MY PUBLIC URL: ' + PUBLIC_URL);
   if (!isAuthenticated()) {
     return (
       <Flex
@@ -35,10 +37,22 @@ const App = () => {
       <div id="main-and-sidebar-wrapper">
         <div id="left" className="column">
           <main>
-            <Route exact path="/" component={MostRecent} />
-            <Route exact path="/my-questions" component={MyQuestions} />
-            <Route exact path="/question/:id" component={Question} />
-            <Route exact path="/search-results" component={SearchResults} />
+            <Route exact path={PUBLIC_URL + '/'} component={MostRecent} />
+            <Route
+              exact
+              path={PUBLIC_URL + '/my-questions'}
+              component={MyQuestions}
+            />
+            <Route
+              exact
+              path={PUBLIC_URL + '/question/:id'}
+              component={Question}
+            />
+            <Route
+              exact
+              path={PUBLIC_URL + '/search-results'}
+              component={SearchResults}
+            />
           </main>
         </div>
         <div id="right" className="column">

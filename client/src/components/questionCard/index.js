@@ -2,7 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import { Box, Card, Flex, Link, Token } from '@procore/core-react';
 import './index.css';
-import 'react-tagsinput/react-tagsinput.css'
+import 'react-tagsinput/react-tagsinput.css';
+
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 const QuestionCard = props => {
   const {
@@ -20,6 +22,16 @@ const QuestionCard = props => {
   let bodyText = body;
   if (body && body.length > 250) {
     bodyText = body.substring(0, 250) + '...';
+  }
+  let tagContainer = '';
+  if (tags) {
+    tagContainer = tags.map(tag => {
+      return (
+        <Token className="tag">
+          <Token.Label>{tag}</Token.Label>
+        </Token>
+      );
+    });
   }
 
   return (
@@ -62,7 +74,8 @@ const QuestionCard = props => {
           </Flex>
           <Flex direction="column" className="right-side-container">
             <Box>
-              <Link href={`http://localhost:3000/question/${id}`}>
+              {/* TODO: remove hard coded URL */}
+              <Link href={PUBLIC_URL + `/question/${id}`}>
                 <p className="card-title">{title}</p>
               </Link>
             </Box>
@@ -70,25 +83,24 @@ const QuestionCard = props => {
               <Flex direction="column">
                 <p className="card-body">{bodyText}</p>
                 <div className="card-body">
-                  { (tags) ? (
-                      tags.map((tag, index) => {
-                        return (
-                          <Token key={index} className="tag">
-                            <Token.Label>{tag}</Token.Label>
-                          </Token>
-                        )
-                      })
-                    ) : (
-                      <div></div>
-                    )
-                  }
+                  {tags ? (
+                    tags.map((tag, index) => {
+                      return (
+                        <Token key={index} className="tag">
+                          <Token.Label>{tag}</Token.Label>
+                        </Token>
+                      );
+                    })
+                  ) : (
+                    <div />
+                  )}
                 </div>
               </Flex>
             </Box>
             <Flex className="question-user-info" direction="column">
               <p className="subtext">
                 Asked by
-                <Link href={`http://localhost:3000/profile/userid=${userId}`}>
+                <Link href={PUBLIC_URL + `/profile/userid=${userId}`}>
                   {` ${user}`}
                 </Link>
                 {` on ${timestamp.format('ll')}`}

@@ -19,6 +19,8 @@ import './coremodal.css';
 // import { bindActionCreators } from 'redux'
 // import { connect } from 'react-redux'
 
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
+
 class LessModal extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +89,7 @@ class LessModal extends React.Component {
       data.append('doc', file);
     });
 
-    axios.post('http://localhost:5000/upload', data).then(res => {
+    axios.post(PUBLIC_URL + '/upload', data).then(res => {
       console.log(res);
       console.log(res.data);
       const imageURL = res.data.success[0].location;

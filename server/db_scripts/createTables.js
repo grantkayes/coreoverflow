@@ -1,21 +1,29 @@
-var AWS = require("aws-sdk");
-var tables = require("../db_tables");
+var AWS = require('aws-sdk');
+var tables = require('../db_tables');
+
+require('dotenv').config();
 
 AWS.config.update({
-  region: "eu-west-2",
-  endpoint: "http://localhost:8000",
-  accessKeyId: 'myfakeaccessid',
-  secretAccessKey: 'secret'
+  region: process.env.DYNAMO_REGION,
+
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 
 var dynamodb = new AWS.DynamoDB();
 
 for (var key in tables) {
   dynamodb.createTable(tables[key], function(err, data) {
-      if (err) {
-          console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
-      } else {
-          console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
-      }
+    if (err) {
+      console.error(
+        'Unable to create table. Error JSON:',
+        JSON.stringify(err, null, 2)
+      );
+    } else {
+      console.log(
+        'Created table. Table description JSON:',
+        JSON.stringify(data, null, 2)
+      );
+    }
   });
 }
