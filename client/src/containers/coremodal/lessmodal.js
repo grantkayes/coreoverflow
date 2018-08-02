@@ -10,7 +10,6 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { submitAnswer, editAnswer } from '../../modules/actions/answers';
 
 import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
@@ -67,7 +66,6 @@ class LessModal extends React.Component {
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
-    console.log('WHOO we did it reddit!');
     console.log(acceptedFiles[0]);
 
     let data = new FormData();
@@ -165,16 +163,4 @@ class LessModal extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      submitAnswer,
-      editAnswer
-    },
-    dispatch
-  );
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(LessModal);
+export default LessModal;
