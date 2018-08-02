@@ -16,9 +16,9 @@ import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import './coremodal.css';
-// import { push } from 'connected-react-router'
-// import { bindActionCreators } from 'redux'
-// import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import CoreModal from './coremodal'
 
 class LessModal extends React.Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class LessModal extends React.Component {
     };
 
     if (this.state.body.length > 100) {
-      const answerAction = (answer) => {
+      const answerAction = () => {
         this.props.modalType === 'edit'
           ? this.props.editAnswer(answer)
           : this.props.submitAnswer(answer);
@@ -165,4 +165,16 @@ class LessModal extends React.Component {
   }
 }
 
-export default LessModal;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      submitAnswer,
+      editAnswer
+    },
+    dispatch
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LessModal);
