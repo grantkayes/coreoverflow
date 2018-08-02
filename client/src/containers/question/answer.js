@@ -85,7 +85,7 @@ class Answer extends React.Component {
           <Flex className="answer-card-right" direction="column">
             <Flex className="info-container">
               <Header className="record-info record-info-answer" type="h3">
-                Answered by {`${this.props.userFirstName} ${this.props.userLastName}`} on{' '}
+                Answered by {`${this.props.answerFirstName} ${this.props.answerLastName}`} on{' '}
                 <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
               </Header>
 

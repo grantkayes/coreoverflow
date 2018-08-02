@@ -11,7 +11,8 @@ class AnswerList extends React.Component {
 
   render() {
     const Answers = this.props.answers.map(answer => {
-      const { body, id, questionId, timestamp, claps } = answer;
+      console.log(answer)
+      const { body, id, questionId, timestamp, claps, firstName, lastName } = answer;
 
       return (
         <Answer
@@ -27,6 +28,8 @@ class AnswerList extends React.Component {
           userEmail={this.props.userEmail}
           userFirstName={this.props.userFirstName}
           userLastName={this.props.userLastName}
+          answerFirstName={firstName}
+          answerLastName={lastName}
         />
       );
     });
