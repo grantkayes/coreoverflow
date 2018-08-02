@@ -124,7 +124,7 @@ React.render(
     let tagContainer = ""
     if(tags) {
       tagContainer = tags.map((tag, index) => {
-        return (    
+        return (
           <Token key={index} className="tag">
             <Token.Label>{tag}</Token.Label>
           </Token>
@@ -155,11 +155,11 @@ React.render(
             {questionTitle}
           </Header>
           <Markdown className="question-markdown" text={body} />
-          <Flex className="tags-container" direction="row">
+          <Flex className="tags-container" direction="row" justifyContent='flex-end'>
             {tagContainer}
           </Flex>
           <Flex className="info-container" justifyContent="space-between">
-            <Flex className="actions-container" justify-content="space-around">
+            <Flex className="actions-container">
               <Header className="actions" type="h3" onClick={this.toggleLessModal}>
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
