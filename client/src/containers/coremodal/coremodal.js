@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 import { Modal, Button, Header } from '@procore/core-react';
 import { TextArea } from '@procore/core-react';
 import { Tabs } from '@procore/core-react';
-import { updateQuestions } from '../../modules/actions/questions';
+import { updateQuestions, postQuestion } from '../../modules/actions/questions';
 import { toggleModal } from '../../modules/sidebar.js';
 import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
@@ -45,13 +45,11 @@ class CoreModal extends React.Component {
       tags: this.state.tags
     };
 
-    console.log('questionTAG', question)
-
-    axios.post('http://localhost:5000/questions', question).then(res => {
-      this.props.toggleModal();
-      const questionId = res.data.Attributes.id;
-      this.props.changePage(questionId)
-    });
+    this.props.postQuestion(question);
+    this.props.toggleModal();
+    // console.log(this.props.newQuestionId)
+    // const questionId = res.data.Attributes.id;
+    // this.props.changePage(questionId)
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
@@ -196,6 +194,7 @@ const mapDispatchToProps = dispatch =>
     {
       updateQuestions,
       toggleModal,
+      postQuestion,
       changePage: (id) => push(`/question/${id}`)
     },
     dispatch
