@@ -138,8 +138,7 @@ router.post('/', function(req, res, next) {
   const fields = {
     userEmail: req.body.userEmail,
     questionTitle: req.body.title,
-    up: 0,
-    down: 0,
+    claps: 0,
     body: req.body.body,
     timestamp: moment().format('YYYY-MM-DDTHH:mm'),
     answerCount: 0,
