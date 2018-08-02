@@ -102,7 +102,7 @@ class DetailedQuestion extends React.Component {
           <Question
             question={this.props.question}
             updateQuestions={this.props.updateQuestions}
-            questionId={this.questionId}
+            questionId={this.props.questionId}
             toggleSubmitModal={this.toggleSubmitModal}
           />
           <AnswerList

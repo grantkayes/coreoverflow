@@ -142,6 +142,8 @@ export default (state = initialState, action) => {
     
     case DELETE_MY_QUESTION_SUCCEEDED:
       console.log('delete my question succeeded');
+
+      
       return {
         ...state,
         data: action.payload.data,
