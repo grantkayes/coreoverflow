@@ -9,8 +9,10 @@ import {
   SUBMIT_ANSWER_FAILED
 } from '../reducers/answers';
 
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
+
 const retrieveAnswers = questionId => {
-  return axios.get(`http://localhost:5000/answers/?questionId=${questionId}`);
+  return axios.get(PUBLIC_URL + `/answers/?questionId=${questionId}`);
 };
 
 const getAnswers = questionId => {
@@ -36,7 +38,7 @@ const getAnswers = questionId => {
 };
 
 const postAnswers = body => {
-  return axios.post(`http://localhost:5000/answers`, body);
+  return axios.post(PUBLIC_URL + `/answers`, body);
 };
 
 const submitAnswer = body => {
@@ -62,7 +64,7 @@ const submitAnswer = body => {
 };
 
 const patchAnswer = (answerId, body) => {
-  return axios.patch(`http://localhost:5000/answers/${answerId}`, body);
+  return axios.patch(PUBLIC_URL + `/answers/${answerId}`, body);
 };
 
 const editAnswer = (answerId, body) => {

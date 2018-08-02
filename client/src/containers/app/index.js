@@ -1,25 +1,34 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { Flex } from '@procore/core-react'
-import Login from '../../components/auth/Login'
+import { Flex } from '@procore/core-react';
+import Login from '../../components/auth/Login';
 import NavBar from '../navbar';
 import SideBarContainer from '../sidebar/sidebarContainer';
 import MyQuestions from '../myQuestions';
 import Question from '../question';
 import MostRecent from '../mostRecent';
-import SearchResults from '../search'
+import SearchResults from '../search';
 import isAuthenticated from '../../components/auth/isAuthenticated';
 import '@procore/core-css';
 import '@procore/core-icons';
 import './index.css';
 
 const App = () => {
+  const PUBLIC_URL = process.env.PUBLIC_URL || '';
+
+  console.log(PUBLIC_URL);
+
   if (!isAuthenticated()) {
     return (
-      <Flex alignItems='center' justifyContent='center' direction='column' className='login-page'>
-        <Login className='login-container' />
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        direction="column"
+        className="login-page"
+      >
+        <Login className="login-container" />
       </Flex>
-    )
+    );
   }
   return (
     <div id="header-and-body-wrapper">
@@ -39,10 +48,8 @@ const App = () => {
           <SideBarContainer />
         </div>
       </div>
-      
     </div>
   );
-}
-
+};
 
 export default App;

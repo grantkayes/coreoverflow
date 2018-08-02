@@ -6,28 +6,28 @@ const uuidv4 = require('uuid/v4');
 require('dotenv').config();
 
 if (
-  !process.env.AWS_ACCESS_KEY_ID ||
-  !process.env.AWS_SECRET_ACCESS_KEY ||
-  !process.env.AWS_S3_BUCKET ||
-  !process.env.AWS_S3_REGION ||
-  !process.env.AWS_S3_ENDPOINT
+  !process.env.ACCESS_KEY_ID ||
+  !process.env.SECRET_ACCESS_KEY ||
+  !process.env.S3_BUCKET ||
+  !process.env.S3_REGION ||
+  !process.env.S3_ENDPOINT
 ) {
   throw new ReferenceError(
-    'Environmental variables: AWS_ACCESS_KEY_ID or AWS_SECRET_ACCESS_KEY or AWS_S3_BUCKET are undefined',
+    'Environmental variables: ACCESS_KEY_ID or SECRET_ACCESS_KEY or S3_BUCKET are undefined',
     'libs/aws.js',
     9
   );
 }
 
 const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_S3_REGION,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  region: process.env.S3_REGION,
   s3BucketEndpoint: true,
-  endpoint: process.env.AWS_S3_ENDPOINT
+  endpoint: process.env.S3_ENDPOINT
 });
 
-const MY_BUCKET_NAME = process.env.AWS_S3_BUCKET;
+const MY_BUCKET_NAME = process.env.S3_BUCKET;
 
 // S3 Functions
 const uploadDocument = multer({
