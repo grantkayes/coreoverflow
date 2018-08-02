@@ -4,44 +4,50 @@ var AWS = require('aws-sdk');
 var uuidv4 = require('uuid/v4');
 const { WebClient } = require('@slack/client');
 
+require('dotenv').config();
+
 const token = process.env.SLACK_TOKEN;
+
+const PUBLIC_URL = process.env.PUBLIC_URL;
 
 const web = new WebClient(token);
 
 var router = express.Router();
 
-
 function sendSlackNotification(email, title, id) {
-  web.users.lookupByEmail({ email })
-    .then((res) => {
-      const userId = res.user.id
-      web.im.open({
-        token: process.env.SLACK_BOT_TOKEN,
-        user: userId,
-        return_im: true,
-      })
-      .then((res) => {
-        web.chat.postMessage({
+  web.users
+    .lookupByEmail({ email })
+    .then(res => {
+      const userId = res.user.id;
+      web.im
+        .open({
           token: process.env.SLACK_BOT_TOKEN,
-          channel: res.channel.id,
-          text: `:wave: Hey! Your question has been answered!`,
-          attachments: [
-            {
-              title,
-              title_link: `http://localhost:3000/question/${id}`,
-            }
-          ]
+          user: userId,
+          return_im: true
         })
-          .then((res) => {
-        // `res` contains information about the posted message
-          console.log('Message sent: ', res.ts);
-        })
-          .catch(console.error);
-      })
+        .then(res => {
+          web.chat
+            .postMessage({
+              token: process.env.SLACK_BOT_TOKEN,
+              channel: res.channel.id,
+              text: `:wave: Hey! Your question has been answered!`,
+              attachments: [
+                {
+                  title,
+                  title_link: PUBLIC_URL + `/question/${id}`
+                }
+              ]
+            })
+            .then(res => {
+              // `res` contains information about the posted message
+              console.log('Message sent: ', res.ts);
+            })
+            .catch(console.error);
+        });
     })
-    .catch((err) => {
-      console.error('User not found in slack')
-    })
+    .catch(err => {
+      console.error('User not found in slack');
+    });
 }
 
 function createGetAnswerParams(query) {
@@ -84,17 +90,18 @@ function createPostAnswersParams(questionId, id, query) {
   return {
     TableName: 'Question',
     Key: { id: questionId.trim() },
-    UpdateExpression: "SET answers.#answerId = :answer, answerCount = answerCount + :count",
-    ExpressionAttributeNames: { "#answerId" : id.trim() },
-    ExpressionAttributeValues: { ":answer" : query, ':count': 1 },
-    ConditionExpression: "attribute_not_exists(answers.#answerId)",
+    UpdateExpression:
+      'SET answers.#answerId = :answer, answerCount = answerCount + :count',
+    ExpressionAttributeNames: { '#answerId': id.trim() },
+    ExpressionAttributeValues: { ':answer': query, ':count': 1 },
+    ConditionExpression: 'attribute_not_exists(answers.#answerId)',
     ReturnValues: 'ALL_NEW'
   };
 }
 
 function createUpdateAnswersParams(questionId, id, query) {
-  let UpdateExpression = []
-  let ExpressionAttributeNames = { "#answerId": id.trim() };
+  let UpdateExpression = [];
+  let ExpressionAttributeNames = { '#answerId': id.trim() };
   let ExpressionAttributeValues = {};
 
   for (key in query) {
@@ -111,36 +118,50 @@ function createUpdateAnswersParams(questionId, id, query) {
     UpdateExpression,
     ExpressionAttributeNames,
     ExpressionAttributeValues,
-    ConditionExpression: "attribute_exists(answers.#answerId)",
+    ConditionExpression: 'attribute_exists(answers.#answerId)',
     ReturnValues: 'ALL_NEW'
   };
 }
 
-
-
 AWS.config.update({
-  region: 'eu-west-2',
-  endpoint: 'http://localhost:8000',
-  accessKeyId: 'myfakeaccessid',
-  secretAccessKey: 'secret'
+  region: process.env.DYNAMO_REGION,
+  endpoint: process.env.DYNAMO_ENDPOINT,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
 router.post('/', function(req, res, next) {
-  if (req.body.questionId === undefined || req.body.questionId === null || req.body.questionId.trim() === '') {
+  if (
+    req.body.questionId === undefined ||
+    req.body.questionId === null ||
+    req.body.questionId.trim() === ''
+  ) {
     res.status(400).send();
     return;
   }
-  if (req.body.userEmail === undefined || req.body.userEmail === null || req.body.userEmail.trim() === '') {
+  if (
+    req.body.userEmail === undefined ||
+    req.body.userEmail === null ||
+    req.body.userEmail.trim() === ''
+  ) {
     res.status(400).send();
     return;
   }
-  if (req.body.firstName === undefined || req.body.firstName === null || req.body.firstName.trim() === '') {
+  if (
+    req.body.firstName === undefined ||
+    req.body.firstName === null ||
+    req.body.firstName.trim() === ''
+  ) {
     res.status(400).send();
     return;
   }
-  if (req.body.lastName === undefined || req.body.lastName === null || req.body.lastName.trim() === '') {
+  if (
+    req.body.lastName === undefined ||
+    req.body.lastName === null ||
+    req.body.lastName.trim() === ''
+  ) {
     res.status(400).send();
     return;
   }
@@ -174,8 +195,12 @@ router.post('/', function(req, res, next) {
     const answer = {
       id: answerId,
       ...question.answers[answerId]
-    }
-    sendSlackNotification(question.userEmail, question.questionTitle, question.id);
+    };
+    sendSlackNotification(
+      question.userEmail,
+      question.questionTitle,
+      question.id
+    );
     res.status(200).json({
       data: answer
     });
@@ -219,11 +244,11 @@ router.get('/', function(req, res, next) {
       console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
       res.status(500).send();
     } else {
-      const listData = []
+      const listData = [];
 
       if (data.Item) {
         for (key in data.Item.answers) {
-          const answerObj = data.Item.answers[key]
+          const answerObj = data.Item.answers[key];
           answerObj.id = key;
           listData.push(answerObj);
         }
@@ -238,15 +263,27 @@ router.get('/', function(req, res, next) {
 });
 
 router.patch('/:id', function(req, res, next) {
-  if (req.params.id === undefined || req.params.id === null || req.params.id.trim() === '') {
+  if (
+    req.params.id === undefined ||
+    req.params.id === null ||
+    req.params.id.trim() === ''
+  ) {
     res.status(400).send('PATCH ANSWER: Missing id');
     return;
   }
-  if (req.body.questionId === undefined || req.body.questionId === null || req.body.questionId.trim() === '') {
+  if (
+    req.body.questionId === undefined ||
+    req.body.questionId === null ||
+    req.body.questionId.trim() === ''
+  ) {
     res.status(400).send();
     return;
   }
-  const params = createUpdateAnswersParams(req.body.questionId.trim(), req.params.id, req.body);
+  const params = createUpdateAnswersParams(
+    req.body.questionId.trim(),
+    req.params.id,
+    req.body
+  );
 
   docClient.update(params, function(err, data) {
     if (err) {
@@ -254,14 +291,14 @@ router.patch('/:id', function(req, res, next) {
       res.status(500).send();
       return;
     }
-    const id = req.params.id.trim()
+    const id = req.params.id.trim();
     const answer = {
       id,
       ...data.Attributes.answers[id]
-    }
+    };
 
-    console.log('data:', data.Attributes)
-    console.log('new data:', answer)
+    console.log('data:', data.Attributes);
+    console.log('new data:', answer);
     res.status(200).json({
       data: answer
     });
@@ -269,12 +306,20 @@ router.patch('/:id', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
-  if (req.params.id === undefined || req.params.id === null || req.params.id.trim() === '') {
+  if (
+    req.params.id === undefined ||
+    req.params.id === null ||
+    req.params.id.trim() === ''
+  ) {
     res.status(400).send('PATCH ANSWER: Missing Id');
     return;
   }
 
-  if (req.body.questionId === undefined || req.body.questionId === null || req.body.questionId.trim() === '') {
+  if (
+    req.body.questionId === undefined ||
+    req.body.questionId === null ||
+    req.body.questionId.trim() === ''
+  ) {
     res.status(400).send('PATCH ANSWER: Missing Question Id');
     return;
   }
@@ -285,7 +330,7 @@ router.delete('/:id', function(req, res, next) {
       id: req.body.questionId.trim()
     },
     UpdateExpression: `REMOVE answers.#answerId`,
-    ExpressionAttributeNames: { "#answerId" : req.params.id.trim() },
+    ExpressionAttributeNames: { '#answerId': req.params.id.trim() }
   };
 
   docClient.update(params, function(err, data) {
