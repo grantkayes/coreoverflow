@@ -26,15 +26,24 @@ class LessModal extends React.Component {
     super(props);
     this.state = {
       body: this.props.body,
+      answerId: this.props.id,
       error: '',
       isWriteActive: true,
       isPreviewActive: false
     };
   }
 
+  componentWillReceiveProps(nextProps){
+   if(this.state.id != nextProps.id){
+     this.setState({
+       answerId: nextProps.id,
+       body: nextProps.body
+     });
+   }
+  }
+
   editAnswer = event => {
     event.preventDefault();
-
     const answer = {
       body: this.state.body
     };
@@ -47,6 +56,7 @@ class LessModal extends React.Component {
   submitAnswer = event => {
     event.preventDefault();
     const answer = {
+      id: this.state.answerId,
       body: this.state.body
     };
 
@@ -57,6 +67,9 @@ class LessModal extends React.Component {
           : this.props.submitAnswer;
 
       answerAction(answer);
+      this.setState({
+        body: ''
+      })
 
       this.props.close();
     } else {
@@ -101,66 +114,68 @@ class LessModal extends React.Component {
 
   render() {
     return (
-      <Modal
-        class="modalBody"
-        open={this.props.open}
-        onClickOverlay={this.props.close}
-      >
-        <Modal.Header className="lessModalHeader" onClose={this.props.close}>
-          <Header type="h1">Your Answer </Header>
-        </Modal.Header>
-        <Modal.Body class="modalText">
-          <Tabs>
-            <Tabs.Tab active>
-              <Tabs.Link onClick={this.toggleWrite}>
-                <h3>Write</h3>
-              </Tabs.Link>
-            </Tabs.Tab>
-            <Tabs.Tab>
-              <Tabs.Link onClick={this.togglePreview}>
-                <h3>Preview</h3>
-              </Tabs.Link>
-            </Tabs.Tab>
-          </Tabs>
+      <div>
+        <Modal
+          class="modalBody"
+          open={this.props.open}
+          onClickOverlay={this.props.close}
+        >
+          <Modal.Header className="lessModalHeader" onClose={this.props.close}>
+            <Header type="h1">Your Answer </Header>
+          </Modal.Header>
+          <Modal.Body className="modalText">
+            <Tabs>
+              <Tabs.Tab active>
+                <Tabs.Link onClick={this.toggleWrite}>
+                  Write
+                </Tabs.Link>
+              </Tabs.Tab>
+              <Tabs.Tab>
+                <Tabs.Link onClick={this.togglePreview}>
+                  Preview
+                </Tabs.Link>
+              </Tabs.Tab>
+            </Tabs>
 
-          {this.state.isWriteActive && (
-            <TextArea
-              class="modalTextBody"
-              resize="none"
-              value={this.state.body}
-              onChange={this.setBody}
-            />
-          )}
-          {this.state.isPreviewActive && (
-            <Markdown className="modalTextBody" text={this.state.body} />
-          )}
-        </Modal.Body>
-        <Modal.Footer className="modalFooter">
-          <Flex className="uploadContainer">
-            <Dropzone
-              className="uploadImage"
-              multiple={false}
-              onDrop={this.onDrop}
-            >
-              <Button variant="form">
-                <FontAwesomeIcon className="imageIcon" icon={faImage} />
-                Attach
+            {this.state.isWriteActive && (
+              <TextArea
+                className="modalTextBody"
+                resize="none"
+                value={this.state.body}
+                onChange={this.setBody}
+              />
+            )}
+            {this.state.isPreviewActive && (
+              <Markdown className="modalTextBody" text={this.state.body} />
+            )}
+          </Modal.Body>
+          <Modal.Footer className="modalFooter">
+            <Flex className="uploadContainer">
+              <Dropzone
+                className="uploadImage"
+                multiple={false}
+                onDrop={this.onDrop}
+              >
+                <Button variant="form">
+                  <FontAwesomeIcon className="imageIcon" icon={faImage} />
+                  Attach
+                </Button>
+              </Dropzone>
+            </Flex>
+            <Header type="h3" className="error">
+              {this.state.error}
+            </Header>
+            <Modal.FooterButtons>
+              <Button variant="tertiary" onClick={this.props.close}>
+                Cancel
               </Button>
-            </Dropzone>
-          </Flex>
-          <Header type="h3" className="error">
-            {this.state.error}
-          </Header>
-          <Modal.FooterButtons>
-            <Button variant="tertiary" onClick={this.props.close}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={this.submitAnswer}>
-              Submit
-            </Button>
-          </Modal.FooterButtons>
-        </Modal.Footer>
-      </Modal>
+              <Button variant="primary" onClick={this.submitAnswer}>
+                Submit
+              </Button>
+            </Modal.FooterButtons>
+          </Modal.Footer>
+        </Modal>
+      </div>
     );
   }
 }

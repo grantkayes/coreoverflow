@@ -82,7 +82,19 @@ const QuestionCard = props => {
             <Box>
               <Flex direction="column">
                 <p className="card-body">{bodyText}</p>
-                <p className="card-body">{tagContainer}</p>
+                <div className="card-body">
+                  {tags ? (
+                    tags.map((tag, index) => {
+                      return (
+                        <Token key={index} className="tag">
+                          <Token.Label>{tag}</Token.Label>
+                        </Token>
+                      );
+                    })
+                  ) : (
+                    <div />
+                  )}
+                </div>
               </Flex>
             </Box>
             <Flex className="question-user-info" direction="column">
@@ -91,8 +103,8 @@ const QuestionCard = props => {
                 <Link href={PUBLIC_URL + `/profile/userid=${userId}`}>
                   {` ${user}`}
                 </Link>
+                {` on ${timestamp.format('ll')}`}
               </p>
-              <p className="subtext">on {timestamp.format('ll')}</p>
             </Flex>
           </Flex>
         </Flex>

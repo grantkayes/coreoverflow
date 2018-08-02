@@ -1,4 +1,5 @@
 import React from 'react';
+import { push } from 'connected-react-router';
 import { Modal, Button, Header } from '@procore/core-react';
 import { TextArea } from '@procore/core-react';
 import { Tabs } from '@procore/core-react';
@@ -8,10 +9,10 @@ import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import './coremodal.css';
-import TagsInput from 'react-tagsinput'
-import 'react-tagsinput/react-tagsinput.css'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import TagsInput from 'react-tagsinput';
+import 'react-tagsinput/react-tagsinput.css';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
@@ -48,6 +49,13 @@ class CoreModal extends React.Component {
 
     axios.post(PUBLIC_URL + '/questions', question).then(res => {
       this.props.toggleModal();
+      const questionId = res.data.Attributes.id;
+      this.props.changePage(questionId);
+      this.setState({
+        title: '',
+        body: '',
+        tags: []
+      });
     });
   };
 
@@ -124,14 +132,10 @@ class CoreModal extends React.Component {
         <Modal.Body className="modalText">
           <Tabs>
             <Tabs.Tab active>
-              <Tabs.Link onClick={this.toggleWrite}>
-                <h3>Write</h3>
-              </Tabs.Link>
+              <Tabs.Link onClick={this.toggleWrite}>Write</Tabs.Link>
             </Tabs.Tab>
             <Tabs.Tab>
-              <Tabs.Link onClick={this.togglePreview}>
-                <h3>Preview</h3>
-              </Tabs.Link>
+              <Tabs.Link onClick={this.togglePreview}>Preview</Tabs.Link>
             </Tabs.Tab>
           </Tabs>
 
@@ -192,7 +196,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateQuestions,
-      toggleModal
+      toggleModal,
+      changePage: id => push(`/question/${id}`)
     },
     dispatch
   );

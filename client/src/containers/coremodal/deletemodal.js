@@ -10,10 +10,6 @@ import { deleteMyQuestions } from '../../modules/actions/questions';
 
 class DeleteModal extends React.Component {
 
-  constructor(props) {
-    super(props);
-  };
-
   handleDelete = () => {
     this.props.deleteMyQuestions('f7edf38f-9941-406b-a155-375245ee2b04'); //HARDCODED LMAO
     this.props.close();

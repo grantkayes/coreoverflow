@@ -16,10 +16,7 @@
           "dynamodb:List*",
           "dynamodb:PutItem",
           "dynamodb:DeleteItem",
-          "dynamodb:GetRecords",
-          "dynamodb:GetShardIterator",
-          "dynamodb:DescribeStream",
-          "dynamodb:ListStreams"
+          "dynamodb:DescribeStream"
         ]
       }
     ]

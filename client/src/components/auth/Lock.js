@@ -31,11 +31,12 @@ class Lock extends Component {
         if (err) {
           return;
         }
-
+        console.log(profile);
         const user = {
           email: profile.email,
           firstName: profile.given_name,
           lastName: profile.family_name,
+          picture: profile.picture,
           accessToken: authResult.accessToken
         };
         this.props.login(user);

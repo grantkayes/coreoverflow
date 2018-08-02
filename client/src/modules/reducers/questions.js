@@ -114,15 +114,15 @@ export default (state = initialState, action) => {
       };
 
     case GET_SEARCH_RESULTS:
-      console.log('getting search results');
       let searchterm = action.payload.toLowerCase();
 
       // Traverse data matching searchterm
       const filtered = state.data.filter(question => {
         let questionTitle = question.questionTitle.toLowerCase();
         let questionBody = question.body.toLowerCase();
+        let questionTags = question.tags;
 
-        return (questionTitle.includes(searchterm) || questionBody.includes(searchterm))
+        return (questionTitle.includes(searchterm) || questionBody.includes(searchterm) || questionTags.includes(searchterm))
       })
 
       return {
