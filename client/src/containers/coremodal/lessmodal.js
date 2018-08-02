@@ -31,14 +31,14 @@ class LessModal extends React.Component {
     };
   }
 
-    componentWillReceiveProps(nextProps){
-     if(this.state.id != nextProps.id){
-       this.setState({
-         answerId: nextProps.id,
-         body: nextProps.body
-       });
-     }
+  componentWillReceiveProps(nextProps){
+   if(this.state.id != nextProps.id){
+     this.setState({
+       answerId: nextProps.id,
+       body: nextProps.body
+     });
    }
+  }
 
   editAnswer = event => {
     event.preventDefault();

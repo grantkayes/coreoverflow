@@ -51,6 +51,11 @@ class CoreModal extends React.Component {
       this.props.toggleModal();
       const questionId = res.data.Attributes.id;
       this.props.changePage(questionId)
+      this.setState({
+        title: '',
+        body: '',
+        tags: []
+      })
     });
   };
 

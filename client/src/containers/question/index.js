@@ -30,13 +30,19 @@ class DetailedQuestion extends React.Component {
       isSubmitModalOpen: false,
       modalType: 'edit',
       body: '',
-      answerId: ''
+      answerId: '',
+      questionId: ''
     };
+  }
 
-    const questionId = this.props.match.params.id;
-
-    this.props.getCurrentQuestion(questionId);
-    this.props.getAnswers(questionId);
+  componentWillReceiveProps(nextProps){
+   if(this.state.questionId != nextProps.match.params.id){
+     this.setState({
+       questionId: nextProps.match.params.id,
+     });
+     this.props.getCurrentQuestion(nextProps.match.params.id);
+     this.props.getAnswers(nextProps.match.params.id);
+   }
   }
 
   toggleSubmitModal = () => {
