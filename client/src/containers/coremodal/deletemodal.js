@@ -15,7 +15,8 @@ class DeleteModal extends React.Component {
   };
 
   handleDelete = () => {
-    this.props.deleteMyQuestions('f7edf38f-9941-406b-a155-375245ee2b04'); //HARDCODED LMAO
+    console.log(this.props.questionID);
+    this.props.deleteMyQuestions(this.props.questionID);
     this.props.close();
   }
 

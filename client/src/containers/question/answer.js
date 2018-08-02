@@ -96,7 +96,7 @@ class Answer extends React.Component {
                   open={this.state.isSubmitModalOpen}
                   close={this.toggleSubmitModal}
                   editAnswer={this.editAnswer}
-                  submitAnswer={this.submitAnswer}
+                  submitAnswer={this.props.submitAnswer}
                   modalType={this.state.modalType}
                 />
                 <Header

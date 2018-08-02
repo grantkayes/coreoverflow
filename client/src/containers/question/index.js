@@ -28,6 +28,7 @@ class DetailedQuestion extends React.Component {
 
     this.props.getCurrentQuestion(questionId);
     this.props.getAnswers(questionId);
+    console.log(questionId);
   }
 
   render() {
@@ -39,6 +40,7 @@ class DetailedQuestion extends React.Component {
           <Question 
             question={this.props.question}
             updateQuestions={this.props.updateQuestions}
+            questionId={this.questionId}
           />
           <AnswerList
             answers={this.props.answers}
