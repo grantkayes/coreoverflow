@@ -10,6 +10,7 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { submitAnswer, editAnswer } from '../../modules/actions/answers';
 
 import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
@@ -50,10 +51,11 @@ class LessModal extends React.Component {
     };
 
     if (this.state.body.length > 100) {
-      const answerAction =
+      const answerAction = (answer) => {
         this.props.modalType === 'edit'
-          ? this.props.editAnswer
-          : this.props.submitAnswer;
+          ? this.props.editAnswer(answer)
+          : this.props.submitAnswer(answer);
+      }
 
       answerAction(answer);
 
