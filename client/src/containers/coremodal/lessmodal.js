@@ -28,6 +28,7 @@ class LessModal extends React.Component {
       isWriteActive: true,
       isPreviewActive: false
     };
+    console.log('this.props', this.props.body)
   }
 
   editAnswer = event => {
@@ -55,6 +56,9 @@ class LessModal extends React.Component {
           : this.props.submitAnswer;
 
       answerAction(answer);
+      this.setState({
+        body: ''
+      })
 
       this.props.close();
     } else {

@@ -19,13 +19,14 @@ class Answer extends React.Component {
   constructor(props) {
     super(props);
   }
+
   onClap = () => {
-    this.props.editAnswer(this.props.id, { questionId: this.props.questionId, claps: this.props.claps + 1 });
+    this.props.editAnswer( {id: this.props.id, questionId: this.props.questionId, claps: this.props.claps + 1 });
   };
 
 
   render() {
-    const { body, id, questionId, timestamp, claps } = this.props;
+    const { body, timestamp, claps } = this.props;
 
     return (
       <Card id="answer-container">
@@ -54,7 +55,7 @@ class Answer extends React.Component {
                   Reply
                 </Header>
                 <Header
-                  onClick={this.props.toggleEditModal(body)}
+                  onClick={this.props.toggleEditModal}
                   className="actions"
                   type="h3"
                 >

@@ -22,9 +22,6 @@ class DetailedQuestion extends React.Component {
     super(props);
 
     this.state = {
-      upvoted: false,
-      downvoted: false,
-      votes: 25,
       isQuestionModalOpen: false,
       isEditQuestionModalOpen: false,
       isLessModalOpen: false,
@@ -32,50 +29,16 @@ class DetailedQuestion extends React.Component {
     };
   }
 
-  onUpvote = () => {
-    console.log('I upvoted!');
-    if (this.state.downvoted) {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        votes: this.state.votes + 2
-      });
-    } else if (this.state.upvoted) {
-      this.setState({
-        upvoted: false,
-        downvoted: false,
-        votes: this.state.votes - 1
-      });
-    } else {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        votes: this.state.votes + 1
-      });
-    }
-  };
+  onClap = () => {
+    const updateData = {
+      title: this.props.question.questionTitle,
+      body: this.props.question.body,
+      tags: this.props.question.tags,
+      questionId: this.props.question.id,
+      claps: this.props.question.claps+1
+    };
 
-  onDownvote = () => {
-    console.log('I downvoted!');
-    if (this.state.upvoted) {
-      this.setState({
-        downvoted: true,
-        upvoted: false,
-        votes: this.state.votes - 2
-      });
-    } else if (this.state.downvoted) {
-      this.setState({
-        downvoted: false,
-        upvoted: false,
-        votes: this.state.votes + 1
-      });
-    } else {
-      this.setState({
-        downvoted: true,
-        upvoted: false,
-        votes: this.state.votes - 1
-      });
-    }
+    this.props.updateQuestions(updateData);
   };
 
   toggleQuestionModal = () => {
@@ -96,7 +59,6 @@ class DetailedQuestion extends React.Component {
 
   confirmDelete = () => {
     window.alert('deleting question...');
-
     this.toggleDeleteModal();
   }
 
@@ -126,7 +88,7 @@ class DetailedQuestion extends React.Component {
           alignItems="center"
           justifyContent="center"
         >
-          <Clap claps={claps}/>
+          <Clap claps={claps} onClap={this.onClap}/>
         </Flex>
         <Flex
           justifyContent="center"
@@ -142,7 +104,7 @@ class DetailedQuestion extends React.Component {
           </Flex>
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container">
-              <Header className="actions" type="h3" onClick={this.toggleLessModal}>
+              <Header className="actions" type="h3" onClick={this.props.toggleSubmitModal}>
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
               </Header>
@@ -151,12 +113,16 @@ class DetailedQuestion extends React.Component {
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
-              <CoreModal
-                open={this.state.isEditQuestionModalOpen}
-                close={this.toggleEditQuestionModal}
-                type='edit'
-                olderData={this.props.question}
-              />
+
+              {this.state.isEditQuestionModalOpen ?
+                <CoreModal
+                  open={this.state.isEditQuestionModalOpen}
+                  close={this.toggleEditQuestionModal}
+                  type='edit'
+                  olderData={this.props.question}
+                /> :
+                <div></div>
+              }
 
               <Header className="actions" type="h3" onClick={this.toggleDeleteModal}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
@@ -164,7 +130,6 @@ class DetailedQuestion extends React.Component {
               </Header>
 
               <DeleteModal open={this.state.isDeleteModalOpen} delete={this.confirmDelete} close={this.toggleDeleteModal}/>
-
 
             </Flex>
             <Header className="record-info" type="h3">

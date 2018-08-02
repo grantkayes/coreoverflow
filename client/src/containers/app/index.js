@@ -14,9 +14,6 @@ import '@procore/core-icons';
 import './index.css';
 
 const App = () => {
-  const PUBLIC_URL = process.env.PUBLIC_URL || '';
-
-  console.log(PUBLIC_URL);
 
   if (!isAuthenticated()) {
     return (
