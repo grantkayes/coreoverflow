@@ -202,7 +202,6 @@ router.post('/', function(req, res, next) {
 // });
 //
 router.get('/', function(req, res, next) {
-  console.log('grr', req.query);
   if (req.query.questionId === undefined || req.query.questionId === null || req.query.questionId.trim() === '') {
     res.status(400).send();
     return;
@@ -223,8 +222,6 @@ router.get('/', function(req, res, next) {
       const listData = []
 
       if (data.Item) {
-        console.log('Query succeeded.', data.Item.answers);
-
         for (key in data.Item.answers) {
           const answerObj = data.Item.answers[key]
           answerObj.id = key;

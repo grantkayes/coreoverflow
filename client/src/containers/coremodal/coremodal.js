@@ -9,7 +9,7 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import './coremodal.css';
 import TagsInput from 'react-tagsinput'
-import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
+import 'react-tagsinput/react-tagsinput.css'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -52,7 +52,6 @@ class CoreModal extends React.Component {
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
-
     let data = new FormData();
 
     acceptedFiles.forEach(file => {

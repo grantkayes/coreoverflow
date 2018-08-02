@@ -22,8 +22,6 @@ class DetailedQuestion extends React.Component {
     super(props);
 
     this.state = {
-      upvoted: false,
-      downvoted: false,
       votes: 25,
       isQuestionModalOpen: false,
       isEditQuestionModalOpen: false,
@@ -31,52 +29,6 @@ class DetailedQuestion extends React.Component {
       isDeleteModalOpen: false,
     };
   }
-
-  onUpvote = () => {
-    console.log('I upvoted!');
-    if (this.state.downvoted) {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        votes: this.state.votes + 2
-      });
-    } else if (this.state.upvoted) {
-      this.setState({
-        upvoted: false,
-        downvoted: false,
-        votes: this.state.votes - 1
-      });
-    } else {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        votes: this.state.votes + 1
-      });
-    }
-  };
-
-  onDownvote = () => {
-    console.log('I downvoted!');
-    if (this.state.upvoted) {
-      this.setState({
-        downvoted: true,
-        upvoted: false,
-        votes: this.state.votes - 2
-      });
-    } else if (this.state.downvoted) {
-      this.setState({
-        downvoted: false,
-        upvoted: false,
-        votes: this.state.votes + 1
-      });
-    } else {
-      this.setState({
-        downvoted: true,
-        upvoted: false,
-        votes: this.state.votes - 1
-      });
-    }
-  };
 
   toggleQuestionModal = () => {
     this.setState({ isQuestionModalOpen: !this.state.isQuestionModalOpen });
@@ -96,7 +48,6 @@ class DetailedQuestion extends React.Component {
 
   confirmDelete = () => {
     window.alert('deleting question...');
-
     this.toggleDeleteModal();
   }
 
@@ -169,12 +120,16 @@ React.render(
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
-              <CoreModal
-                open={this.state.isEditQuestionModalOpen}
-                close={this.toggleEditQuestionModal}
-                type='edit'
-                olderData={this.props.question}
-              />
+
+              {this.state.isEditQuestionModalOpen ? 
+                <CoreModal
+                  open={this.state.isEditQuestionModalOpen}
+                  close={this.toggleEditQuestionModal}
+                  type='edit'
+                  olderData={this.props.question}
+                /> : 
+                <div></div>
+              }
 
               <Header className="actions" type="h3" onClick={this.toggleDeleteModal}>
                 <FontAwesomeIcon className="edit" icon={faTrash} />
@@ -182,7 +137,6 @@ React.render(
               </Header>
 
               <DeleteModal open={this.state.isDeleteModalOpen} delete={this.confirmDelete} close={this.toggleDeleteModal}/>
-
 
             </Flex>
             <Header className="record-info" type="h3">

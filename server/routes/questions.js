@@ -77,6 +77,7 @@ router.get('/', function(req, res, next) {
   };
 
   if (req.query.id) {
+    console.log('Query By Id!!')
     const params = {
       TableName: 'Question',
       Key: {
@@ -121,7 +122,7 @@ router.get('/:userEmail', function(req, res, next) {
     if (err) {
       console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
     } else {
-      console.log('Query succeeded.');
+      console.log('Query succeeded');
       res.status(200).send(data.Items);
     }
   });

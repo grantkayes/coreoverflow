@@ -94,6 +94,7 @@ const getMyQuestions = (user) => {
 }
 
 const getCurrentQuestion = (id) => {
+  console.log('inside getCurrentQuestion Action')
   return (dispatch, getState) => {
     dispatch({
       type: GET_CURRENT_QUESTION_REQUESTED
