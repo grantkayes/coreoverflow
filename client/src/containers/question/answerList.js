@@ -14,13 +14,6 @@ const emptyStateButton = {
 };
 
 class AnswerList extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
-
-
   render() {
     const Answers = this.props.answers.map(answer => {
       const { body, id, questionId, timestamp, claps, firstName, lastName } = answer;
