@@ -197,7 +197,7 @@ const mapDispatchToProps = dispatch =>
     {
       updateQuestions,
       toggleModal,
-      changePage: id => push(`/question/${id}`)
+      changePage: id => push(PUBLIC_URL + `/question/${id}`)
     },
     dispatch
   );
