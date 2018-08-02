@@ -91,8 +91,7 @@ router.get('/', function(req, res, next) {
       } else {
         if (!data.Item) {
           res.status(404).send()
-        }
-        else {
+        } else {
           res.status(200).json({data: data.Item})
         }
         return;
@@ -109,7 +108,6 @@ router.get('/', function(req, res, next) {
       );
     } else {
       console.log("Scan succeeded.");
-      console.log(data)
       res.status(200).send(data)
     }
   });

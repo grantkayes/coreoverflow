@@ -14,7 +14,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 class CoreModal extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +27,7 @@ class CoreModal extends React.Component {
   }
 
   componentDidMount() {
+    console.log('component did mount: ', this.props.olderData)
     if(this.props.type === 'edit'){
       this.updateModalData(this.props.olderData)
     }
