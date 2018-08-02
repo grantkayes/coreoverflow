@@ -22,7 +22,6 @@ class DetailedQuestion extends React.Component {
     super(props);
 
     this.state = {
-      votes: 25,
       isQuestionModalOpen: false,
       isEditQuestionModalOpen: false,
       isLessModalOpen: false,
@@ -31,8 +30,15 @@ class DetailedQuestion extends React.Component {
   }
 
   onClap = () => {
-    // this.props.editAnswer(this.props.id, { questionId: this.props.questionId, claps: this.props.claps + 1 });
+    const updateData = {
+      title: this.props.question.questionTitle,
+      body: this.props.question.body,
+      tags: this.props.question.tags,
+      questionId: this.props.question.id,
+      claps: this.props.question.claps+1
+    };
 
+    this.props.updateQuestions(updateData);
   };
 
   toggleQuestionModal = () => {
@@ -57,25 +63,7 @@ class DetailedQuestion extends React.Component {
   }
 
   render() {
-    const { answerCount, questionTitle, body, user, claps, timestamp, tags } = this.props.question;
-    const input = `
-## Hello
-
-I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown!
-
-\`Hello\`
-
-
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-    <Markdown source="# Your markdown here" />,
-    document.getElementById('content')
-);
-\`\`\`
-`;
+    const { questionTitle, body, user, claps, timestamp, tags } = this.props.question;
 
     let tagContainer = ""
     if(tags) {
@@ -100,7 +88,7 @@ React.render(
           alignItems="center"
           justifyContent="center"
         >
-          <Clap claps={claps}/>
+          <Clap claps={claps} onClap={this.onClap}/>
         </Flex>
         <Flex
           justifyContent="center"

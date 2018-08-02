@@ -207,25 +207,6 @@ router.post('/', function(req, res, next) {
   });
 });
 
-// router.get('/', function(req, res, next) {
-//   console.log('zhag');
-//   let params = createGetAnswerParams(req.query);
-//   params.TableName = 'Answer';
-//
-//   docClient.scan(params, function(err, data) {
-//     if (err) {
-//       console.log(err);
-//       res.status(500).send();
-//       return;
-//     }
-//     console.log(data);
-//     console.log('success');
-//     res.status(200).json({
-//       data: data.Items
-//     });
-//   });
-// });
-//
 router.get('/', function(req, res, next) {
   if (req.query.questionId === undefined || req.query.questionId === null || req.query.questionId.trim() === '') {
     res.status(400).send();
@@ -297,8 +278,6 @@ router.patch('/:id', function(req, res, next) {
       ...data.Attributes.answers[id]
     };
 
-    console.log('data:', data.Attributes);
-    console.log('new data:', answer);
     res.status(200).json({
       data: answer
     });

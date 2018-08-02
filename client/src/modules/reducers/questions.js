@@ -160,20 +160,22 @@ export default (state = initialState, action) => {
     case UPDATE_QUESTIONS_SUCCEEDED:
       console.log('update questions succeeded');
       const changes = action.payload.dataPayload
-
+      
       //Update state 
       const newArray = state.data.map(
-        question =>
-          question.id === changes.questionId
-            ? {
+        question => 
+          question.id === changes.questionId 
+          ? { 
               ...question,
               ...changes
-            } : question   
-      )
+            }
+          : question  
+      );
 
       return {
         ...state,
         data: newArray,
+        currentQuestion: {...state.currentQuestion, ...changes},
         busy: false,
         error: null
       };

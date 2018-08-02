@@ -7,7 +7,6 @@ var moment = require('moment');
 
 require('dotenv').config();
 
-console.log(process.env.DYNAMO_REGION);
 AWS.config.update({
   region: process.env.DYNAMO_REGION,
   endpoint: process.env.DYNAMO_ENDPOINT,
@@ -61,7 +60,6 @@ function createUpdateQuestionParams(id, query) {
 
 //Get all questions [DONE]
 router.get('/', function(req, res, next) {
-  console.log('hello')
   var params = {
     TableName: 'Question',
     ProjectionExpression:
@@ -80,16 +78,12 @@ router.get('/', function(req, res, next) {
     }
   };
   if (req.query.id) {
-    console.log('Query By Id!!')
     const params = {
       TableName: 'Question',
       Key: {
         id: req.query.id.trim()
       }
     };
-
-    console.log('hello');
-    console.log(req.query.id);
 
     docClient.get(params, function(err, data) {
       if (err) {
@@ -122,14 +116,12 @@ router.get('/', function(req, res, next) {
 
 // Get all questions for a specific userId [DONE]
 router.get('/:userEmail', function(req, res, next) {
-  console.log('bye')
   let params = createGetQuestionsParams({ userEmail: req.params.userEmail });
 
   docClient.scan(params, function(err, data) {
     if (err) {
       console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
     } else {
-      console.log('Query succeeded');
       res.status(200).send(data.Items);
     }
   });
@@ -188,11 +180,12 @@ router.patch('/:questionId', function(req, res, next) {
   var params = {
     TableName: 'Question',
     Key: { id: req.params.questionId },
-    UpdateExpression: 'set questionTitle = :qt, body = :b, tags = :t',
+    UpdateExpression: 'set questionTitle = :qt, body = :b, tags = :t, claps = :c',
     ExpressionAttributeValues: {
       ':qt': req.body.title,
       ':b': req.body.text,
-      ':t': req.body.tags
+      ':t': req.body.tags,
+      ':c': req.body.claps
     },
     ReturnValues: 'UPDATED_NEW'
   };
@@ -210,7 +203,8 @@ router.patch('/:questionId', function(req, res, next) {
         questionId: req.params.questionId,
         questionTitle: data.Attributes.questionTitle,
         body: data.Attributes.body,
-        tags: data.Attributes.tags
+        tags: data.Attributes.tags,
+        claps: data.Attributes.claps
       };
 
       res.status(200).json({ dataPayload });

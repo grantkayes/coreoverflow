@@ -10,7 +10,8 @@ import {
 } from '../../modules/actions/answers';
 
 import {
-  getCurrentQuestion
+  getCurrentQuestion,
+  updateQuestions
 } from '../../modules/actions/questions';
 
 import Question from './question';
@@ -34,6 +35,7 @@ class DetailedQuestion extends React.Component {
         <Card id="card-container" className="card" level="30">
           <Question 
             question={this.props.question}
+            updateQuestions={this.props.updateQuestions}
           />
           <AnswerList
             answers={this.props.answers}
@@ -66,6 +68,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getCurrentQuestion,
+      updateQuestions,
       getAnswers,
       editAnswer,
       submitAnswer

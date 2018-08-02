@@ -67,7 +67,8 @@ class CoreModal extends React.Component {
       title: this.state.title,
       body: this.state.body,
       tags: this.state.tags,
-      questionId: this.props.olderData.id
+      questionId: this.props.olderData.id,
+      claps: this.props.olderData.claps
     };
 
     this.props.updateQuestions(updateData);
