@@ -118,3 +118,10 @@
 .answer-card-right {
   width: 90%;
 }
+
+.empty-answers-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 50px;
+}

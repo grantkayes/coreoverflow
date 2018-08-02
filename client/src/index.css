@@ -54,8 +54,13 @@ button:disabled {
 }
 
 .tag {
-  margin-right: 2px;
-  background-color: #f47e42;
+  margin-right: 8px;
+  background-color: #f78a54;
+  font-weight: 300;
+}
+
+.tag:hover {
+  background-color: #f78a54;
 }
 
 .tags-container {

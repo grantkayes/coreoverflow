@@ -63,12 +63,12 @@ class DetailedQuestion extends React.Component {
   }
 
   render() {
-    const { questionTitle, body, user, claps, timestamp, tags } = this.props.question;
+    const { answerCount, questionTitle, body, user, claps, timestamp, tags } = this.props.question;
 
     let tagContainer = ""
     if(tags) {
       tagContainer = tags.map((tag, index) => {
-        return (    
+        return (
           <Token key={index} className="tag">
             <Token.Label>{tag}</Token.Label>
           </Token>
@@ -99,12 +99,12 @@ class DetailedQuestion extends React.Component {
             {questionTitle}
           </Header>
           <Markdown className="question-markdown" text={body} />
-          <Flex className="tags-container" direction="row">
+          <Flex className="tags-container" direction="row" justifyContent='flex-end' style={{ margin:'5px 0 10px 0', width: '100%' }}>
             {tagContainer}
           </Flex>
           <Flex className="info-container" justifyContent="space-between">
-            <Flex className="actions-container" justify-content="space-around">
-              <Header className="actions" type="h3" onClick={this.toggleLessModal}>
+            <Flex className="actions-container">
+              <Header className="actions" type="h3" onClick={this.props.toggleSubmitModal}>
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
               </Header>
@@ -114,13 +114,13 @@ class DetailedQuestion extends React.Component {
                 Edit
               </Header>
 
-              {this.state.isEditQuestionModalOpen ? 
+              {this.state.isEditQuestionModalOpen ?
                 <CoreModal
                   open={this.state.isEditQuestionModalOpen}
                   close={this.toggleEditQuestionModal}
                   type='edit'
                   olderData={this.props.question}
-                /> : 
+                /> :
                 <div></div>
               }
 

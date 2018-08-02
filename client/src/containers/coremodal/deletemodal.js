@@ -10,10 +10,6 @@ import { deleteMyQuestions } from '../../modules/actions/questions';
 
 class DeleteModal extends React.Component {
 
-  constructor(props) {
-    super(props);
-  };
-
   handleDelete = () => {
     console.log(this.props.questionID);
     this.props.deleteMyQuestions(this.props.questionID);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { push } from 'connected-react-router';
 import { Modal, Button, Header, Flex } from '@procore/core-react';
 import { TextArea } from '@procore/core-react';
 import { Tabs } from '@procore/core-react';
@@ -46,8 +47,17 @@ class CoreModal extends React.Component {
       tags: this.state.tags
     };
 
+    console.log('questionTAG', question)
+
     axios.post('http://localhost:5000/questions', question).then(res => {
       this.props.toggleModal();
+      const questionId = res.data.Attributes.id;
+      this.props.changePage(questionId)
+      this.setState({
+        title: '',
+        body: '',
+        tags: []
+      })
     });
   };
 
@@ -125,12 +135,12 @@ class CoreModal extends React.Component {
           <Tabs>
             <Tabs.Tab active>
               <Tabs.Link onClick={this.toggleWrite}>
-                <h3>Write</h3>
+                Write
               </Tabs.Link>
             </Tabs.Tab>
             <Tabs.Tab>
               <Tabs.Link onClick={this.togglePreview}>
-                <h3>Preview</h3>
+                Preview
               </Tabs.Link>
             </Tabs.Tab>
           </Tabs>
@@ -203,7 +213,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateQuestions,
-      toggleModal
+      toggleModal,
+      changePage: (id) => push(`/question/${id}`)
     },
     dispatch
   );
