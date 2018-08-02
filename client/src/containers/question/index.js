@@ -33,6 +33,8 @@ class DetailedQuestion extends React.Component {
       answerId: '',
       questionId: ''
     };
+
+    this.props.getCurrentQuestion(this.props.match.params.id);
   }
 
   componentWillReceiveProps(nextProps){
