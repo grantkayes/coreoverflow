@@ -102,24 +102,6 @@ class DetailedQuestion extends React.Component {
 
   render() {
     const { answerCount, questionTitle, body, user, claps, timestamp, tags } = this.props.question;
-    const input = `
-## Hello
-
-I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown! I am trying to work with React & markdown!
-
-\`Hello\`
-
-
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-    <Markdown source="# Your markdown here" />,
-    document.getElementById('content')
-);
-\`\`\`
-`;
 
     let tagContainer = ""
     if(tags) {
