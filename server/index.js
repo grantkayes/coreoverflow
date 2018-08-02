@@ -22,7 +22,7 @@ app.use(cors());
 
 AWS.config.update({
   region: process.env.DYNAMO_REGION,
-  endpoint: process.env.DYNAMO_ENDPOINT,
+
   accessKeyId: process.env.ACCESS_KEY_ID,
   secretAccessKey: process.env.SECRET_ACCESS_KEY
 });

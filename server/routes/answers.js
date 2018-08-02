@@ -125,7 +125,7 @@ function createUpdateAnswersParams(questionId, id, query) {
 
 AWS.config.update({
   region: process.env.DYNAMO_REGION,
-  endpoint: process.env.DYNAMO_ENDPOINT,
+
   accessKeyId: process.env.ACCESS_KEY_ID,
   secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
@@ -208,7 +208,11 @@ router.post('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  if (req.query.questionId === undefined || req.query.questionId === null || req.query.questionId.trim() === '') {
+  if (
+    req.query.questionId === undefined ||
+    req.query.questionId === null ||
+    req.query.questionId.trim() === ''
+  ) {
     res.status(400).send();
     return;
   }
