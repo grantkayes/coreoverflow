@@ -28,7 +28,7 @@ function pickRandomUser(users) {
 }
 
 function pickRandomNumber(x) {
-  return Math.floor(Math.random() * x + 1);
+  return Math.floor(Math.random() * x);
 }
 
 // function createRandomTags() {

@@ -1,8 +1,17 @@
 import React from 'react';
-import { Flex, Header, EmptyState } from '@procore/core-react';
+import { Flex, Header, EmptyState, Button, Icon } from '@procore/core-react';
 import Answer from './answer';
 import './index.css';
 import { EDIT_ANSWER_FAILED } from '../../modules/reducers/answers';
+
+const emptyStateButton = {
+  width: '150px',
+  display: 'flex',
+  justifyContent: 'center',
+  height: '40px',
+  paddingRight: '20px',
+  fontSize: '16px'
+};
 
 class AnswerList extends React.Component {
   constructor(props) {
@@ -49,7 +58,8 @@ class AnswerList extends React.Component {
             <EmptyState>
               <EmptyState.Image><img src="http://coreoverflow.s3.amazonaws.com/1/5c2398eb-488d-47ec-8b5b-8202a79aca19" alt='empty state img'/></EmptyState.Image>
               <EmptyState.Title>{`${this.props.userFirstName}, can you answer this question?`}</EmptyState.Title>
-              <EmptyState.Description>Please try using 'Post a Question' in the side bar</EmptyState.Description>
+              <EmptyState.Description style={{ fontSize: '12px' }}>People are searching for a better answer to this question.</EmptyState.Description>
+              <EmptyState.Actions><Button style={emptyStateButton}><Icon size="md" icon="edit" /> Answer</Button></EmptyState.Actions>
             </EmptyState>
           </div> :
           Answers
