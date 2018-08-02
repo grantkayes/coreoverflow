@@ -100,14 +100,14 @@ class LessModal extends React.Component {
   render() {
     return (
       <Modal
-        className="modalBody"
+        class="modalBody"
         open={this.props.open}
         onClickOverlay={this.props.close}
       >
         <Modal.Header className="lessModalHeader" onClose={this.props.close}>
           <Header type="h1">Your Answer </Header>
         </Modal.Header>
-        <Modal.Body className="modalText">
+        <Modal.Body class="modalText">
           <Tabs>
             <Tabs.Tab active>
               <Tabs.Link onClick={this.toggleWrite}>
@@ -123,7 +123,7 @@ class LessModal extends React.Component {
 
           {this.state.isWriteActive && (
             <TextArea
-              className="modalTextBody"
+              class="modalTextBody"
               resize="none"
               value={this.state.body}
               onChange={this.setBody}
