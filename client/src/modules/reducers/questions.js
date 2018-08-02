@@ -22,6 +22,7 @@ const initialState = {
   searchData: [],
   currentQuestion: {},
   busy: false,
+  loading: false,
   error: null
 };
 
@@ -89,6 +90,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         busy: true,
+        loading: true,
         error: null
       };
 
@@ -98,6 +100,7 @@ export default (state = initialState, action) => {
         ...state,
         currentQuestion: action.payload.data.data,
         busy: false,
+        loading: false,
         error: null
       };
 
@@ -106,6 +109,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         busy: false,
+        loading: false,
         error: action.error
       };
 
@@ -160,20 +164,22 @@ export default (state = initialState, action) => {
     case UPDATE_QUESTIONS_SUCCEEDED:
       console.log('update questions succeeded');
       const changes = action.payload.dataPayload
-
+      
       //Update state 
       const newArray = state.data.map(
-        question =>
-          question.id === changes.questionId
-            ? {
+        question => 
+          question.id === changes.questionId 
+          ? { 
               ...question,
               ...changes
-            } : question   
-      )
+            }
+          : question  
+      );
 
       return {
         ...state,
         data: newArray,
+        currentQuestion: {...state.currentQuestion, ...changes},
         busy: false,
         error: null
       };

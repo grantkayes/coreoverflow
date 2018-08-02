@@ -25,6 +25,7 @@ class Answer extends React.Component {
       modalType: 'edit'
     };
   }
+
   onClap = () => {
     this.props.editAnswer(this.props.id, { questionId: this.props.questionId, claps: this.props.claps + 1 });
   };
@@ -70,7 +71,7 @@ class Answer extends React.Component {
   };
 
   render() {
-    const { body, id, questionId, timestamp, claps } = this.props;
+    const { body, timestamp, claps } = this.props;
 
     return (
       <Card id="answer-container">

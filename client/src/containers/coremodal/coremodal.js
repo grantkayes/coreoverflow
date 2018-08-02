@@ -8,10 +8,10 @@ import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import './coremodal.css';
-import TagsInput from 'react-tagsinput';
-import 'react-tagsinput/react-tagsinput.css'; // If using WebPack and style-loader.
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 class CoreModal extends React.Component {
   constructor(props) {
@@ -67,7 +67,8 @@ class CoreModal extends React.Component {
       title: this.state.title,
       body: this.state.body,
       tags: this.state.tags,
-      questionId: this.props.olderData.id
+      questionId: this.props.olderData.id,
+      claps: this.props.olderData.claps
     };
 
     this.props.updateQuestions(updateData);
