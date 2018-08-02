@@ -72,7 +72,6 @@ const QuestionCard = props => {
           </Flex>
           <Flex direction="column" className="right-side-container">
             <Box>
-              {/* TODO: remove hard coded URL */}
               <Link href={`http://localhost:3000/question/${id}`}>
                 <p className="card-title">{title}</p>
               </Link>

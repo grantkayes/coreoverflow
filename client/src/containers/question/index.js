@@ -10,13 +10,15 @@ import {
 } from '../../modules/actions/answers';
 
 import {
-  getCurrentQuestion
+  getCurrentQuestion,
+  updateQuestions
 } from '../../modules/actions/questions';
 
 import Question from './question';
 import AnswerList from './answerList';
 
 import './index.css';
+import QuestionSpinner from '../dashboard/questionSpinner';
 
 class DetailedQuestion extends React.Component {
   constructor(props) {
@@ -29,10 +31,15 @@ class DetailedQuestion extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.questionLoading ? (
+      <QuestionSpinner />
+    ) : (
       <Flex id="main-container" justifyContent="center" direction="column">
         <Card id="card-container" className="card" level="30">
-          <Question question={this.props.question}/>
+          <Question 
+            question={this.props.question}
+            updateQuestions={this.props.updateQuestions}
+          />
           <AnswerList
             answers={this.props.answers}
             answersBusy={this.props.answersBusy}
@@ -46,7 +53,7 @@ class DetailedQuestion extends React.Component {
           />
         </Card>
       </Flex>
-    );
+    )
   }
 }
 
@@ -58,12 +65,14 @@ const mapStateToProps = state => ({
   userFirstName: state.user.data.firstName,
   userLastName: state.user.data.lastName,
   question: state.question.currentQuestion,
+  questionLoading: state.question.loading
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getCurrentQuestion,
+      updateQuestions,
       getAnswers,
       editAnswer,
       submitAnswer

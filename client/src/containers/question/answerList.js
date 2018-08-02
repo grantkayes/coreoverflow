@@ -2,7 +2,6 @@ import React from 'react';
 import { Flex, Header } from '@procore/core-react';
 import Answer from './answer';
 import './index.css';
-import { EDIT_ANSWER_FAILED } from '../../modules/reducers/answers';
 
 class AnswerList extends React.Component {
   constructor(props) {
@@ -23,7 +22,6 @@ class AnswerList extends React.Component {
           claps={claps}
           editAnswer={this.props.editAnswer}
           submitAnswer={this.props.submitAnswer}
-          questionId={this.props.questionId}
           userEmail={this.props.userEmail}
           userFirstName={this.props.userFirstName}
           userLastName={this.props.userLastName}

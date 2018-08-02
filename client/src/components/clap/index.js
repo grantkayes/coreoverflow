@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Icon } from '@procore/core-react';
+import { Flex } from '@procore/core-react';
 import './index.css';
 
 const Clap = props => {
