@@ -18,6 +18,7 @@ import Question from './question';
 import AnswerList from './answerList';
 
 import './index.css';
+import QuestionSpinner from '../dashboard/questionSpinner';
 
 class DetailedQuestion extends React.Component {
   constructor(props) {
@@ -30,7 +31,9 @@ class DetailedQuestion extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.questionLoading ? (
+      <QuestionSpinner />
+    ) : (
       <Flex id="main-container" justifyContent="center" direction="column">
         <Card id="card-container" className="card" level="30">
           <Question 
@@ -50,7 +53,7 @@ class DetailedQuestion extends React.Component {
           />
         </Card>
       </Flex>
-    );
+    )
   }
 }
 
@@ -62,6 +65,7 @@ const mapStateToProps = state => ({
   userFirstName: state.user.data.firstName,
   userLastName: state.user.data.lastName,
   question: state.question.currentQuestion,
+  questionLoading: state.question.loading
 });
 
 const mapDispatchToProps = dispatch =>

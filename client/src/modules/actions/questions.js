@@ -30,7 +30,6 @@ const getQuestions = () => {
     axios
       .get(PUBLIC_URL + '/questions/')
       .then(response => {
-        console.log('res', response);
         return dispatch({
           type: GET_QUESTIONS_SUCCEEDED,
           payload: response
