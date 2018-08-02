@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Box, Card, Flex, Link, Token } from '@procore/core-react';
 import './index.css';
-import 'react-tagsinput/react-tagsinput.css' 
+import 'react-tagsinput/react-tagsinput.css'
 
 const QuestionCard = props => {
   const {
@@ -24,7 +24,7 @@ const QuestionCard = props => {
   let tagContainer = ""
   if(tags) {
     tagContainer = tags.map((tag) => {
-      return (    
+      return (
         <Token className="tag">
           <Token.Label>{tag}</Token.Label>
         </Token>
@@ -44,7 +44,7 @@ const QuestionCard = props => {
             <Box className="votes-container">
               <Flex alignItems="center" direction="column">
                 <p className="card-vote-num">{claps}</p>
-                <p className="card-vote-text">votes</p>
+                <p className="card-vote-text">claps</p>
               </Flex>
             </Box>
             <Box

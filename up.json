@@ -1,0 +1,30 @@
+{
+  "name": "coreoverflow",
+  "profile": "myaccount",
+  "regions": ["us-west-1"],
+  "proxy": {
+    "command": "node ./server/bin/www"
+  },
+  "environment": {
+    "ACCESS_KEY_ID": "AKIAI7ZFG5Q3RN2PF7AA",
+    "SECRET_ACCESS_KEY": "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",
+    "S3_BUCKET": "coreoverflow",
+    "S3_REGION": "us-west-1",
+    "S3_ENDPOINT": "http://coreoverflow.s3.amazonaws.com"
+  },
+  "stages": {
+    "staging": {
+      "hooks": {
+        "build": "PUBLIC_URL=/staging yarn build"
+      }
+    },
+    "production": {
+      "hooks": {
+        "build": "PUBLIC_URL=/production yarn build"
+      }
+    }
+  },
+  "hooks": {
+    "build": "yarn build"
+  }
+}

@@ -1,6 +1,8 @@
 {
+  "name": "client",
+  "version": "0.1.0",
   "private": true,
-  "homepage": "https://create-react-app-redux.now.sh",
+  "proxy": "http://localhost:5000",
   "scripts": {
     "deploy": "now && now alias",
     "start": "react-scripts start",
@@ -11,8 +13,7 @@
     "precommit": "pretty-quick --staged"
   },
   "devDependencies": {
-    "prettier": "1.13.7",
-    "react-scripts": "^1.1.4"
+    "prettier": "1.13.7"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
@@ -37,6 +38,7 @@
     "react-redux": "5.0.7",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
+    "react-scripts": "1.1.4",
     "react-tagsinput": "^3.19.0",
     "redux": "4.0.0",
     "redux-persist": "^5.10.0",

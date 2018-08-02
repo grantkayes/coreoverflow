@@ -1,0 +1,19 @@
+{
+  "name": "coreoverflow",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm-run-all --sequential install:*",
+    "install:client": "cd client && yarn install",
+    "install:server": "cd server && yarn install",
+    "start": "npm-run-all --race --parallel start:*",
+    "start:client": "cd client && yarn start",
+    "start:server": "cd server && yarn start",
+    "build": "npm-run-all --sequential build:*",
+    "build:client": "cd client && yarn build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "npm-run-all": "^4.1.3"
+  }
+}
