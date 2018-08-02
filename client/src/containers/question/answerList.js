@@ -27,7 +27,7 @@ class AnswerList extends React.Component {
           timestamp={timestamp}
           claps={claps}
           editAnswer={this.props.editAnswer}
-          toggleEditModal={this.props.toggleEditModal}
+          openEditModal={this.props.openEditModal}
           toggleSubmitModal={this.props.toggleSubmitModal}
           userEmail={this.props.userEmail}
           userFirstName={this.props.userFirstName}

@@ -29,13 +29,20 @@ class DetailedQuestion extends React.Component {
       isEditModalOpen: false,
       isSubmitModalOpen: false,
       modalType: 'edit',
-      body: ''
+      body: '',
+      answerId: '',
+      questionId: ''
     };
+  }
 
-    const questionId = this.props.match.params.id;
-
-    this.props.getCurrentQuestion(questionId);
-    this.props.getAnswers(questionId);
+  componentWillReceiveProps(nextProps){
+   if(this.state.questionId != nextProps.match.params.id){
+     this.setState({
+       questionId: nextProps.match.params.id,
+     });
+     this.props.getCurrentQuestion(nextProps.match.params.id);
+     this.props.getAnswers(nextProps.match.params.id);
+   }
   }
 
   toggleSubmitModal = () => {
@@ -45,18 +52,25 @@ class DetailedQuestion extends React.Component {
     });
   };
 
-  toggleEditModal = () => {
-    console.log('toggling');
+  openEditModal = (id, body) => () => {
     this.setState({
-      isEditModalOpen: !this.state.isEditModalOpen,
+      isEditModalOpen: true,
+      modalType: 'edit',
+      body: body,
+      answerId: id,
+    });
+
+  };
+
+  closeEditModal = () => {
+    this.setState({
+      isEditModalOpen: false,
       modalType: 'edit',
     });
 
   };
 
   editAnswer = answer => {
-    console.log('answer')
-    console.log(answer)
     const { body } = answer;
 
     this.props.editAnswer(answer.id, { questionId: this.props.question.id, ...answer });
@@ -65,8 +79,6 @@ class DetailedQuestion extends React.Component {
   submitAnswer = answer => {
     const { userEmail, userFirstName, userLastName } = this.props;
     const { body } = answer;
-
-    console.log('this.props', this.props)
 
     const reqBody = {
       questionId: this.props.question.id,
@@ -102,7 +114,7 @@ class DetailedQuestion extends React.Component {
             userEmail={this.props.userEmail}
             userFirstName={this.props.userFirstName}
             userLastName={this.props.userLastName}
-            toggleEditModal={this.toggleEditModal}
+            openEditModal={this.openEditModal}
             toggleSubmitModal={this.toggleSubmitModal}
 
           />
@@ -117,9 +129,10 @@ class DetailedQuestion extends React.Component {
         />
 
         <LessModal
+          id={this.state.answerId}
           body={this.state.body}
           open={this.state.isEditModalOpen}
-          close={this.toggleEditModal}
+          close={this.closeEditModal}
           editAnswer={this.editAnswer}
           submitAnswer={this.submitAnswer}
           modalType={this.state.modalType}
