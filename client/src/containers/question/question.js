@@ -30,6 +30,10 @@ class DetailedQuestion extends React.Component {
     };
   }
 
+  onClap = () => {
+    this.props.editAnswer(this.props.id, { questionId: this.props.questionId, claps: this.props.claps + 1 });
+  };
+
   toggleQuestionModal = () => {
     this.setState({ isQuestionModalOpen: !this.state.isQuestionModalOpen });
   }

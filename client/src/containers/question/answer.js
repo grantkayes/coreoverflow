@@ -25,6 +25,7 @@ class Answer extends React.Component {
       modalType: 'edit'
     };
   }
+  
   onClap = () => {
     this.props.editAnswer(this.props.id, { questionId: this.props.questionId, claps: this.props.claps + 1 });
   };

@@ -32,7 +32,9 @@ class DetailedQuestion extends React.Component {
     return (
       <Flex id="main-container" justifyContent="center" direction="column">
         <Card id="card-container" className="card" level="30">
-          <Question question={this.props.question}/>
+          <Question 
+            question={this.props.question}
+          />
           <AnswerList
             answers={this.props.answers}
             answersBusy={this.props.answersBusy}
