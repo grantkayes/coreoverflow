@@ -21,16 +21,6 @@ const QuestionCard = props => {
   if (body && body.length > 250) {
     bodyText = body.substring(0, 250) + '...';
   }
-  let tagContainer = ""
-  if(tags) {
-    tagContainer = tags.map((tag) => {
-      return (
-        <Token className="tag">
-          <Token.Label>{tag}</Token.Label>
-        </Token>
-      )
-    })
-  }
 
   return (
     <Card className="card" level="30">
@@ -79,7 +69,20 @@ const QuestionCard = props => {
             <Box>
               <Flex direction="column">
                 <p className="card-body">{bodyText}</p>
-                <p className="card-body">{tagContainer}</p>
+                <div className="card-body">
+                  { (tags) ? (
+                      tags.map((tag, index) => {
+                        return (
+                          <Token key={index} className="tag">
+                            <Token.Label>{tag}</Token.Label>
+                          </Token>
+                        )
+                      })
+                    ) : (
+                      <div></div>
+                    )
+                  }
+                </div>
               </Flex>
             </Box>
             <Flex className="question-user-info" direction="column">

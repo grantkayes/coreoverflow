@@ -123,12 +123,12 @@ class CoreModal extends React.Component {
           <Tabs>
             <Tabs.Tab active>
               <Tabs.Link onClick={this.toggleWrite}>
-                <h3>Write</h3>
+                Write
               </Tabs.Link>
             </Tabs.Tab>
             <Tabs.Tab>
               <Tabs.Link onClick={this.togglePreview}>
-                <h3>Preview</h3>
+                Preview
               </Tabs.Link>
             </Tabs.Tab>
           </Tabs>

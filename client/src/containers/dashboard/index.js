@@ -11,9 +11,7 @@ const Dashboard = props => {
 
   while (questionData.length) all.push(questionData.splice(0, 3));
 
-  let key = 0;
   const allQuestions = all.map((questionArr, index) => {
-    ++key;
     const exampleQuestions = questionArr.map(question => {
       const exampleQuestion = {
         id: question.id,
