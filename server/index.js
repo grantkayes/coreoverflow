@@ -13,16 +13,18 @@ var questionRouter = require('./routes/questions');
 
 var app = express();
 
+require('dotenv').config();
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use(cors());
 
 AWS.config.update({
-  region: 'eu-west-2',
-  endpoint: 'http://localhost:8000',
-  accessKeyId: 'myfakeaccessid',
-  secretAccessKey: 'secret'
+  region: process.env.DYNAMO_REGION,
+  endpoint: process.env.DYNAMO_ENDPOINT,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 
 // view engine setup

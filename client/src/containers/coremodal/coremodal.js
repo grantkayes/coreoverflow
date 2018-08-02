@@ -13,6 +13,8 @@ import 'react-tagsinput/react-tagsinput.css'; // If using WebPack and style-load
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
+
 class CoreModal extends React.Component {
   constructor(props) {
     super(props);
@@ -44,7 +46,7 @@ class CoreModal extends React.Component {
       tags: this.state.tags
     };
 
-    axios.post('http://localhost:5000/questions', question).then(res => {
+    axios.post(PUBLIC_URL + '/questions', question).then(res => {
       this.props.toggleModal();
     });
   };
@@ -56,7 +58,7 @@ class CoreModal extends React.Component {
       data.append('doc', file);
     });
 
-    axios.post('http://localhost:5000/upload', data).then(res => {
+    axios.post(PUBLIC_URL + '/upload', data).then(res => {
       const imageURL = res.data.success[0].location;
       this.setState({ body: `${this.state.body}\n![](${imageURL})` });
     });
