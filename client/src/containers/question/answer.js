@@ -18,56 +18,11 @@ import './index.css';
 class Answer extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isEditModalOpen: false,
-      isSubmitModalOpen: false,
-      modalType: 'edit'
-    };
   }
   onClap = () => {
     this.props.editAnswer(this.props.id, { questionId: this.props.questionId, claps: this.props.claps + 1 });
   };
 
-  toggleSubmitModal = () => {
-    this.setState({
-      isSubmitModalOpen: !this.state.isSubmitModalOpen,
-      modalType: 'submit'
-    });
-  };
-
-  toggleEditModal = () => {
-    console.log('toggling');
-    this.setState({
-      isEditModalOpen: !this.state.isEditModalOpen,
-      modalType: 'edit'
-    });
-  };
-
-  editAnswer = answer => {
-    const { body } = answer;
-
-    this.props.editAnswer(this.props.id, { questionId: this.props.questionId, body });
-  };
-
-  submitAnswer = answer => {
-    const { questionId, userEmail, userFirstName, userLastName } = this.props;
-    const { body } = answer;
-
-    console.log('this.props', this.props)
-
-    const reqBody = {
-      questionId,
-      userEmail,
-      firstName: userFirstName,
-      lastName: userLastName,
-      body
-    };
-
-    console.log(reqBody);
-
-    this.props.submitAnswer(reqBody);
-  };
 
   render() {
     const { body, id, questionId, timestamp, claps } = this.props;
@@ -90,33 +45,16 @@ class Answer extends React.Component {
               </Header>
 
               <Flex className="actions-container" justifyContent="flex-end">
-                <LessModal
-                  body={''}
-                  open={this.state.isSubmitModalOpen}
-                  close={this.toggleSubmitModal}
-                  editAnswer={this.editAnswer}
-                  submitAnswer={this.submitAnswer}
-                  modalType={this.state.modalType}
-                />
                 <Header
-                  onClick={this.toggleSubmitModal}
+                  onClick={this.props.toggleSubmitModal}
                   className="actions"
                   type="h3"
                 >
                   <FontAwesomeIcon className="answer" icon={faReply} />
                   Reply
                 </Header>
-
-                <LessModal
-                  body={body}
-                  open={this.state.isEditModalOpen}
-                  close={this.toggleEditModal}
-                  editAnswer={this.editAnswer}
-                  submitAnswer={this.submitAnswer}
-                  modalType={this.state.modalType}
-                />
                 <Header
-                  onClick={this.toggleEditModal}
+                  onClick={this.props.toggleEditModal(body)}
                   className="actions"
                   type="h3"
                 >
