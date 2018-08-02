@@ -30,7 +30,6 @@ const getQuestions = () => {
     axios
       .get(PUBLIC_URL + '/questions/')
       .then(response => {
-        console.log('res', response);
         return dispatch({
           type: GET_QUESTIONS_SUCCEEDED,
           payload: response
@@ -55,7 +54,8 @@ const updateQuestions = updateData => {
       .patch(PUBLIC_URL + `/questions/${updateData.questionId}`, {
         title: updateData.title,
         text: updateData.body,
-        tags: updateData.tags
+        tags: updateData.tags,
+        claps: updateData.claps
       })
       .then(response => {
         return dispatch({
