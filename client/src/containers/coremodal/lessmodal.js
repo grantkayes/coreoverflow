@@ -24,16 +24,24 @@ class LessModal extends React.Component {
     super(props);
     this.state = {
       body: this.props.body,
+      answerId: this.props.id,
       error: '',
       isWriteActive: true,
       isPreviewActive: false
     };
-    console.log('this.props', this.props.body)
   }
+
+    componentWillReceiveProps(nextProps){
+     if(this.state.id != nextProps.id){
+       this.setState({
+         answerId: nextProps.id,
+         body: nextProps.body
+       });
+     }
+   }
 
   editAnswer = event => {
     event.preventDefault();
-
     const answer = {
       body: this.state.body
     };
@@ -46,6 +54,7 @@ class LessModal extends React.Component {
   submitAnswer = event => {
     event.preventDefault();
     const answer = {
+      id: this.state.answerId,
       body: this.state.body
     };
 

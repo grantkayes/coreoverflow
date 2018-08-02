@@ -55,7 +55,7 @@ class Answer extends React.Component {
                   Reply
                 </Header>
                 <Header
-                  onClick={this.props.toggleEditModal}
+                  onClick={this.props.openEditModal(this.props.id, body)}
                   className="actions"
                   type="h3"
                 >
