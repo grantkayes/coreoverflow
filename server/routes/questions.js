@@ -58,6 +58,7 @@ function createUpdateQuestionParams(id, query) {
 
 //Get all questions [DONE]
 router.get('/', function(req, res, next) {
+  console.log('hello')
   var params = {
     TableName: 'Question',
     ProjectionExpression:
@@ -116,6 +117,7 @@ router.get('/', function(req, res, next) {
 
 // Get all questions for a specific userId [DONE]
 router.get('/:userEmail', function(req, res, next) {
+  console.log('bye')
   let params = createGetQuestionsParams({ userEmail: req.params.userEmail });
 
   docClient.scan(params, function(err, data) {
