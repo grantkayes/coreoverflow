@@ -5,14 +5,16 @@ import {
   UPLOAD_IMAGE_FAILED
 } from '../reducers/modal';
 
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
+
 const postImage = acceptedFiles => {
-    let data = new FormData();
+  let data = new FormData();
 
-    acceptedFiles.forEach(file => {
-      data.append('doc', file);
-    });
+  acceptedFiles.forEach(file => {
+    data.append('doc', file);
+  });
 
-    return axios.post('http://localhost:5000/upload', data);
+  return axios.post(PUBLIC_URL + '/upload', data);
 };
 
 const uploadImage = acceptedFiles => {
@@ -20,7 +22,7 @@ const uploadImage = acceptedFiles => {
     dispatch({
       type: UPLOAD_IMAGE_REQUESTED
     });
-    
+
     postImage(acceptedFiles)
       .then(response =>
         dispatch({

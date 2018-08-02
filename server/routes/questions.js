@@ -5,11 +5,14 @@ var moment = require('moment');
 var router = express.Router();
 var moment = require('moment');
 
+require('dotenv').config();
+
+console.log(process.env.DYNAMO_REGION);
 AWS.config.update({
-  region: 'eu-west-2',
-  endpoint: 'http://localhost:8000',
-  accessKeyId: 'myfakeaccessid',
-  secretAccessKey: 'secret'
+  region: process.env.DYNAMO_REGION,
+  endpoint: process.env.DYNAMO_ENDPOINT,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 
 var docClient = new AWS.DynamoDB.DocumentClient();
@@ -39,21 +42,21 @@ function createGetQuestionsParams(query) {
 }
 
 function createUpdateQuestionParams(id, query) {
- const AttributeUpdates = {};
+  const AttributeUpdates = {};
 
- for (key in query) {
-   AttributeUpdates[key] = {
-     Action: 'PUT',
-     Value: query[key]
-   };
- }
+  for (key in query) {
+    AttributeUpdates[key] = {
+      Action: 'PUT',
+      Value: query[key]
+    };
+  }
 
- return {
-   TableName: 'Question',
-   Key: { id: id.trim() },
-   AttributeUpdates,
-   ReturnValues: 'ALL_NEW'
- };
+  return {
+    TableName: 'Question',
+    Key: { id: id.trim() },
+    AttributeUpdates,
+    ReturnValues: 'ALL_NEW'
+  };
 }
 
 //Get all questions [DONE]
@@ -76,7 +79,6 @@ router.get('/', function(req, res, next) {
       '#tags': 'tags'
     }
   };
-
   if (req.query.id) {
     const params = {
       TableName: 'Question',
@@ -85,16 +87,18 @@ router.get('/', function(req, res, next) {
       }
     };
 
+    console.log('hello');
+    console.log(req.query.id);
+
     docClient.get(params, function(err, data) {
       if (err) {
         console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
         res.status(500).send();
       } else {
         if (!data.Item) {
-          res.status(404).send()
-        }
-        else {
-          res.status(200).json({data: data.Item})
+          res.status(404).send();
+        } else {
+          res.status(200).json({ data: data.Item });
         }
         return;
       }
@@ -109,9 +113,9 @@ router.get('/', function(req, res, next) {
         JSON.stringify(err, null, 2)
       );
     } else {
-      console.log("Scan succeeded.");
-      console.log(data)
-      res.status(200).send(data)
+      console.log('Scan succeeded.');
+      console.log(data);
+      res.status(200).send(data);
     }
   });
 });
@@ -132,7 +136,7 @@ router.get('/:userEmail', function(req, res, next) {
 });
 
 // To post a question [DONE]
-router.post('/', function(req, res, next){
+router.post('/', function(req, res, next) {
   const fields = {
     userEmail: req.body.userEmail,
     questionTitle: req.body.title,
@@ -149,13 +153,13 @@ router.post('/', function(req, res, next){
 
   docClient.update(params, function(err, data) {
     if (err) {
-      console.log("Error: ", err);
+      console.log('Error: ', err);
     } else {
-      console.log("Added item:", JSON.stringify(data, null, 2));
-      res.status(200).send(data)
+      console.log('Added item:', JSON.stringify(data, null, 2));
+      res.status(200).send(data);
     }
-  })
-})
+  });
+});
 
 // To delete a specific question [DONE]
 router.delete('/:questionId', function(req, res, next) {
@@ -182,33 +186,36 @@ router.patch('/:questionId', function(req, res, next) {
   console.log('within PATCH endpoint');
 
   var params = {
-    TableName: "Question",
-    Key:{ "id": req.params.questionId },
-    UpdateExpression: "set questionTitle = :qt, body = :b, tags = :t",
-    ExpressionAttributeValues:{
-        ":qt": req.body.title,
-        ":b": req.body.text,
-        ":t": req.body.tags
+    TableName: 'Question',
+    Key: { id: req.params.questionId },
+    UpdateExpression: 'set questionTitle = :qt, body = :b, tags = :t',
+    ExpressionAttributeValues: {
+      ':qt': req.body.title,
+      ':b': req.body.text,
+      ':t': req.body.tags
     },
-    ReturnValues:"UPDATED_NEW"
+    ReturnValues: 'UPDATED_NEW'
   };
 
   docClient.update(params, function(err, data) {
     if (err) {
-      console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+      console.error(
+        'Unable to update item. Error JSON:',
+        JSON.stringify(err, null, 2)
+      );
     } else {
-      console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+      console.log('UpdateItem succeeded:', JSON.stringify(data, null, 2));
 
       const dataPayload = {
         questionId: req.params.questionId,
         questionTitle: data.Attributes.questionTitle,
         body: data.Attributes.body,
         tags: data.Attributes.tags
-      }
+      };
 
       res.status(200).json({ dataPayload });
     }
   });
-})
+});
 
 module.exports = router;
