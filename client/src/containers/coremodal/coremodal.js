@@ -185,7 +185,10 @@ class CoreModal extends React.Component {
             </Button>
 
             {this.state.type === 'edit' && (
-              <Button variant="primary" onClick={this.handleUpdate}>
+              <Button variant="primary" 
+                onClick={this.handleUpdate}
+                disabled={this.state.title === '' || this.state.body === '' || this.state.tags.length === 0 }
+              >
                 {' '}
                 Submit Edit{' '}
               </Button>
