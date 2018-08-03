@@ -78,8 +78,6 @@ class LessModal extends React.Component {
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
-    console.log(acceptedFiles[0]);
-
     let data = new FormData();
 
     acceptedFiles.forEach(file => {
@@ -87,8 +85,6 @@ class LessModal extends React.Component {
     });
 
     axios.post(PUBLIC_URL + '/upload', data).then(res => {
-      console.log(res);
-      console.log(res.data);
       const imageURL = res.data.success[0].location;
 
       this.setState({

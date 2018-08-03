@@ -111,7 +111,6 @@ function createUpdateAnswersParams(questionId, id, query) {
   }
 
   UpdateExpression = 'SET ' + UpdateExpression.join(',');
-  console.log(UpdateExpression);
   return {
     TableName: 'Question',
     Key: { id: questionId.trim() },

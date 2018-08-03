@@ -108,7 +108,6 @@ router.get('/', function(req, res, next) {
         JSON.stringify(err, null, 2)
       );
     } else {
-      console.log('Scan succeeded.');
       res.status(200).send(data);
     }
   });
@@ -129,7 +128,6 @@ router.get('/:userEmail', function(req, res, next) {
 
 // To post a question [DONE]
 router.post('/', function(req, res, next) {
-  console.log(req.body)
   const fields = {
     userEmail: req.body.userEmail,
     questionTitle: req.body.title,
@@ -156,7 +154,6 @@ router.post('/', function(req, res, next) {
 
 // To delete a specific question [DONE]
 router.delete('/:questionId', function(req, res, next) {
-  console.log('within DELETE endpoint');
   var params = {
     TableName: 'Question',
     Key: { id: req.params.questionId }
@@ -176,8 +173,6 @@ router.delete('/:questionId', function(req, res, next) {
 
 // Update a specific question [DONE]
 router.patch('/:questionId', function(req, res, next) {
-  console.log('within PATCH endpoint');
-
   var params = {
     TableName: 'Question',
     Key: { id: req.params.questionId },

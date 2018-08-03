@@ -16,7 +16,6 @@ import './index.css';
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 const App = () => {
-  console.log('THIS IS MY PUBLIC URL: ' + PUBLIC_URL);
   if (!isAuthenticated()) {
     return (
       <Flex

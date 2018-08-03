@@ -31,7 +31,6 @@ class Lock extends Component {
         if (err) {
           return;
         }
-        console.log(profile);
         const user = {
           email: profile.email,
           firstName: profile.given_name,
@@ -51,7 +50,6 @@ class Lock extends Component {
   }
 
   render() {
-    console.log('lock');
     return !this.state.loggedIn ? (
       <div>
         <div id={AUTH_CONFIG.container} className="login-card" />

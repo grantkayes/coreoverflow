@@ -21,7 +21,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPLOAD_IMAGE_REQUESTED:
-      console.log('upload image requested...');
       return {
         ...state,
         busy: true,
@@ -29,24 +28,19 @@ export default (state = initialState, action) => {
       };
 
     case UPLOAD_IMAGE_SUCCEEDED:
-      console.log('upload image succeeded');
-      console.log(action.payload);
       const imageURL = action.payload.success[0].location;
       const body = state.question.body;
-      const bodyAppended = body + '![](' + imageURL + ')'; 
-      //console.log(imageURL);
-
+      const bodyAppended = body + '![](' + imageURL + ')';
       return {
         ...state,
         question: {
-            body: bodyAppended
+          body: bodyAppended
         },
         busy: false,
         error: null
       };
 
     case GET_ANSWERS_FAILED:
-      console.log('upload image failed');
       return {
         ...state,
         busy: false,
