@@ -39,7 +39,7 @@ class DetailedQuestion extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.questionId != nextProps.match.params.id) {
+    if (this.state.questionId !== nextProps.match.params.id) {
       this.setState({
         questionId: nextProps.match.params.id
       });
@@ -72,8 +72,6 @@ class DetailedQuestion extends React.Component {
   };
 
   editAnswer = answer => {
-    const { body } = answer;
-
     this.props.editAnswer(answer.id, {
       questionId: this.props.question.id,
       ...answer

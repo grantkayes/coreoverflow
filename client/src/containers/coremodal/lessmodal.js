@@ -34,7 +34,7 @@ class LessModal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.id != nextProps.id) {
+    if (this.state.id !== nextProps.id) {
       this.setState({
         answerId: nextProps.id,
         body: nextProps.body

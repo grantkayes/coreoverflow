@@ -8,7 +8,6 @@ import {
   Tabs,
   Flex
 } from '@procore/core-react';
-import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
@@ -16,8 +15,9 @@ import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Dropzone from 'react-dropzone';
 
-import { updateQuestions } from '../../modules/actions/questions';
+import { updateQuestions, postQuestion } from '../../modules/actions/questions';
 import { toggleModal } from '../../modules/sidebar.js';
 import Markdown from '../../components/markdown';
 import './coremodal.css';
