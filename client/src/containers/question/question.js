@@ -163,6 +163,7 @@ class DetailedQuestion extends React.Component {
                 open={this.state.isDeleteModalOpen}
                 delete={this.confirmDelete}
                 close={this.toggleDeleteModal}
+                questionID={this.props.question.id}
               />
             </Flex>
             <Header className="record-info" type="h3">

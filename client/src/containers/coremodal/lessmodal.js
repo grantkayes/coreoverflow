@@ -15,9 +15,9 @@ import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import './coremodal.css';
-// import { push } from 'connected-react-router'
-// import { bindActionCreators } from 'redux'
-// import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import CoreModal from './coremodal'
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
@@ -61,10 +61,11 @@ class LessModal extends React.Component {
     };
 
     if (this.state.body.length > 100) {
-      const answerAction =
+      const answerAction = () => {
         this.props.modalType === 'edit'
-          ? this.props.editAnswer
-          : this.props.submitAnswer;
+          ? this.props.editAnswer(answer)
+          : this.props.submitAnswer(answer);
+      }
 
       answerAction(answer);
       this.setState({
@@ -80,7 +81,6 @@ class LessModal extends React.Component {
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
-    console.log('WHOO we did it reddit!');
     console.log(acceptedFiles[0]);
 
     let data = new FormData();
