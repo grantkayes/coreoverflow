@@ -15,6 +15,7 @@ import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import './coremodal.css';
+import './lessmodal.css';
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
@@ -138,7 +139,7 @@ class LessModal extends React.Component {
               <Markdown className="modalTextBody" text={this.state.body} />
             )}
           </Modal.Body>
-          <Modal.Footer className="modalFooter modalFooterLess">
+          <Modal.Footer className="modalFooterLess modalFooter">
             <Flex className="uploadContainer">
               <Dropzone
                 className="uploadImage"
