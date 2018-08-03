@@ -191,7 +191,10 @@ class CoreModal extends React.Component {
               </Button>
             )}
             {this.state.type === 'post' && (
-              <Button variant="primary" onClick={this.submitQuestion}>
+              <Button variant="primary" 
+                onClick={this.submitQuestion} 
+                disabled={this.state.title === '' || this.state.body === '' || this.state.tags.length === 0 }
+              >
                 {' '}
                 Submit{' '}
               </Button>
