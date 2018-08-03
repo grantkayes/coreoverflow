@@ -63,13 +63,11 @@ class NavBar extends React.Component {
 
   render() {
     const avatarImageUrl =
-      'http://coreoverflow.s3.amazonaws.com/1/1364337f-d4f2-4c21-9665-0272e39e809f';
+      'https://procore-marketplace.s3.amazonaws.com/production/uploads/procore-ios-logo.png';
     return (
       <ToolHeader>
         <ToolHeader.Section className="navbar-container">
-          <Avatar size="lg">
-            <Avatar.Portrait imageUrl={avatarImageUrl} />
-          </Avatar>
+          <img src={avatarImageUrl} className="core-overflow-logo" />
           <ToolHeader.Header className="logo" onClick={this.navigateDashboard}>
             ore Overflow
           </ToolHeader.Header>
