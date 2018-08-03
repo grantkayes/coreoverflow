@@ -108,15 +108,8 @@ class DetailedQuestion extends React.Component {
             {questionTitle}
           </Header>
           <Markdown className="question-markdown" text={body} />
-          <Flex
-            className="tags-container"
-            direction="row"
-            justifyContent="flex-end"
-            style={{ margin: '5px 0 10px 0', width: '100%' }}
-          >
-            {tagContainer}
-          </Flex>
-          <Flex className="info-container" justifyContent="space-between">
+
+          <Flex className="actions-tags-container" justifyContent="space-between">
             <Flex className="actions-container">
               <Header
                 className="actions"
@@ -166,6 +159,19 @@ class DetailedQuestion extends React.Component {
                 questionID={this.props.question.id}
               />
             </Flex>
+            <Flex
+              className="tags-container"
+              direction="row"
+              justifyContent="flex-end"
+              style={{ margin: '5px 0 10px 0', width: '100%' }}
+            >
+              {tagContainer}
+            </Flex>
+          </Flex>
+
+
+
+          <Flex className="info-container" justifyContent="space-between">
             <Header className="record-info" type="h3">
               Asked by {user} on{' '}
               <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
