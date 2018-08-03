@@ -54,20 +54,22 @@ button:disabled {
 }
 
 .tag {
-  margin-right: 6px;
-  border-radius: 5px;
-  background-color: #f78a54;
+  margin-right: 8px;
+  background-color: #f78a54 !important;
   font-weight: 300;
 }
 
 .tag:hover {
-  background-color: #f78a54;
+  background-color: #f78a54 !important;
 }
 
 .tags-container {
   margin: 1px 0px 4px 0px !important;
 }
 
+.core-token--standard {
+  border-radius: 3px !important;
+}
 .react-tagsinput-tag {
   background-color: #f47e42;
   border: 1px solid #f47e42;

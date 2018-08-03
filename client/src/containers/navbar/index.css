@@ -2,7 +2,7 @@
   width: 140px;
   letter-spacing: 1px;
   margin-left: 5px;
-  color: white;
+  color: white !important;
 }
 
 .logo:hover {
