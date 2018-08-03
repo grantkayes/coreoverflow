@@ -15,9 +15,6 @@ import Markdown from '../../components/markdown';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import './coremodal.css';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import CoreModal from './coremodal'
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
