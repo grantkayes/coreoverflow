@@ -7,16 +7,12 @@
   width: 100%;
 }
 
-/* .core-modal {
-} */
-
 .modalTextBody {
   padding: 5px;
   min-height: 250px;
   max-height: 250px;
   overflow-y: auto;
   width: 500px;
-  
 } 
 
 .flex-item1 {
@@ -90,7 +86,6 @@
 }
 
 .modalText {
-  /* overflow: hidden; */
   margin: 0px !important;
 }
 
