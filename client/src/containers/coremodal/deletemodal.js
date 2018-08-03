@@ -18,7 +18,7 @@ class DeleteModal extends React.Component {
     this.props.deleteMyQuestions(this.props.questionID);
     this.props.close();
     this.props.changePage();
-    //window.location.reload();
+    window.location.reload();
   }
 
   render() {
