@@ -6,7 +6,10 @@ import {
 } from '@procore/core-react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router';
 import { deleteMyQuestions } from '../../modules/actions/questions';
+
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 class DeleteModal extends React.Component {
 
@@ -14,6 +17,7 @@ class DeleteModal extends React.Component {
     console.log(this.props.questionID);
     this.props.deleteMyQuestions(this.props.questionID);
     this.props.close();
+    this.props.changePage();
   }
 
   render() {
@@ -47,7 +51,8 @@ class DeleteModal extends React.Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      deleteMyQuestions
+      deleteMyQuestions,
+      changePage: () => push(PUBLIC_URL + '/')
     },
     dispatch
   );
