@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import removeMd from 'remove-markdown';
 import { Box, Card, Flex, Link, Token } from '@procore/core-react';
 import './index.css';
 import 'react-tagsinput/react-tagsinput.css';
@@ -81,7 +82,7 @@ const QuestionCard = props => {
             </Box>
             <Box>
               <Flex direction="column">
-                <p className="card-body">{bodyText}</p>
+                <p className="card-body">{removeMd(bodyText)}</p>
                 <div className="card-body">
                   {tags ? (
                     tags.map((tag, index) => {

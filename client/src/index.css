@@ -55,12 +55,12 @@ button:disabled {
 
 .tag {
   margin-right: 8px;
-  background-color: #f78a54;
+  background-color: #f78a54 !important;
   font-weight: 300;
 }
 
 .tag:hover {
-  background-color: #f78a54;
+  background-color: #f78a54 !important;
 }
 
 .tags-container {
