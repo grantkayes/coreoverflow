@@ -156,7 +156,7 @@ const deleteMyQuestions = questionId => {
 
 const postQuestion = question => {
   return (dispatch, getState) => {
-    axios.post('http://localhost:5000/questions', question).then(response => {
+    axios.post(PUBLIC_URL + '/questions', question).then(response => {
       dispatch({
         type: SUBMIT_QUESTION_SUCCEEDED,
         payload: response.data
