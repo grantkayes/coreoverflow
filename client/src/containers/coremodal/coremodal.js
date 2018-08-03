@@ -55,16 +55,16 @@ class CoreModal extends React.Component {
       tags: this.state.tags
     };
 
-    axios.post(PUBLIC_URL + '/questions', question).then(res => {
-      this.props.toggleModal();
-      const questionId = res.data.Attributes.id;
-      this.props.changePage(questionId);
-      this.setState({
-        title: '',
-        body: '',
-        tags: []
-      });
+    this.props.postQuestion(question);
+    this.props.toggleModal();
+    this.setState({
+      title: '',
+      body: '',
+      tags: []
     });
+    // console.log(this.props.newQuestionId)
+    // const questionId = res.data.Attributes.id;
+    // this.props.changePage(questionId)
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
@@ -220,6 +220,7 @@ const mapDispatchToProps = dispatch =>
     {
       updateQuestions,
       toggleModal,
+      postQuestion,
       changePage: id => push(PUBLIC_URL + `/question/${id}`)
     },
     dispatch
