@@ -12,12 +12,8 @@ class DeleteModal extends React.Component {
     this.props.deleteMyQuestions(this.props.questionID);
     this.props.close();
     this.props.changePage();
-<<<<<<< HEAD
     window.location.reload();
   }
-=======
-  };
->>>>>>> 8d3fef72094d56ffe0bd7fd5b58ce85cd84eab15
 
   render() {
     return (
@@ -29,7 +25,6 @@ class DeleteModal extends React.Component {
         delete={this.props.delete}
         headline="Delete your question?"
       >
-        <Modal.Body />
         <Modal.Footer>
           <Modal.FooterButtons>
             <Button variant="tertiary" onClick={this.props.close}>
