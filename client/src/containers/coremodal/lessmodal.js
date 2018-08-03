@@ -19,21 +19,31 @@ import './coremodal.css';
 // import { bindActionCreators } from 'redux'
 // import { connect } from 'react-redux'
 
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
+
 class LessModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       body: this.props.body,
+      answerId: this.props.id,
       error: '',
       isWriteActive: true,
       isPreviewActive: false
     };
-    console.log('this.props', this.props.body)
+  }
+
+  componentWillReceiveProps(nextProps){
+   if(this.state.id != nextProps.id){
+     this.setState({
+       answerId: nextProps.id,
+       body: nextProps.body
+     });
+   }
   }
 
   editAnswer = event => {
     event.preventDefault();
-
     const answer = {
       body: this.state.body
     };
@@ -46,6 +56,7 @@ class LessModal extends React.Component {
   submitAnswer = event => {
     event.preventDefault();
     const answer = {
+      id: this.state.answerId,
       body: this.state.body
     };
 
@@ -78,7 +89,7 @@ class LessModal extends React.Component {
       data.append('doc', file);
     });
 
-    axios.post('http://localhost:5000/upload', data).then(res => {
+    axios.post(PUBLIC_URL + '/upload', data).then(res => {
       console.log(res);
       console.log(res.data);
       const imageURL = res.data.success[0].location;

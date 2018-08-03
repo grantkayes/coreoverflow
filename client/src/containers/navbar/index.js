@@ -2,14 +2,16 @@ import React from 'react';
 import Profile from './profile';
 import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
 import { withRouter } from 'react-router';
-import { bindActionCreators } from '../../../node_modules/redux'
-import { connect } from 'react-redux'
-import { getSearchResults } from '../../modules/actions/questions'
-import { logout } from '../../modules/actions/user'
-import { push } from 'connected-react-router'
+import { bindActionCreators } from '../../../node_modules/redux';
+import { connect } from 'react-redux';
+import { getSearchResults } from '../../modules/actions/questions';
+import { logout } from '../../modules/actions/user';
+import { push } from 'connected-react-router';
 import onClickOutside from 'react-onclickoutside';
 
 import './index.css';
+
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -22,7 +24,7 @@ class NavBar extends React.Component {
   }
 
   navigateDashboard = () => {
-    this.props.history.push('/');
+    this.props.history.push(PUBLIC_URL + '/');
   };
 
   closeDropdowns = () => {
@@ -33,16 +35,16 @@ class NavBar extends React.Component {
   };
 
   handleClickOutside = evt => {
-    this.closeDropdowns()
+    this.closeDropdowns();
   };
 
   onChange = event => {
     this.setState({ input: event.target.value });
   };
 
-  handleSearch = (props) => {
-    this.props.getSearchResults(this.state.input)
-    this.props.changePage()
+  handleSearch = props => {
+    this.props.getSearchResults(this.state.input);
+    this.props.changePage();
   };
 
   toggleNotifications = () => {
@@ -54,10 +56,10 @@ class NavBar extends React.Component {
 
   toggleProfile = () => {
     console.log('profile toggle');
-      this.setState({
-        isProfileOpen: !this.state.isProfileOpen,
-        isNotificationsOpen: false
-      });
+    this.setState({
+      isProfileOpen: !this.state.isProfileOpen,
+      isNotificationsOpen: false
+    });
   };
 
   render() {
@@ -99,12 +101,12 @@ const mapDispatchToProps = dispatch =>
     {
       getSearchResults,
       logout,
-      changePage: () => push('/search-results')
+      changePage: () => push(PUBLIC_URL + '/search-results')
     },
     dispatch
-  )
+  );
 
 export default connect(
   null,
   mapDispatchToProps
-)(withRouter(onClickOutside(NavBar)))
+)(withRouter(onClickOutside(NavBar)));

@@ -9,7 +9,7 @@ require('dotenv').config();
 
 AWS.config.update({
   region: process.env.DYNAMO_REGION,
-  endpoint: process.env.DYNAMO_ENDPOINT,
+
   accessKeyId: process.env.ACCESS_KEY_ID,
   secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
@@ -108,8 +108,8 @@ router.get('/', function(req, res, next) {
         JSON.stringify(err, null, 2)
       );
     } else {
-      console.log("Scan succeeded.");
-      res.status(200).send(data)
+      console.log('Scan succeeded.');
+      res.status(200).send(data);
     }
   });
 });
@@ -181,7 +181,8 @@ router.patch('/:questionId', function(req, res, next) {
   var params = {
     TableName: 'Question',
     Key: { id: req.params.questionId },
-    UpdateExpression: 'set questionTitle = :qt, body = :b, tags = :t, claps = :c',
+    UpdateExpression:
+      'set questionTitle = :qt, body = :b, tags = :t, claps = :c',
     ExpressionAttributeValues: {
       ':qt': req.body.title,
       ':b': req.body.text,
