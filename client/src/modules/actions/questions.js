@@ -66,7 +66,6 @@ const updateQuestions = updateData => {
         });
       })
       .catch(err => {
-        console.log(err);
         dispatch({
           type: UPDATE_QUESTIONS_FAILED,
           error: err
@@ -141,15 +140,12 @@ const deleteMyQuestions = questionId => {
     axios
       .delete(PUBLIC_URL + `/questions/${questionId}`)
       .then(response => {
-        console.log('AM HERE');
-
         dispatch({
           type: DELETE_MY_QUESTION_SUCCEEDED,
           payload: response
         });
       })
       .catch(err => {
-        console.log(err);
         dispatch({
           type: DELETE_MY_QUESTION_FAILED,
           error: err
@@ -158,19 +154,17 @@ const deleteMyQuestions = questionId => {
   };
 };
 
-const postQuestion = (question) => {
-  console.log('post question')
+const postQuestion = question => {
   return (dispatch, getState) => {
-    axios.post('http://localhost:5000/questions', question)
-      .then(response => {
-        dispatch({
-          type: SUBMIT_QUESTION_SUCCEEDED,
-          payload: response.data
-        })
-        dispatch(push(PUBLIC_URL + `/question/${response.data.Attributes.id}`))
+    axios.post('http://localhost:5000/questions', question).then(response => {
+      dispatch({
+        type: SUBMIT_QUESTION_SUCCEEDED,
+        payload: response.data
+      });
+      dispatch(push(PUBLIC_URL + `/question/${response.data.Attributes.id}`));
     });
-  }
-}
+  };
+};
 
 export {
   getQuestions,

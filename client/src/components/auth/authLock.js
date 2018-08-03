@@ -22,8 +22,4 @@ const lock = new Auth0Lock(AUTH_CONFIG.clientId, AUTH_CONFIG.domain, {
   }
 });
 
-console.log('AUTH0 INFORMATION:');
-console.log(AUTH_CONFIG);
-console.log(process.env);
-
 export default lock;

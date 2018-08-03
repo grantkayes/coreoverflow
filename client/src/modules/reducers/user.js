@@ -2,7 +2,7 @@ export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 
 const initialState = {
-  data: {},
+  data: {}
 };
 
 export default (state = initialState, action) => {
@@ -10,14 +10,13 @@ export default (state = initialState, action) => {
     case LOGIN_USER:
       return {
         ...state,
-        data: action.payload,
+        data: action.payload
       };
 
     case LOGOUT_USER:
-      console.log('logout success');
       return {
         ...state,
-        data: {},
+        data: {}
       };
 
     default:
