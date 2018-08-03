@@ -8,7 +8,16 @@ require('dotenv').config();
 
 const token = process.env.SLACK_TOKEN;
 
-const PUBLIC_URL = process.env.PUBLIC_URL;
+const PUBLIC_URL = process.env.PUBLIC_URL || '';
+let SLACK_URL = process.env.SLACK_PUBLIC_URL;
+
+var env = process.env.NODE_ENV || 'dev';
+
+if (env === 'dev') {
+  SLACK_URL = 'http://localhost:3000';
+}
+
+const SLACK_PUBLIC_URL = SLACK_URL + PUBLIC_URL
 
 const web = new WebClient(token);
 
@@ -26,6 +35,7 @@ function sendSlackNotification(email, title, id) {
           return_im: true
         })
         .then(res => {
+          console.log('adsfasdfasd', SLACK_PUBLIC_URL + `/question/${id}`)
           web.chat
             .postMessage({
               token: process.env.SLACK_BOT_TOKEN,
@@ -34,7 +44,7 @@ function sendSlackNotification(email, title, id) {
               attachments: [
                 {
                   title,
-                  title_link: PUBLIC_URL + `/question/${id}`
+                  title_link: SLACK_PUBLIC_URL + `/question/${id}`
                 }
               ]
             })
