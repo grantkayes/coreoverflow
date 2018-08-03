@@ -15,7 +15,8 @@ export const GET_CURRENT_QUESTION_SUCCEEDED = 'GET_CURRENT_QUESTION_SUCEEDED';
 export const GET_CURRENT_QUESTION_FAILED = 'GET_CURRENT_QUESTION_FAILED';
 export const UPDATE_QUESTIONS_REQUESTED = 'UPDATE_QUESTIONS_REQUESTED';
 export const UPDATE_QUESTIONS_SUCCEEDED = 'UPDATE_QUESTIONS_SUCCEEDED';
-export const UPDATE_QUESTIONS_FAILED= 'UPDATE_QUESTIONS_FAILED';
+export const UPDATE_QUESTIONS_FAILED = 'UPDATE_QUESTIONS_FAILED';
+export const SUBMIT_QUESTION_SUCCEEDED = 'SUBMIT_QUESTION_SUCCEEDED';
 
 const initialState = {
   data: [],
@@ -42,7 +43,7 @@ export default (state = initialState, action) => {
 
       //Sort by most recent time
       payload.sort(function(time1, time2){
-        return moment(time1.timestamp) - moment(time2.timestamp)
+        return moment(time2.timestamp) - moment(time1.timestamp)
       })
 
       return {
@@ -142,6 +143,8 @@ export default (state = initialState, action) => {
     
     case DELETE_MY_QUESTION_SUCCEEDED:
       console.log('delete my question succeeded');
+
+      
       return {
         ...state,
         data: action.payload.data,
@@ -187,6 +190,14 @@ export default (state = initialState, action) => {
     case UPDATE_QUESTIONS_FAILED:
       console.log('update questions failed');
       return state;
+
+    case SUBMIT_QUESTION_SUCCEEDED:
+      console.log('submitting question succeeded');
+
+      return {
+        ...state,
+        data: [...state.data, action.payload.Attributes]
+      }
 
     default:
       return state;

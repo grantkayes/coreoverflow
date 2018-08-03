@@ -129,6 +129,7 @@ router.get('/:userEmail', function(req, res, next) {
 
 // To post a question [DONE]
 router.post('/', function(req, res, next) {
+  console.log(req.body)
   const fields = {
     userEmail: req.body.userEmail,
     questionTitle: req.body.title,

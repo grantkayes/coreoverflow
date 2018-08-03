@@ -24,16 +24,6 @@ const QuestionCard = props => {
   if (body && body.length > 250) {
     bodyText = body.substring(0, 250) + '...';
   }
-  let tagContainer = '';
-  if (tags) {
-    tagContainer = tags.map(tag => {
-      return (
-        <Token className="tag">
-          <Token.Label>{tag}</Token.Label>
-        </Token>
-      );
-    });
-  }
 
   return (
     <Card className="card" level="30">

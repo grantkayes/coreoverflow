@@ -11,19 +11,17 @@ import {
 
 import Markdown from '../../components/markdown';
 import Clap from '../../components/clap';
-import LessModal from '../coremodal/lessmodal';
 
 import './index.css';
 
 class Answer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   onClap = () => {
-    this.props.editAnswer( {id: this.props.id, questionId: this.props.questionId, claps: this.props.claps + 1 });
+    this.props.editAnswer({
+      id: this.props.id,
+      questionId: this.props.questionId,
+      claps: this.props.claps + 1
+    });
   };
-
 
   render() {
     const { body, timestamp, claps } = this.props;
@@ -41,8 +39,9 @@ class Answer extends React.Component {
           <Flex className="answer-card-right" direction="column">
             <Flex className="info-container">
               <Header className="record-info record-info-answer" type="h3">
-                Answered by {`${this.props.answerFirstName} ${this.props.answerLastName}`} on{' '}
-                <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
+                Answered by{' '}
+                {`${this.props.answerFirstName} ${this.props.answerLastName}`}{' '}
+                on <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
               </Header>
 
               <Flex className="actions-container" justifyContent="flex-end">

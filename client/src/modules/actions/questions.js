@@ -16,7 +16,8 @@ import {
   DELETE_MY_QUESTION_FAILED,
   UPDATE_QUESTIONS_REQUESTED,
   UPDATE_QUESTIONS_SUCCEEDED,
-  UPDATE_QUESTIONS_FAILED
+  UPDATE_QUESTIONS_FAILED,
+  SUBMIT_QUESTION_SUCCEEDED
 } from '../reducers/questions';
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
@@ -139,7 +140,7 @@ const deleteMyQuestions = questionId => {
     axios
       .delete(PUBLIC_URL + `/questions/${questionId}`)
       .then(response => {
-        console.log(response);
+        console.log('AM HERE');
 
         dispatch({
           type: DELETE_MY_QUESTION_SUCCEEDED,
@@ -156,11 +157,29 @@ const deleteMyQuestions = questionId => {
   };
 };
 
+const postQuestion = (question) => {
+  console.log('post question')
+  return (dispatch, getState) => {
+    axios.post('http://localhost:5000/questions', question)
+      .then(response => {
+        // console.log(response.data.Attributes.id)
+        dispatch({
+          type: SUBMIT_QUESTION_SUCCEEDED,
+          payload: response.data
+        })
+
+        // const questionId = res.data.Attributes.id;
+        // this.props.changePage(questionId)
+    });
+  }
+}
+
 export {
   getQuestions,
   getMyQuestions,
   getCurrentQuestion,
   getSearchResults,
   deleteMyQuestions,
-  updateQuestions
+  updateQuestions,
+  postQuestion
 };

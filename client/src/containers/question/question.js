@@ -3,7 +3,7 @@ import { Flex, Header, Token } from '@procore/core-react';
 import moment from 'moment';
 
 import Markdown from '../../components/markdown';
-import Clap from '../../components/clap'
+import Clap from '../../components/clap';
 import LessModal from '../coremodal/lessmodal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,7 +25,7 @@ class DetailedQuestion extends React.Component {
       isQuestionModalOpen: false,
       isEditQuestionModalOpen: false,
       isLessModalOpen: false,
-      isDeleteModalOpen: false,
+      isDeleteModalOpen: false
     };
   }
 
@@ -35,7 +35,7 @@ class DetailedQuestion extends React.Component {
       body: this.props.question.body,
       tags: this.props.question.tags,
       questionId: this.props.question.id,
-      claps: this.props.question.claps+1
+      claps: this.props.question.claps + 1
     };
 
     this.props.updateQuestions(updateData);
@@ -43,37 +43,46 @@ class DetailedQuestion extends React.Component {
 
   toggleQuestionModal = () => {
     this.setState({ isQuestionModalOpen: !this.state.isQuestionModalOpen });
-  }
+  };
 
   toggleEditQuestionModal = () => {
-    this.setState({ isEditQuestionModalOpen: !this.state.isEditQuestionModalOpen });
-  }
+    this.setState({
+      isEditQuestionModalOpen: !this.state.isEditQuestionModalOpen
+    });
+  };
 
   toggleLessModal = () => {
     this.setState({ isLessModalOpen: !this.state.isLessModalOpen });
-  }
+  };
 
   toggleDeleteModal = () => {
     this.setState({ isDeleteModalOpen: !this.state.isDeleteModalOpen });
-  }
+  };
 
   confirmDelete = () => {
     window.alert('deleting question...');
     this.toggleDeleteModal();
-  }
+  };
 
   render() {
-    const { answerCount, questionTitle, body, user, claps, timestamp, tags } = this.props.question;
+    const {
+      questionTitle,
+      body,
+      user,
+      claps,
+      timestamp,
+      tags
+    } = this.props.question;
 
-    let tagContainer = ""
-    if(tags) {
+    let tagContainer = '';
+    if (tags) {
       tagContainer = tags.map((tag, index) => {
         return (
           <Token key={index} className="tag">
             <Token.Label>{tag}</Token.Label>
           </Token>
-        )
-      })
+        );
+      });
     }
 
     return (
@@ -88,7 +97,7 @@ class DetailedQuestion extends React.Component {
           alignItems="center"
           justifyContent="center"
         >
-          <Clap claps={claps} onClap={this.onClap}/>
+          <Clap claps={claps} onClap={this.onClap} />
         </Flex>
         <Flex
           justifyContent="center"
@@ -99,41 +108,67 @@ class DetailedQuestion extends React.Component {
             {questionTitle}
           </Header>
           <Markdown className="question-markdown" text={body} />
-          <Flex className="tags-container" direction="row" justifyContent='flex-end' style={{ margin:'5px 0 10px 0', width: '100%' }}>
+          <Flex
+            className="tags-container"
+            direction="row"
+            justifyContent="flex-end"
+            style={{ margin: '5px 0 10px 0', width: '100%' }}
+          >
             {tagContainer}
           </Flex>
           <Flex className="info-container" justifyContent="space-between">
             <Flex className="actions-container">
-              <Header className="actions" type="h3" onClick={this.props.toggleSubmitModal}>
+              <Header
+                className="actions"
+                type="h3"
+                onClick={this.props.toggleSubmitModal}
+              >
                 <FontAwesomeIcon className="answer" icon={faComments} />
                 Answer
               </Header>
-              <LessModal open={this.state.isLessModalOpen} close={this.toggleLessModal} />
-              <Header className="actions" type="h3" onClick={this.toggleEditQuestionModal}>
+              <LessModal
+                open={this.state.isLessModalOpen}
+                close={this.toggleLessModal}
+              />
+              <Header
+                className="actions"
+                type="h3"
+                onClick={this.toggleEditQuestionModal}
+              >
                 <FontAwesomeIcon className="edit" icon={faStickyNote} />
                 Edit
               </Header>
 
-              {this.state.isEditQuestionModalOpen ?
+              {this.state.isEditQuestionModalOpen ? (
                 <CoreModal
                   open={this.state.isEditQuestionModalOpen}
                   close={this.toggleEditQuestionModal}
-                  type='edit'
+                  type="edit"
                   olderData={this.props.question}
-                /> :
-                <div></div>
-              }
+                />
+              ) : (
+                <div />
+              )}
 
-              <Header className="actions" type="h3" onClick={this.toggleDeleteModal}>
+              <Header
+                className="actions"
+                type="h3"
+                onClick={this.toggleDeleteModal}
+              >
                 <FontAwesomeIcon className="edit" icon={faTrash} />
                 Delete
               </Header>
 
-              <DeleteModal open={this.state.isDeleteModalOpen} delete={this.confirmDelete} close={this.toggleDeleteModal}/>
-
+              <DeleteModal
+                open={this.state.isDeleteModalOpen}
+                delete={this.confirmDelete}
+                close={this.toggleDeleteModal}
+                questionID={this.props.question.id}
+              />
             </Flex>
             <Header className="record-info" type="h3">
-              Asked by {user} on <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
+              Asked by {user} on{' '}
+              <i>{moment(timestamp).format('MMMM Do YYYY, h:mm a')}</i>
             </Header>
           </Flex>
         </Flex>

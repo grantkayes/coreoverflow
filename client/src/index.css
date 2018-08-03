@@ -64,5 +64,18 @@ button:disabled {
 }
 
 .tags-container {
-  margin: 0px 0px 5px 0px;
+  margin: 1px 0px 4px 0px !important;
+}
+
+.core-token--standard {
+  border-radius: 3px !important;
+}
+.react-tagsinput-tag {
+  background-color: #f47e42;
+  border: 1px solid #f47e42;
+  color: #ffffff;
+}
+
+.react-tagsinput-tag--focused {
+  border-color: none;
 }
