@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 
 import {
   GET_QUESTIONS_REQUESTED,
@@ -162,14 +163,11 @@ const postQuestion = (question) => {
   return (dispatch, getState) => {
     axios.post('http://localhost:5000/questions', question)
       .then(response => {
-        // console.log(response.data.Attributes.id)
         dispatch({
           type: SUBMIT_QUESTION_SUCCEEDED,
           payload: response.data
         })
-
-        // const questionId = res.data.Attributes.id;
-        // this.props.changePage(questionId)
+        dispatch(push(PUBLIC_URL + `/question/${response.data.Attributes.id}`))
     });
   }
 }
