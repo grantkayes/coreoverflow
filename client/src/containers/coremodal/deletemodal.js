@@ -24,7 +24,6 @@ class DeleteModal extends React.Component {
         delete={this.props.delete}
         headline="Delete your question?"
       >
-        <Modal.Body />
         <Modal.Footer>
           <Modal.FooterButtons>
             <Button variant="tertiary" onClick={this.props.close}>
