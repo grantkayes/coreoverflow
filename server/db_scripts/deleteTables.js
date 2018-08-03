@@ -2,7 +2,7 @@ var AWS = require('aws-sdk');
 var tables = require('../db_tables');
 
 require('dotenv').config();
-
+console.log(process.env)
 AWS.config.update({
   region: process.env.DYNAMO_REGION,
 
