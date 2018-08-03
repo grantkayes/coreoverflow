@@ -1,25 +1,23 @@
 import React from 'react';
-import {
-  Modal,
-  Button,
-  ConfirmModal
-} from '@procore/core-react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { Modal, Button, ConfirmModal } from '@procore/core-react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { deleteMyQuestions } from '../../modules/actions/questions';
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 class DeleteModal extends React.Component {
-
   handleDelete = () => {
-    console.log(this.props.questionID);
     this.props.deleteMyQuestions(this.props.questionID);
     this.props.close();
     this.props.changePage();
+<<<<<<< HEAD
     window.location.reload();
   }
+=======
+  };
+>>>>>>> 8d3fef72094d56ffe0bd7fd5b58ce85cd84eab15
 
   render() {
     return (
@@ -31,8 +29,7 @@ class DeleteModal extends React.Component {
         delete={this.props.delete}
         headline="Delete your question?"
       >
-        <Modal.Body>
-        </Modal.Body>
+        <Modal.Body />
         <Modal.Footer>
           <Modal.FooterButtons>
             <Button variant="tertiary" onClick={this.props.close}>
@@ -45,9 +42,8 @@ class DeleteModal extends React.Component {
         </Modal.Footer>
       </ConfirmModal>
     );
-  };
-
-};
+  }
+}
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
