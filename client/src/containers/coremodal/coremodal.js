@@ -1,18 +1,26 @@
 import React from 'react';
 import { push } from 'connected-react-router';
-import { Modal, Button, Header } from '@procore/core-react';
-import { TextArea } from '@procore/core-react';
-import { Tabs } from '@procore/core-react';
-import { updateQuestions } from '../../modules/actions/questions';
-import { toggleModal } from '../../modules/sidebar.js';
-import Markdown from '../../components/markdown';
+import {
+  Modal,
+  Button,
+  Header,
+  TextArea,
+  Tabs,
+  Flex
+} from '@procore/core-react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-import './coremodal.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import { updateQuestions } from '../../modules/actions/questions';
+import { toggleModal } from '../../modules/sidebar.js';
+import Markdown from '../../components/markdown';
+import './coremodal.css';
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
@@ -115,7 +123,11 @@ class CoreModal extends React.Component {
 
   render() {
     return (
-      <Modal open={this.props.open} onClickOverlay={this.props.close}>
+      <Modal
+        open={this.props.open}
+        onClickOverlay={this.props.close}
+        className="modalComponent"
+      >
         <Modal.Header className="modalHeader" onClose={this.props.close}>
           <div className="flex-container">
             <Header type="h1" className="flex-item1">
@@ -139,17 +151,19 @@ class CoreModal extends React.Component {
             </Tabs.Tab>
           </Tabs>
 
-          {this.state.isWriteActive && (
-            <TextArea
-              className="modalTextBody"
-              resize="none"
-              value={this.state.body}
-              onChange={this.setBody}
-            />
-          )}
-          {this.state.isPreviewActive && (
-            <Markdown className="modalTextBody" text={this.state.body} />
-          )}
+          {this.state.isWriteActive &&
+            !this.state.isPreviewActive && (
+              <TextArea
+                className="modalTextBody"
+                resize="none"
+                value={this.state.body}
+                onChange={this.setBody}
+              />
+            )}
+          {this.state.isPreviewActive &&
+            !this.state.isWriteActive && (
+              <Markdown className="modalTextBody" text={this.state.body} />
+            )}
           <TagsInput
             value={this.state.tags}
             onChange={this.handleChange}
@@ -157,10 +171,19 @@ class CoreModal extends React.Component {
             onlyUnique={true}
           />
         </Modal.Body>
-        <Modal.Footer>
-          <Dropzone className="dropzone" multiple={false} onDrop={this.onDrop}>
-            <Header>Click to upload image, or drag and drop file here</Header>
-          </Dropzone>
+        <Modal.Footer className="modalFooter">
+          <Flex className="uploadContainer">
+            <Dropzone
+              className="uploadImage"
+              multiple={false}
+              onDrop={this.onDrop}
+            >
+              <Button variant="form">
+                <FontAwesomeIcon className="imageIcon" icon={faImage} />
+                Attach
+              </Button>
+            </Dropzone>
+          </Flex>
           <Modal.FooterButtons>
             <Button variant="tertiary" onClick={this.props.close}>
               Cancel

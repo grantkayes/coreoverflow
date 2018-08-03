@@ -22,16 +22,16 @@
     ]
   },
   "environment": {
-    "ACCESS_KEY_ID": "AKIAI7ZFG5Q3RN2PF7AA",
-    "SECRET_ACCESS_KEY": "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",
+    "ACCESS_KEY_ID": "AKIAIKAU5N5G6JNEAZ3A",
+    "SECRET_ACCESS_KEY": "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",
     "S3_BUCKET": "coreoverflow",
     "S3_REGION": "us-west-1",
     "S3_ENDPOINT": "http://coreoverflow.s3.amazonaws.com",
     "DYNAMO_ENDPOINT": "http://localhost:8000",
     "DYNAMO_REGION": "us-west-1",
     "SLACK_TOKEN":
-      "xoxp-404653693399-403483040211-408239508258-469fa8d2970a12504154377b7b1d741b",
-    "SLACK_BOT_TOKEN": "xoxb-404653693399-407683824305-m8Px1X8TGwogACLS0nf6GC6f"
+      "xoxp-404653693399-403483040211-410013129154-17e3ddde352b2c27b2c302a00097bb70",
+    "SLACK_BOT_TOKEN": "xoxb-404653693399-407683824305-CTqZvmX9StgbxwizT46NjmfB"
   },
   "stages": {
     "staging": {

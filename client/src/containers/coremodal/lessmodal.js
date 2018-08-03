@@ -33,13 +33,13 @@ class LessModal extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps){
-   if(this.state.id != nextProps.id){
-     this.setState({
-       answerId: nextProps.id,
-       body: nextProps.body
-     });
-   }
+  componentWillReceiveProps(nextProps) {
+    if (this.state.id != nextProps.id) {
+      this.setState({
+        answerId: nextProps.id,
+        body: nextProps.body
+      });
+    }
   }
 
   editAnswer = event => {
@@ -69,7 +69,7 @@ class LessModal extends React.Component {
       answerAction(answer);
       this.setState({
         body: ''
-      })
+      });
 
       this.props.close();
     } else {
@@ -126,14 +126,10 @@ class LessModal extends React.Component {
           <Modal.Body className="modalText">
             <Tabs>
               <Tabs.Tab active>
-                <Tabs.Link onClick={this.toggleWrite}>
-                  Write
-                </Tabs.Link>
+                <Tabs.Link onClick={this.toggleWrite}>Write</Tabs.Link>
               </Tabs.Tab>
               <Tabs.Tab>
-                <Tabs.Link onClick={this.togglePreview}>
-                  Preview
-                </Tabs.Link>
+                <Tabs.Link onClick={this.togglePreview}>Preview</Tabs.Link>
               </Tabs.Tab>
             </Tabs>
 

@@ -33,16 +33,18 @@ class DetailedQuestion extends React.Component {
       answerId: '',
       questionId: ''
     };
+
+    this.props.getCurrentQuestion(this.props.match.params.id);
   }
 
-  componentWillReceiveProps(nextProps){
-   if(this.state.questionId != nextProps.match.params.id){
-     this.setState({
-       questionId: nextProps.match.params.id,
-     });
-     this.props.getCurrentQuestion(nextProps.match.params.id);
-     this.props.getAnswers(nextProps.match.params.id);
-   }
+  componentWillReceiveProps(nextProps) {
+    if (this.state.questionId != nextProps.match.params.id) {
+      this.setState({
+        questionId: nextProps.match.params.id
+      });
+      this.props.getCurrentQuestion(nextProps.match.params.id);
+      this.props.getAnswers(nextProps.match.params.id);
+    }
   }
 
   toggleSubmitModal = () => {
@@ -57,23 +59,24 @@ class DetailedQuestion extends React.Component {
       isEditModalOpen: true,
       modalType: 'edit',
       body: body,
-      answerId: id,
+      answerId: id
     });
-
   };
 
   closeEditModal = () => {
     this.setState({
       isEditModalOpen: false,
-      modalType: 'edit',
+      modalType: 'edit'
     });
-
   };
 
   editAnswer = answer => {
     const { body } = answer;
 
-    this.props.editAnswer(answer.id, { questionId: this.props.question.id, ...answer });
+    this.props.editAnswer(answer.id, {
+      questionId: this.props.question.id,
+      ...answer
+    });
   };
 
   submitAnswer = answer => {
@@ -87,11 +90,11 @@ class DetailedQuestion extends React.Component {
       lastName: userLastName,
       body
     };
-    this.props.submitAnswer(reqBody)
+    this.props.submitAnswer(reqBody);
     this.setState({
       body: ''
-    })
-  }
+    });
+  };
 
   render() {
     return this.props.questionLoading ? (
@@ -116,7 +119,6 @@ class DetailedQuestion extends React.Component {
             userLastName={this.props.userLastName}
             openEditModal={this.openEditModal}
             toggleSubmitModal={this.toggleSubmitModal}
-
           />
         </Card>
         <LessModal
@@ -138,7 +140,7 @@ class DetailedQuestion extends React.Component {
           modalType={this.state.modalType}
         />
       </Flex>
-    )
+    );
   }
 }
 

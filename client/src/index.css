@@ -55,14 +55,18 @@ button:disabled {
 
 .tag {
   margin-right: 8px;
-  background-color: #f78a54;
+  background-color: #f78a54 !important;
   font-weight: 300;
 }
 
 .tag:hover {
-  background-color: #f78a54;
+  background-color: #f78a54 !important;
 }
 
 .tags-container {
   margin: 0px 0px 5px 0px;
+}
+
+.core-token--standard {
+  border-radius: 3px !important;
 }
