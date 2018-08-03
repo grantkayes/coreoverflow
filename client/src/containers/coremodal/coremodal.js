@@ -1,6 +1,6 @@
 import React from 'react';
 import { push } from 'connected-react-router';
-import { Modal, Button, Header } from '@procore/core-react';
+import { Modal, Button, Header, Flex } from '@procore/core-react';
 import { TextArea } from '@procore/core-react';
 import { Tabs } from '@procore/core-react';
 import { updateQuestions, postQuestion } from '../../modules/actions/questions';
@@ -13,6 +13,8 @@ import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
@@ -112,7 +114,7 @@ class CoreModal extends React.Component {
 
   render() {
     return (
-      <Modal open={this.props.open} onClickOverlay={this.props.close}>
+      <Modal class="modalBody" open={this.props.open} onClickOverlay={this.props.close}>
         <Modal.Header className="modalHeader" onClose={this.props.close}>
           <div className="flex-container">
             <Header type="h1" className="flex-item1">
@@ -155,9 +157,20 @@ class CoreModal extends React.Component {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Dropzone className="dropzone" multiple={false} onDrop={this.onDrop}>
-            <Header>Click to upload image, or drag and drop file here</Header>
-          </Dropzone>
+
+          <Flex className="uploadContainer">
+              <Dropzone
+                className="uploadImage"
+                multiple={false}
+                onDrop={this.onDrop}
+              >
+                <Button variant="form">
+                  <FontAwesomeIcon className="imageIcon" icon={faImage} />
+                  Attach
+                </Button>
+              </Dropzone>
+            </Flex>
+
           <Modal.FooterButtons>
             <Button variant="tertiary" onClick={this.props.close}>
               Cancel

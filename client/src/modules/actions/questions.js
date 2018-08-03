@@ -141,7 +141,7 @@ const deleteMyQuestions = questionId => {
     axios
       .delete(PUBLIC_URL + `/questions/${questionId}`)
       .then(response => {
-        console.log(response);
+        console.log('AM HERE');
 
         dispatch({
           type: DELETE_MY_QUESTION_SUCCEEDED,

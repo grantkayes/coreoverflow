@@ -129,7 +129,12 @@ class DetailedQuestion extends React.Component {
                 Delete
               </Header>
 
-              <DeleteModal open={this.state.isDeleteModalOpen} delete={this.confirmDelete} close={this.toggleDeleteModal}/>
+              <DeleteModal 
+                open={this.state.isDeleteModalOpen} 
+                delete={this.confirmDelete} 
+                close={this.toggleDeleteModal}
+                questionID={this.props.question.id}
+              />
 
             </Flex>
             <Header className="record-info" type="h3">
