@@ -54,9 +54,6 @@ class CoreModal extends React.Component {
       body: '',
       tags: []
     })
-    // console.log(this.props.newQuestionId)
-    // const questionId = res.data.Attributes.id;
-    // this.props.changePage(questionId)
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
