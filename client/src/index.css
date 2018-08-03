@@ -137,3 +137,8 @@ textarea:focus {
   padding: 5px;
   width: 80px;
 }
+
+button:disabled {
+  background-color: #4D4D4D !important;
+  border: 1px solid #4D4D4D !important;
+}

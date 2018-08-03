@@ -1,6 +1,6 @@
 import React from 'react';
 import Profile from './profile';
-import { ToolHeader, Avatar, Search, Flex } from '@procore/core-react';
+import { ToolHeader, Search, Flex } from '@procore/core-react';
 import { withRouter } from 'react-router';
 import { bindActionCreators } from '../../../node_modules/redux';
 import { connect } from 'react-redux';
@@ -67,7 +67,7 @@ class NavBar extends React.Component {
     return (
       <ToolHeader>
         <ToolHeader.Section className="navbar-container">
-          <img src={avatarImageUrl} className="core-overflow-logo" />
+          <img src={avatarImageUrl} alt="core-overflow-img" className="core-overflow-logo" />
           <ToolHeader.Header className="logo" onClick={this.navigateDashboard}>
             ore Overflow
           </ToolHeader.Header>
