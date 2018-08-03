@@ -76,7 +76,7 @@ class CoreModal extends React.Component {
 
     axios.post(PUBLIC_URL + '/upload', data).then(res => {
       const imageURL = res.data.success[0].location;
-      this.setState({ body: `${this.state.body}\n![](${imageURL})` });
+      this.setState({ body: `${this.state.body}\n![pic](${imageURL})` });
     });
   };
 

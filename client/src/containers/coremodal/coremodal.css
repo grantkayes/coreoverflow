@@ -12,14 +12,14 @@
 
 .modalTextBody {
   padding: 5px;
-  min-height: 250px;
-  max-height: 250px;
+  min-height: 250px !important;
+  max-height: 250px !important;
   overflow-y: auto;
-  width: 500px;
+  width: 500px !important;
 }
 
 .flex-item1 {
-  width: 35%;
+  width: 100% !important;
   font-size: 18px;
   font-weight: bold;
   color: #4d4d4d;
@@ -98,18 +98,11 @@
 }
 
 .modalTextBody {
-  padding: 5px;
-  min-height: 300px;
+  padding: 5px !important;
+  min-height: 300px !important;
   max-height: 300px;
   overflow-y: auto;
-  width: 100%;
-}
-
-.modalFooter {
-  padding-top: 0px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 700px;
+  width: 100% !important;
 }
 
 .imageIcon {
@@ -139,10 +132,10 @@
 
 .modalFooter {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 48px;
-  padding-bottom: 30px;
+  display: flex !important;
+  justify-content: space-between !important;
+  padding: 10px 48px !important;
+  padding-bottom: 30px !important;
 }
 
 .modalComponent {

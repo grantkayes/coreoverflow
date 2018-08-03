@@ -145,7 +145,7 @@ class LessModal extends React.Component {
               <Markdown className="modalTextBody" text={this.state.body} />
             )}
           </Modal.Body>
-          <Modal.Footer className="modalFooter">
+          <Modal.Footer className="modalFooter modalFooterLess">
             <Flex className="uploadContainer">
               <Dropzone
                 className="uploadImage"

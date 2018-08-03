@@ -28,6 +28,10 @@
   width: 80%;
 }
 
+.modalFooterLess {
+  padding-right: 28px !important;
+}
+
 /*
 .flex-container2 {
   padding: 0;
