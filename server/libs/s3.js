@@ -5,8 +5,6 @@ const uuidv4 = require('uuid/v4');
 
 require('dotenv').config();
 
-console.log(process.env);
-
 if (
   !process.env.ACCESS_KEY_ID ||
   !process.env.SECRET_ACCESS_KEY ||

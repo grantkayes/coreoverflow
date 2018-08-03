@@ -55,7 +55,6 @@ class NavBar extends React.Component {
   };
 
   toggleProfile = () => {
-    console.log('profile toggle');
     this.setState({
       isProfileOpen: !this.state.isProfileOpen,
       isNotificationsOpen: false
