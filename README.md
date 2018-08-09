@@ -25,7 +25,7 @@ Note: Use the command above to start server
 5. Run "yarn create-db"
 
 
-## To start backend
+## To start CoreOverflow
 
 1. Run "yarn"
 
