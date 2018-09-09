@@ -32,6 +32,6 @@ Note: Use the command above to start server
 2. Run "yarn start"
 
 ## In Action
-<img src="https://media.giphy.com/media/Bp3RZAF9yGZvbR7o25/giphy.gif" width="540" height="400">
+<img src="https://media.giphy.com/media/Bp3RZAF9yGZvbR7o25/giphy.gif" width="640" height="400">
 
-<img src="https://media.giphy.com/media/fQr7kMwHhBG4DSfTb9/giphy.gif" width="540" height="400">
+<img src="https://media.giphy.com/media/fQr7kMwHhBG4DSfTb9/giphy.gif" width="640" height="400">
