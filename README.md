@@ -1,8 +1,6 @@
 # Core Overflow
 
-An intern project by Grant, Elton, Gregg, and Chanun
-
-Changing the world, and your core
+Stack Overflow-like question and answer application
 
 
 
