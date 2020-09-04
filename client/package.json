@@ -48,6 +48,6 @@
     "remove-markdown": "^0.3.0",
     "sanitize.css": "6.0.0",
     "serve": "^9.4.0",
-    "showdown": "^1.8.6"
+    "showdown": "^1.9.1"
   }
 }
